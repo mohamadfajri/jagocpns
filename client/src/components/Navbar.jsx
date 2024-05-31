@@ -1,6 +1,61 @@
 import { Link, Outlet } from 'react-router-dom';
+import { useState } from 'react';
 
 const Navbar = () => {
+  const [active, setActive] = useState('home');
+  const scrollToFirst = () => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+      setActive('home');
+    }
+  };
+
+  const scrollToSecond = () => {
+    const vh = window.innerHeight;
+    if (typeof window !== 'undefined') {
+      window.scrollTo({
+        top: vh,
+        behavior: 'smooth',
+      });
+      setActive('tryout');
+    }
+  };
+
+  const scrollToThird = () => {
+    const vh = window.innerHeight * 2;
+    if (typeof window !== 'undefined') {
+      window.scrollTo({
+        top: vh,
+        behavior: 'smooth',
+      });
+      setActive('testimoni');
+    }
+  };
+
+  const scrollToForth = () => {
+    const vh = window.innerHeight / 1;
+    if (typeof window !== 'undefined') {
+      window.scrollTo({
+        top: vh,
+        behavior: 'smooth',
+      });
+      setActive('features');
+    }
+  };
+
+  const scrollToFifth = () => {
+    const vh = window.innerHeight / 1;
+    if (typeof window !== 'undefined') {
+      window.scrollTo({
+        top: vh,
+        behavior: 'smooth',
+      });
+      setActive('panduan');
+    }
+  };
   return (
     <>
       <nav className='bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600'>
@@ -62,45 +117,56 @@ const Navbar = () => {
           >
             <ul className='flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700'>
               <li>
-                <Link
-                  to='#'
-                  className='block py-2 px-3 text-white bg-yellow-700 rounded md:bg-transparent md:text-yellow-700 md:p-0 md:dark:text-yellow-500'
+                <button
+                  onClick={scrollToFirst}
+                  className={`block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-yellow-700 md:p-0 md:dark:hover:text-yellow-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 
+                  ${active === 'home' ? 'text-orange-600' : 'text-gray-900'}`}
                   aria-current='page'
                 >
                   Home
-                </Link>
+                </button>
               </li>
               <li>
-                <Link
-                  to='#'
-                  className='block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-yellow-700 md:p-0 md:dark:hover:text-yellow-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
+                <button
+                  onClick={scrollToSecond}
+                  className={`block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-yellow-700 md:p-0 md:dark:hover:text-yellow-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 
+                  ${active === 'tryout' ? 'text-orange-600' : 'text-gray-900'}`}
                 >
                   Tryout
-                </Link>
+                </button>
               </li>
               <li>
-                <Link
-                  to='#'
-                  className='block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-yellow-700 md:p-0 md:dark:hover:text-yellow-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
+                <button
+                  onClick={scrollToThird}
+                  className={`block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-yellow-700 md:p-0 md:dark:hover:text-yellow-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 
+                  ${
+                    active === 'testimoni' ? 'text-orange-600' : 'text-gray-900'
+                  }`}
                 >
                   Testimoni
-                </Link>
+                </button>
               </li>
               <li>
-                <Link
-                  to='#'
-                  className='block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-yellow-700 md:p-0 md:dark:hover:text-yellow-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
+                <button
+                  onClick={scrollToForth}
+                  className={`block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-yellow-700 md:p-0 md:dark:hover:text-yellow-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 
+                  ${
+                    active === 'features' ? 'text-orange-600' : 'text-gray-900'
+                  }`}
                 >
                   Features
-                </Link>
+                </button>
               </li>
               <li>
-                <Link
-                  to='#'
-                  className='block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-yellow-700 md:p-0 md:dark:hover:text-yellow-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
+                <button
+                  onClick={scrollToFifth}
+                  className={`block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-yellow-700 md:p-0 md:dark:hover:text-yellow-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 
+                  ${
+                    active === 'panduan' ? 'text-orange-600' : 'text-gray-900'
+                  }`}
                 >
                   Panduan
-                </Link>
+                </button>
               </li>
             </ul>
           </div>
