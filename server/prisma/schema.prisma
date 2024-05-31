@@ -1,0 +1,143 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int         @id @default(autoincrement())
+  name          String
+  email         String      @unique
+  password      String
+  province      String
+  phone         String
+  gender        String
+  instance      String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  scores        Score[]
+  balance       Balance?
+  transactions  Transaction[]
+  payments      Payment[]
+  paidLists PaidList[]
+}
+
+model PaidList {
+  id            Int @id @default(autoincrement())
+  userId        Int
+  tryoutListId  Int
+  user          User      @relation(fields: [userId], references: [id])
+  tryoutList    TryoutList @relation(fields: [tryoutListId], references: [id])
+  @@unique([userId, tryoutListId])
+}
+
+model Admin {
+  id            Int         @id @default(autoincrement())
+  name          String
+  email         String      @unique
+  password      String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model Questioner {
+  id            Int         @id @default(autoincrement())
+  name          String
+  email         String      @unique
+  password      String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  tryoutLists   TryoutList[]
+}
+
+model TryoutList {
+  id            Int         @id @default(autoincrement())
+  title         String
+  price         BigInt
+  imageUrl      String
+  description   String
+  questionerId  Int
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  tryouts       Tryout[]
+  scores        Score[]
+  payments      Payment[]
+  questioner    Questioner  @relation(fields: [questionerId], references: [id])
+  paidLists PaidList[]
+}
+
+model Tryout {
+  id             Int         @id @default(autoincrement())
+  tryoutListId   Int
+  type           TryoutType
+  number         Int
+  question       String
+  answer         String
+  explanation    String
+  imageUrl       String?
+  optionA        String
+  optionB        String
+  optionC        String
+  optionD        String
+  optionE        String
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  tryoutList     TryoutList  @relation(fields: [tryoutListId], references: [id])
+}
+
+model Score {
+  id             Int       @id @default(autoincrement())
+  userId         Int
+  tryoutListId   Int
+  tiu            Int
+  twk            Int
+  tkp            Int
+  total          Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user           User      @relation(fields: [userId], references: [id])
+  tryoutList     TryoutList @relation(fields: [tryoutListId], references: [id])
+}
+
+model Balance {
+  id         Int       @id @default(autoincrement())
+  userId     Int       @unique
+  adminId    Int?
+  amount     BigInt   @default(0)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  user       User      @relation(fields: [userId], references: [id])
+}
+
+model Transaction {
+  id          Int @id @default(autoincrement())
+  userId      Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user         User      @relation(fields: [userId], references: [id])
+}
+
+model Payment {
+  id              Int @id @default(autoincrement())
+  userId          Int
+  tryoutListId    Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user            User      @relation(fields: [userId], references: [id])
+  tryoutList      TryoutList @relation(fields: [tryoutListId],references: [id])
+}
+
+enum TryoutType {
+  TIU
+  TWK
+  TKP
+}
