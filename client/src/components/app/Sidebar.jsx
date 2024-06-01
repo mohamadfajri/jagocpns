@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { Avatar, Dropdown } from 'flowbite-react';
+import logo from '../../assets/images/logo-extend.png';
 
 const Sidebar = () => {
   return (
@@ -26,9 +27,9 @@ const Sidebar = () => {
           />
         </svg>
       </button>
-      <nav className='fixed top-0 left-0 right-0 z-50 bg-gray-100 shadow-sm dark:bg-gray-800'>
+      <nav className='fixed top-0 left-0 right-0 z-50 bg-gray-100 shadow-sm dark:bg-gray-900'>
         <div className='flex justify-between px-8'>
-          <h1 className='text-2xl dark:text-white py-2'>JagoCPNS</h1>
+          <img className='h-16' src={logo} alt='' />
           <Dropdown
             arrowIcon={false}
             inline
