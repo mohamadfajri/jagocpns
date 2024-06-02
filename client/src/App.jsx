@@ -4,6 +4,7 @@ import Landing from './pages/Landing';
 import Sidebar from './components/app/Sidebar';
 import Dashboard from './pages/Dashboard';
 import DarkToggle from './components/DarkToggle';
+import Mytryout from './pages/MyTryout';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         </Route>
         <Route path='app/' element={<Sidebar />}>
           <Route path='dashboard/' element={<Dashboard />} />
+          <Route path='mytryouts/' element={<Mytryout />} />
         </Route>
       </Routes>
     </>
