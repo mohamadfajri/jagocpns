@@ -3,13 +3,13 @@ import Navbar from './components/Navbar';
 import Landing from './pages/Landing';
 import Sidebar from './components/app/Sidebar';
 import Dashboard from './pages/Dashboard';
-import DarkToggle from './components/DarkToggle';
+// import DarkToggle from './components/DarkToggle';
 import Mytryout from './pages/MyTryout';
 
 const App = () => {
   return (
     <>
-      <DarkToggle />
+      {/* <DarkToggle /> */}
       <Routes>
         <Route path='/' element={<Navbar />}>
           <Route index element={<Landing />} />

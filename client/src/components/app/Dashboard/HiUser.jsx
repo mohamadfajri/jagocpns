@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import SlideContent from './SlideContent';
+import { Link } from 'react-router-dom';
 
 const HiUser = () => {
   const [great, setGreat] = useState('datang');
   const [name, setName] = useState('');
+
   const times = () => {
     const sekarang = new Date();
     const jam = sekarang.getHours();
@@ -34,7 +36,7 @@ const HiUser = () => {
 
   useEffect(() => {
     times();
-    getName('User sangat bodoh');
+    getName('Asep Bensin');
   }, []);
 
   const settings = {
@@ -48,24 +50,43 @@ const HiUser = () => {
   };
 
   return (
-    <div className='flex border rounded-lg'>
-      <div className='flex flex-col m-4 w-1/5'>
+    <div className='flex flex-col sm:flex-row border rounded-lg'>
+      <div className='flex-col m-4 w-1/5 hidden sm:flex'>
         <div className='my-4'>
-          <h1 className='text-2xl font-medium'>Halo {name}</h1>
-          <p className='text-sm'>Selamat {great}.</p>
+          <h1 className='text-2xl font-medium'>
+            Selamat {great}, {name}.
+          </h1>
+          <p className='my-2'>Selamat datang di Dashboard JagoCPNS.</p>
         </div>
-        <div className='my-4 flex justify-start'>
-          <button className='bg-jago-4 p-2 hover:bg-jago-2 text-sm font-medium text-white rounded-md'>
+        <div className='my-8 flex flex-col justify-start'>
+          <Link
+            to={'/app/mytryouts'}
+            className='bg-jago-4 p-2 w-fit mt-1 hover:bg-jago-2 text-sm font-medium text-white rounded-md'
+          >
             lihat daftar tryout
-          </button>
+          </Link>
         </div>
       </div>
-      <div className='border-l slider-container w-4/5'>
+      <div className='border-l slider-container sm:w-4/5 mt-14 sm:mt-0 w-full'>
         <Slider {...settings}>
           <SlideContent />
           <SlideContent />
           <SlideContent />
         </Slider>
+      </div>
+      <div className='flex flex-col sm:hidden p-6'>
+        <h1 className='text-2xl'>
+          Selamat {great}, {name}.
+        </h1>
+        <p className='text-sm'>Selamat datang di dashboard JagoCPNS</p>
+        <div className='mt-4'>
+          <Link
+            to={'/app/mytryouts'}
+            className='bg-jago-4 p-2 hover:bg-jago-2 text-sm font-medium text-white rounded-md'
+          >
+            lihat daftar tryout
+          </Link>
+        </div>
       </div>
     </div>
   );
