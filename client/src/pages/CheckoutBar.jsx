@@ -1,8 +1,9 @@
-import { Drawer, Label, TextInput, theme } from 'flowbite-react';
+import { Drawer, Label, Modal, TextInput, theme } from 'flowbite-react';
 import { HiShoppingCart } from 'react-icons/hi';
 import { twMerge } from 'tailwind-merge';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { HiOutlineExclamationCircle } from 'react-icons/hi';
 
 const CheckoutBar = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -13,6 +14,7 @@ const CheckoutBar = () => {
     { id: 4, email: 'adolfhitler@gmail.com' },
   ]);
   const [newEmail, setNewEmail] = useState('');
+  const [openModal, setOpenModal] = useState(false);
 
   const handleClose = () => {
     setIsOpen(false);
@@ -68,6 +70,14 @@ const CheckoutBar = () => {
                 <p>SKD blablablablablabl 1 Juli 2024 - 5 Juli 2024</p>
               </div>
             </div>
+            <div className='mb-6'>
+              <Label htmlFor='description' className='mb-2 block'>
+                Total Harga
+              </Label>
+              <div className='border rounded-lg p-2 font-medium'>
+                <p>Rp 32.000</p>
+              </div>
+            </div>
             <label className='inline-flex items-center cursor-pointer my-4'>
               <input
                 type='checkbox'
@@ -85,6 +95,7 @@ const CheckoutBar = () => {
               <div className='mb-6'>
                 <div className='mb-2'>
                   <TextInput
+                    disabled={lists.length >= 4}
                     id='guests'
                     name='guests'
                     placeholder='Masukan 4 email peserta lain'
@@ -93,6 +104,7 @@ const CheckoutBar = () => {
                     type='search'
                     rightIcon={() => (
                       <button
+                        disabled={lists.length >= 4}
                         onClick={handleAdd}
                         size='sm'
                         className='[&>span]:items-center [&>span]:px-2 [&>span]:py-0 flex font-medium text-sm border py-1 px-2 rounded-lg bg-[#155E75] text-white'
@@ -143,11 +155,45 @@ const CheckoutBar = () => {
                 </div>
               </div>
             )}
-            <button className='font-medium bg-jago-4 rounded-lg text-white flex py-2 px-4'>
+            <button
+              type='button'
+              onClick={() => setOpenModal(true)}
+              className='font-medium bg-jago-4 hover:bg-orange-600 rounded-lg text-white flex py-2 px-4'
+            >
               Buat Pesanan
             </button>
           </form>
         </Drawer.Items>
+        <Modal
+          show={openModal}
+          size='md'
+          onClose={() => setOpenModal(false)}
+          popup
+        >
+          <Modal.Header />
+          <Modal.Body>
+            <div className='text-center'>
+              <HiOutlineExclamationCircle className='mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200' />
+              <h3 className='mb-5 text-lg font-normal text-gray-500 dark:text-gray-400'>
+                Pesanan anda sudah benar?
+              </h3>
+              <div className='flex justify-center gap-4'>
+                <button
+                  onClick={() => setOpenModal(false)}
+                  className='inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+                >
+                  Lanjutkan
+                </button>
+                <button
+                  onClick={() => setOpenModal(false)}
+                  className='inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800'
+                >
+                  Batalkan
+                </button>
+              </div>
+            </div>
+          </Modal.Body>
+        </Modal>
       </Drawer>
     </>
   );

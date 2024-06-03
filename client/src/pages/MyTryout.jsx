@@ -1,8 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import TryoutCard from '../components/app/MyTryout/TryoutCard';
 
 const Mytryout = () => {
-  // title, desc, action, url
   const tryouts = [
     {
       id: 1,
@@ -77,7 +76,7 @@ const Mytryout = () => {
                       desc={tryout.desc}
                       key={tryout.id}
                       action={'nilai saya'}
-                      url={`/confirmation/${tryout.id}`}
+                      url={`score/${tryout.id}`}
                     />
                   ))}
                 </div>
@@ -93,6 +92,7 @@ const Mytryout = () => {
           </section>
         </main>
       </div>
+      <Outlet />
     </>
   );
 };
