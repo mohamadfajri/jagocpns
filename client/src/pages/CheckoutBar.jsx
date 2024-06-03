@@ -156,9 +156,10 @@ const CheckoutBar = () => {
               </div>
             )}
             <button
+              disabled={!(lists.length === 4) && isJoin}
               type='button'
               onClick={() => setOpenModal(true)}
-              className='font-medium bg-jago-4 hover:bg-orange-600 rounded-lg text-white flex py-2 px-4'
+              className='font-medium bg-jago-4 hover:bg-orange-600 rounded-lg disabled:cursor-not-allowed disabled:hover:bg-gray-300 disabled:bg-gray-300 text-white flex py-2 px-4'
             >
               Buat Pesanan
             </button>
