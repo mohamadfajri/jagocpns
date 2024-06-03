@@ -5,6 +5,8 @@ import Sidebar from './components/app/Sidebar';
 import Dashboard from './pages/Dashboard';
 // import DarkToggle from './components/DarkToggle';
 import Mytryout from './pages/MyTryout';
+import BuyTryOut from './pages/BuyTryOut';
+import CheckoutBar from './pages/CheckoutBar';
 
 const App = () => {
   return (
@@ -17,6 +19,9 @@ const App = () => {
         <Route path='app/' element={<Sidebar />}>
           <Route path='dashboard/' element={<Dashboard />} />
           <Route path='mytryouts/' element={<Mytryout />} />
+          <Route path='tryoutstore/' element={<BuyTryOut />}>
+            <Route path=':id/' element={<CheckoutBar />} />
+          </Route>
         </Route>
       </Routes>
     </>

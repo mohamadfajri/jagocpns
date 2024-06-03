@@ -11,6 +11,15 @@ const TestiSection = () => {
     arrows: false,
   };
 
+  const settingsPhone = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+  };
+
   const datas = [
     {
       id: 1,
@@ -38,13 +47,25 @@ const TestiSection = () => {
     },
   ];
   return (
-    <section className='h-screen flex flex-col justify-center items-center bg-white dark:bg-gray-900'>
-      <div className='text-center dark:text-white'>
+    <section className='sm:h-screen my-12 sm:my-0 flex flex-col justify-center items-center bg-white dark:bg-gray-900'>
+      <div className='hidden sm:block text-center dark:text-white'>
         <h1 className='text-4xl font-semibold'>Testimoni</h1>
         <h2 className='text-2xl mt-4'>Kata Mereka Tentang JAGOCPNS.ID</h2>
       </div>
-      <div className='slider-container max-w-screen-lg p-4'>
+      <div className='slider-container max-w-screen-lg p-4 hidden sm:block'>
         <Slider {...settings}>
+          {datas.map((data) => (
+            <TestiCard
+              key={data.id}
+              heading={data.name}
+              subheading={data.sub}
+              desc={data.desc}
+            />
+          ))}
+        </Slider>
+      </div>
+      <div className='slider-container w-[100%] p-4 sm:hidden'>
+        <Slider {...settingsPhone}>
           {datas.map((data) => (
             <TestiCard
               key={data.id}
