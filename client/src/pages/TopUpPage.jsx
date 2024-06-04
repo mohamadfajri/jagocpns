@@ -1,10 +1,12 @@
-import { Label, TextInput } from 'flowbite-react';
+import { Button, TextInput } from 'flowbite-react';
 import TopupInfo from '../components/app/Topup/TopupInfo';
 import { useState } from 'react';
+import { useTopup } from '../stores/useTopup';
 
 const TopUpPage = () => {
   const [inputValue, setInputValue] = useState('');
   const [total, setTotal] = useState(0);
+  const { set } = useTopup();
 
   const updateTotal = (event) => {
     const value = event.target.value;
@@ -57,6 +59,9 @@ const TopUpPage = () => {
             placeholder='Disabled readonly input'
             readOnly
           />
+          <Button as={'button'} onClick={() => set(true)} color='blue'>
+            Buat Pesanan
+          </Button>
         </div>
       </div>
     </div>

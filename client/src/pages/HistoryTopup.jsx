@@ -1,5 +1,11 @@
+import History from '../components/app/Topup/History';
+
 const HistoryTopup = () => {
-  return <h1>This page belongs to history</h1>;
+  return (
+    <div className='p-4 border rounded-lg'>
+      <History />
+    </div>
+  );
 };
 
 export default HistoryTopup;

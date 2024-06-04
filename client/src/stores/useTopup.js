@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 
 const useTopup = create((set) => ({
-  active: 'topup',
-  set: () => set((state) => ({ active: state })),
+  isCheckout: false,
+  set: () => set((state) => ({ isCheckout: state })),
 }));
 
 export { useTopup };
