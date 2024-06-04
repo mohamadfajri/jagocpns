@@ -141,7 +141,7 @@ const Sidebar = () => {
                 <Link
                   to={'/app/topup'}
                   className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white group ${
-                    location.pathname === '/app/ranking'
+                    location.pathname === '/app/topup'
                       ? 'bg-gray-100'
                       : 'hover:bg-gray-200 dark:hover:bg-gray-700'
                   }`}

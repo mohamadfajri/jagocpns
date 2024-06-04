@@ -13,8 +13,13 @@ import ScoreModal from './components/app/MyTryout/ScoreModal';
 import TryoutModal from './components/app/MyTryout/TryoutModal';
 import StartTryout from './pages/StartTryout';
 import RankingPage from './pages/RankingPage';
+import TopUpPage from './pages/TopUpPage';
+import TopupTab from './components/app/Topup/TopupTab';
+import { useTopup } from './stores/useTopup';
+import HistoryTopup from './pages/HistoryTopup';
 
 const App = () => {
+  const { active } = useTopup();
   return (
     <>
       {/* <DarkToggle /> */}
@@ -34,6 +39,12 @@ const App = () => {
             <Route path=':id/' element={<CheckoutBar />} />
           </Route>
           <Route path='ranks/' element={<RankingPage />} />
+          <Route path='topup/' element={<TopupTab />}>
+            <Route
+              index
+              element={active === 'history' ? <HistoryTopup /> : <TopUpPage />}
+            />
+          </Route>
         </Route>
         <Route path='start-tryout/:id' element={<StartTryout />} />
       </Routes>
