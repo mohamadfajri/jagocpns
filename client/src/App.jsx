@@ -14,6 +14,8 @@ import TryoutModal from './components/app/MyTryout/TryoutModal';
 import StartTryout from './pages/StartTryout';
 import RankingPage from './pages/RankingPage';
 import TopupTab from './components/app/Topup/TopupTab';
+import InformationPage from './pages/InformationPage';
+import ProfilePage from './pages/ProfilePage';
 
 const App = () => {
   return (
@@ -36,6 +38,8 @@ const App = () => {
           </Route>
           <Route path='ranks/' element={<RankingPage />} />
           <Route path='topup/' element={<TopupTab />} />
+          <Route path='information/' element={<InformationPage />} />
+          <Route path='profile/' element={<ProfilePage />} />
         </Route>
         <Route path='start-tryout/:id' element={<StartTryout />} />
       </Routes>

@@ -1,7 +1,11 @@
+import InvoiceMenu from './InvoiceMenu';
+import InvoiceTopup from './InvoiceTopup';
+
 const InvoicePage = () => {
   return (
-    <div className='p-4 border rounded-lg'>
-      <h1>This page belong to invoice</h1>
+    <div className='p-4 border rounded-lg flex justify-center space-x-8'>
+      <InvoiceTopup />
+      <InvoiceMenu />
     </div>
   );
 };
