@@ -10,6 +10,9 @@ import CheckoutBar from './pages/CheckoutBar';
 import ToDashboard from './pages/ToDashboard';
 import NotFound from './pages/NotFound';
 import ScoreModal from './components/app/MyTryout/ScoreModal';
+import TryoutModal from './components/app/MyTryout/TryoutModal';
+import StartTryout from './pages/StartTryout';
+import RankingPage from './pages/RankingPage';
 
 const App = () => {
   return (
@@ -25,11 +28,14 @@ const App = () => {
           <Route path='dashboard/' element={<Dashboard />} />
           <Route path='mytryouts/' element={<Mytryout />}>
             <Route path='score/:id/' element={<ScoreModal />} />
+            <Route path='tryout/:id/' element={<TryoutModal />} />
           </Route>
           <Route path='tryoutstore/' element={<BuyTryOut />}>
             <Route path=':id/' element={<CheckoutBar />} />
           </Route>
+          <Route path='ranks/' element={<RankingPage />} />
         </Route>
+        <Route path='start-tryout/:id' element={<StartTryout />} />
       </Routes>
     </>
   );

@@ -129,7 +129,9 @@ const CheckoutBar = () => {
                     {lists.map((list) => (
                       <li key={list.id} className='flex flex-row'>
                         <span className='bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300'>
-                          {list.email}
+                          {list.email.length > 25
+                            ? list.email.slice(0, 25) + '...'
+                            : list.email}
                         </span>
                         <button
                           type='button'

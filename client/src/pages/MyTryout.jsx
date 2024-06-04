@@ -45,7 +45,7 @@ const Mytryout = () => {
                       desc={tryout.desc}
                       key={tryout.id}
                       action={'kerjakan'}
-                      url={`/confirmation/${tryout.id}`}
+                      url={`tryout/${tryout.id}`}
                     />
                   ))}
                 </div>
