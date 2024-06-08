@@ -16,6 +16,11 @@ import RankingPage from './pages/RankingPage';
 import TopupTab from './components/app/Topup/TopupTab';
 import InformationPage from './pages/InformationPage';
 import ProfilePage from './pages/ProfilePage';
+import AdminSidebar from './pages/admin/AdminSidebar';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import CrudUser from './pages/admin/CrudUser';
+import CrudTryoutList from './pages/admin/CrudTryoutList';
+import TopupManager from './pages/admin/TopupManager';
 
 const App = () => {
   return (
@@ -40,6 +45,12 @@ const App = () => {
           <Route path='topup/' element={<TopupTab />} />
           <Route path='information/' element={<InformationPage />} />
           <Route path='profile/' element={<ProfilePage />} />
+        </Route>
+        <Route path='admin/' element={<AdminSidebar />}>
+          <Route path='dashboard/' element={<AdminDashboard />} />
+          <Route path='crud/user/' element={<CrudUser />} />
+          <Route path='crud/tryout/' element={<CrudTryoutList />} />
+          <Route path='topup-manager/' element={<TopupManager />} />
         </Route>
         <Route path='start-tryout/:id' element={<StartTryout />} />
       </Routes>
