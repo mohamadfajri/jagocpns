@@ -1,3 +1,4 @@
+import ContactToast from '../components/ContactToast';
 import FeatureSection from '../components/landing/FeatureSection';
 import FooterSection from '../components/landing/FooterSection';
 import HeroSection from '../components/landing/HeroSection';
@@ -12,6 +13,7 @@ export default function Landing() {
       <TestiSection />
       <FeatureSection />
       <FooterSection />
+      <ContactToast />
     </>
   );
 }
