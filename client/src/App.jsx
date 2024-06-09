@@ -21,6 +21,14 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import CrudUser from './pages/admin/CrudUser';
 import CrudTryoutList from './pages/admin/CrudTryoutList';
 import TopupManager from './pages/admin/TopupManager';
+import LoginForm from './pages/auth/LoginForm';
+import SignupForm from './pages/auth/SignupForm';
+import ProtectedRoute from './middleware/ProtectedRoute';
+import SignOut from './pages/auth/SignOut';
+import AdminRoute from './middleware/AdminRoute';
+import LoginFormAdmin from './pages/admin/auth/LoginFormAdmin';
+import SignOutAdmin from './pages/admin/auth/SignOutAdmin';
+import SignupFormAdmin from './pages/admin/auth/SignupFormAdmin';
 
 const App = () => {
   return (
@@ -31,7 +39,14 @@ const App = () => {
         <Route path='/' element={<Navbar />}>
           <Route index element={<Landing />} />
         </Route>
-        <Route path='app/' element={<Sidebar />}>
+        <Route
+          path='app/*'
+          element={
+            <ProtectedRoute>
+              <Sidebar />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<ToDashboard />} />
           <Route path='dashboard/' element={<Dashboard />} />
           <Route path='mytryouts/' element={<Mytryout />}>
@@ -46,13 +61,26 @@ const App = () => {
           <Route path='information/' element={<InformationPage />} />
           <Route path='profile/' element={<ProfilePage />} />
         </Route>
-        <Route path='admin/' element={<AdminSidebar />}>
+        <Route path='admin/auth/signin' element={<LoginFormAdmin />} />
+        <Route path='admin/auth/signout' element={<SignOutAdmin />} />
+        <Route path='admin/auth/signup' element={<SignupFormAdmin />} />
+        <Route
+          path='admin/*'
+          element={
+            <AdminRoute>
+              <AdminSidebar />
+            </AdminRoute>
+          }
+        >
           <Route path='dashboard/' element={<AdminDashboard />} />
           <Route path='crud/user/' element={<CrudUser />} />
           <Route path='crud/tryout/' element={<CrudTryoutList />} />
           <Route path='topup-manager/' element={<TopupManager />} />
         </Route>
         <Route path='start-tryout/:id' element={<StartTryout />} />
+        <Route path='auth/signin' element={<LoginForm />} />
+        <Route path='auth/signup' element={<SignupForm />} />
+        <Route path='auth/signout' element={<SignOut />} />
       </Routes>
     </>
   );

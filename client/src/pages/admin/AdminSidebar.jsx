@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 const AdminSidebar = () => {
   return (
@@ -215,8 +215,8 @@ const AdminSidebar = () => {
               </ul>
             </li>
           </ul>
-          <a
-            href='#'
+          <Link
+            to={'/admin/auth/signout'}
             className='flex items-center p-2 mt-24 text-red-600 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'
           >
             <svg
@@ -235,7 +235,7 @@ const AdminSidebar = () => {
               />
             </svg>
             <span className='flex-1 ms-3 whitespace-nowrap'>Sign Out</span>
-          </a>
+          </Link>
         </div>
       </aside>
       <Outlet />
