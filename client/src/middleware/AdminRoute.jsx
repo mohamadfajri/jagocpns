@@ -1,6 +1,6 @@
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import useAdmin from '../stores/useAdmin';
+import { useAdmin } from '../stores/useAdmin';
 
 // eslint-disable-next-line react/prop-types
 const AdminRoute = ({ children }) => {

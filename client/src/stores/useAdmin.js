@@ -17,4 +17,4 @@ const useAdmin = create(
   )
 );
 
-export default useAdmin;
+export { useAdmin };

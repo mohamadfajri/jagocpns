@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import useAdmin from '../../../stores/useAdmin';
+import { useAdmin } from '../../../stores/useAdmin';
 
 const LoginFormAdmin = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -36,7 +36,7 @@ const LoginFormAdmin = () => {
         <div className='w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700'>
           <div className='p-6 space-y-4 md:space-y-6 sm:p-8'>
             <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white'>
-              Sign in to your account
+              Admin Only
             </h1>
             <form className='space-y-4 md:space-y-6' onSubmit={handleSubmit}>
               <div>
@@ -47,6 +47,7 @@ const LoginFormAdmin = () => {
                   Your email
                 </label>
                 <input
+                  autoComplete='email'
                   type='email'
                   name='email'
                   id='email'
@@ -66,6 +67,7 @@ const LoginFormAdmin = () => {
                 </label>
                 <div className='relative flex items-center'>
                   <input
+                    autoComplete='current-password'
                     type={showPassword ? 'text' : 'password'}
                     name='password'
                     id='password'

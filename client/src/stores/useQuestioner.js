@@ -17,4 +17,4 @@ const useQuestioner = create(
   )
 );
 
-export default useQuestioner;
+export { useQuestioner };

@@ -1,6 +1,6 @@
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import useQuestioner from '../stores/useQuestioner';
+import { useQuestioner } from '../stores/useQuestioner';
 
 // eslint-disable-next-line react/prop-types
 const QuestionerRoute = ({ children }) => {

@@ -29,6 +29,8 @@ import AdminRoute from './middleware/AdminRoute';
 import LoginFormAdmin from './pages/admin/auth/LoginFormAdmin';
 import SignOutAdmin from './pages/admin/auth/SignOutAdmin';
 import SignupFormAdmin from './pages/admin/auth/SignupFormAdmin';
+import LoginFormQuestioner from './pages/questioner/auth/LoginFormQuestioner';
+import SignOutQuestioner from './pages/questioner/auth/SignOutQuestioner';
 
 const App = () => {
   return (
@@ -64,6 +66,11 @@ const App = () => {
         <Route path='admin/auth/signin' element={<LoginFormAdmin />} />
         <Route path='admin/auth/signout' element={<SignOutAdmin />} />
         <Route path='admin/auth/signup' element={<SignupFormAdmin />} />
+        <Route
+          path='questioner/auth/signin'
+          element={<LoginFormQuestioner />}
+        />
+        <Route path='questioner/auth/signout' element={<SignOutQuestioner />} />
         <Route
           path='admin/*'
           element={
