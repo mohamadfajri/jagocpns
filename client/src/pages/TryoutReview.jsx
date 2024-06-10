@@ -175,7 +175,7 @@ const TryoutReview = () => {
               className='md:w-4/5 md:mt-20'
               style={{
                 backgroundImage: `url(${watermark})`,
-                backgroundSize: 'cover',
+                backgroundSize: 'contain',
                 backgroundRepeat: 'repeat',
                 backgroundPosition: 'center',
               }}
