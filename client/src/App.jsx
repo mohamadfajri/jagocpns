@@ -31,6 +31,9 @@ import SignOutAdmin from './pages/admin/auth/SignOutAdmin';
 import SignupFormAdmin from './pages/admin/auth/SignupFormAdmin';
 import LoginFormQuestioner from './pages/questioner/auth/LoginFormQuestioner';
 import SignOutQuestioner from './pages/questioner/auth/SignOutQuestioner';
+import TryoutReview from './pages/TryoutReview';
+import QuestionerDashboard from './pages/questioner/QuestionerDashboard';
+import TryoutEditor from './pages/questioner/TryoutEditor';
 
 const App = () => {
   return (
@@ -71,6 +74,8 @@ const App = () => {
           element={<LoginFormQuestioner />}
         />
         <Route path='questioner/auth/signout' element={<SignOutQuestioner />} />
+        <Route path='questioner/dashboard' element={<QuestionerDashboard />} />
+        <Route path='questioner/editor' element={<TryoutEditor />} />
         <Route
           path='admin/*'
           element={
@@ -85,6 +90,7 @@ const App = () => {
           <Route path='topup-manager/' element={<TopupManager />} />
         </Route>
         <Route path='start-tryout/:id' element={<StartTryout />} />
+        <Route path='review/:id' element={<TryoutReview />} />
         <Route path='auth/signin' element={<LoginForm />} />
         <Route path='auth/signup' element={<SignupForm />} />
         <Route path='auth/signout' element={<SignOut />} />

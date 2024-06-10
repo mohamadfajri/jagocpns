@@ -4,28 +4,108 @@ const StartTryout = () => {
   const [timeLeft, setTimeLeft] = useState('1j :40m :0d');
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState('x');
-  const [answers, setAnswers] = useState(Array(5).fill('x')); // static array for answers
+  const [answers, setAnswers] = useState(Array(5).fill('x'));
   const [showModal, setShowModal] = useState(false);
 
   const questions = [
     {
-      question: 'What is the capital of France?',
+      question: 'What is the capital of Japan?',
       choices: [
-        { text: 'Paris', key: 'a' },
-        { text: 'London', key: 'b' },
-        { text: 'Berlin', key: 'c' },
-        { text: 'Madrid', key: 'd' },
-        { text: 'Rome', key: 'e' },
+        { text: 'Tokyo', key: 'a' },
+        { text: 'Beijing', key: 'b' },
+        { text: 'Seoul', key: 'c' },
+        { text: 'Bangkok', key: 'd' },
+        { text: 'Hanoi', key: 'e' },
       ],
     },
     {
-      question: 'What is the capital of Thailand?',
+      question: 'Which planet is known as the Red Planet?',
       choices: [
-        { text: 'Bangkok', key: 'a' },
-        { text: 'Bangdick', key: 'b' },
-        { text: 'Bangpussy', key: 'c' },
-        { text: 'Bangcock', key: 'd' },
-        { text: 'Bangass', key: 'e' },
+        { text: 'Mars', key: 'a' },
+        { text: 'Earth', key: 'b' },
+        { text: 'Venus', key: 'c' },
+        { text: 'Jupiter', key: 'd' },
+        { text: 'Saturn', key: 'e' },
+      ],
+    },
+    {
+      question: 'Who wrote "To Kill a Mockingbird"?',
+      choices: [
+        { text: 'Harper Lee', key: 'a' },
+        { text: 'Mark Twain', key: 'b' },
+        { text: 'Ernest Hemingway', key: 'c' },
+        { text: 'F. Scott Fitzgerald', key: 'd' },
+        { text: 'Jane Austen', key: 'e' },
+      ],
+    },
+    {
+      question: 'What is the largest ocean on Earth?',
+      choices: [
+        { text: 'Pacific Ocean', key: 'a' },
+        { text: 'Atlantic Ocean', key: 'b' },
+        { text: 'Indian Ocean', key: 'c' },
+        { text: 'Arctic Ocean', key: 'd' },
+        { text: 'Southern Ocean', key: 'e' },
+      ],
+    },
+    {
+      question: 'Which element has the chemical symbol O?',
+      choices: [
+        { text: 'Oxygen', key: 'a' },
+        { text: 'Gold', key: 'b' },
+        { text: 'Osmium', key: 'c' },
+        { text: 'Oganesson', key: 'd' },
+        { text: 'Oxygenium', key: 'e' },
+      ],
+    },
+    {
+      question: 'In what year did the Titanic sink?',
+      choices: [
+        { text: '1912', key: 'a' },
+        { text: '1905', key: 'b' },
+        { text: '1915', key: 'c' },
+        { text: '1920', key: 'd' },
+        { text: '1910', key: 'e' },
+      ],
+    },
+    {
+      question: 'Who painted the Mona Lisa?',
+      choices: [
+        { text: 'Leonardo da Vinci', key: 'a' },
+        { text: 'Vincent van Gogh', key: 'b' },
+        { text: 'Pablo Picasso', key: 'c' },
+        { text: 'Claude Monet', key: 'd' },
+        { text: 'Michelangelo', key: 'e' },
+      ],
+    },
+    {
+      question: 'What is the smallest unit of life?',
+      choices: [
+        { text: 'Cell', key: 'a' },
+        { text: 'Atom', key: 'b' },
+        { text: 'Molecule', key: 'c' },
+        { text: 'Organ', key: 'd' },
+        { text: 'Tissue', key: 'e' },
+      ],
+    },
+    {
+      question: 'Which country is the largest by area?',
+      choices: [
+        { text: 'Russia', key: 'a' },
+        { text: 'Canada', key: 'b' },
+        { text: 'China', key: 'c' },
+        { text: 'United States', key: 'd' },
+        { text: 'Brazil', key: 'e' },
+      ],
+    },
+    {
+      question: 'What is the hardest natural substance on Earth?',
+      choices: [
+        { text: 'Diamond', key: 'a' },
+        { text: 'Gold', key: 'b' },
+        { text: 'Iron', key: 'c' },
+        { text: 'Platinum', key: 'd' },
+        { text: 'Titanium', key: 'e' },
       ],
     },
   ];
