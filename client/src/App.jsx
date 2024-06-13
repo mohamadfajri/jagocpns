@@ -34,6 +34,7 @@ import SignOutQuestioner from './pages/questioner/auth/SignOutQuestioner';
 import TryoutReview from './pages/TryoutReview';
 import QuestionerDashboard from './pages/questioner/QuestionerDashboard';
 import TryoutEditor from './pages/questioner/TryoutEditor';
+import ShowTryout from './pages/admin/ShowTryout';
 
 const App = () => {
   return (
@@ -88,6 +89,7 @@ const App = () => {
           <Route path='crud/user/' element={<CrudUser />} />
           <Route path='crud/tryout/' element={<CrudTryoutList />} />
           <Route path='topup-manager/' element={<TopupManager />} />
+          <Route path='crud/tryout/:id' element={<ShowTryout />} />
         </Route>
         <Route path='start-tryout/:id' element={<StartTryout />} />
         <Route path='review/:id' element={<TryoutReview />} />

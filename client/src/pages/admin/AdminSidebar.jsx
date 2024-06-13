@@ -87,26 +87,26 @@ const AdminSidebar = () => {
               </button>
               <ul id='dropdown-example' className='hidden py-2 space-y-2'>
                 <li>
-                  <a
-                    href='#'
+                  <Link
+                    to={'crud/user/'}
                     className='flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
                   >
                     User
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href='#'
+                  <Link
+                    to={'crud/tryout'}
                     className='flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
                   >
                     Tryout List
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </li>
             <li>
-              <a
-                href='#'
+              <Link
+                to={'topup-manager'}
                 className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'
               >
                 <svg
@@ -126,7 +126,7 @@ const AdminSidebar = () => {
                 <span className='flex-1 ms-3 whitespace-nowrap'>
                   Top Up Manager
                 </span>
-              </a>
+              </Link>
             </li>
             <li>
               <a
