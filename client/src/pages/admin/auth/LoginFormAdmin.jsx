@@ -3,6 +3,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useAdmin } from '../../../stores/useAdmin';
+import axios from 'axios';
 
 const LoginFormAdmin = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -19,10 +20,21 @@ const LoginFormAdmin = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const siginIn = async () => {
+    try {
+      const response = await axios.post('/api/admin/signin', {
+        email: form.email,
+        password: form.password,
+      });
+      setToken(response.data.token);
+    } catch (error) {
+      console.error('this error coming from sign in adminn', error);
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form data:', form);
-    setToken('aezakmi');
+    await siginIn();
     navigate('/admin/dashboard');
   };
 

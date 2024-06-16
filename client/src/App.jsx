@@ -35,6 +35,7 @@ import TryoutReview from './pages/TryoutReview';
 import QuestionerDashboard from './pages/questioner/QuestionerDashboard';
 import TryoutEditor from './pages/questioner/TryoutEditor';
 import ShowTryout from './pages/admin/ShowTryout';
+import FillProfile from './pages/auth/FillProfile';
 
 const App = () => {
   return (
@@ -95,6 +96,7 @@ const App = () => {
         <Route path='review/:id' element={<TryoutReview />} />
         <Route path='auth/signin' element={<LoginForm />} />
         <Route path='auth/signup' element={<SignupForm />} />
+        <Route path='auth/profile' element={<FillProfile />} />
         <Route path='auth/signout' element={<SignOut />} />
       </Routes>
     </>

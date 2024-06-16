@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import SlideContent from './SlideContent';
 import { Link } from 'react-router-dom';
+import useAuth from '../../../stores/useAuth';
 
 const HiUser = () => {
-  const [great, setGreat] = useState('datang');
-  const [name, setName] = useState('');
+  const [great, setGreat] = useState('Datang');
+  const [nameRes, setNameRes] = useState('User');
+  const { profile } = useAuth();
 
   const times = () => {
     const sekarang = new Date();
@@ -31,13 +33,13 @@ const HiUser = () => {
         shortestWord = words[i];
       }
     }
-    setName(shortestWord);
+    setNameRes(shortestWord);
   };
 
   useEffect(() => {
     times();
-    getName('Asep Bensin');
-  }, []);
+    getName(profile.name);
+  }, [profile]);
 
   const settings = {
     dots: false,
@@ -54,7 +56,7 @@ const HiUser = () => {
       <div className='flex-col m-4 w-1/5 hidden sm:flex'>
         <div className='my-4'>
           <h1 className='text-2xl font-medium'>
-            Selamat {great}, {name}.
+            Selamat {great}, {nameRes}.
           </h1>
           <p className='my-2'>Selamat datang di Dashboard JagoCPNS.</p>
         </div>
@@ -76,7 +78,7 @@ const HiUser = () => {
       </div>
       <div className='flex flex-col sm:hidden p-6'>
         <h1 className='text-2xl'>
-          Selamat {great}, {name}.
+          Selamat {great}, {nameRes}.
         </h1>
         <p className='text-sm'>Selamat datang di dashboard JagoCPNS</p>
         <div className='mt-4'>

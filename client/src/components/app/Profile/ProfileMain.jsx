@@ -1,5 +1,7 @@
-import { Button, Dropdown, Label, TextInput } from 'flowbite-react';
-import { useState } from 'react';
+import { Button, Dropdown, Label, Select, TextInput } from 'flowbite-react';
+import { useEffect, useState } from 'react';
+import { province } from '../../../libs/province';
+import { fetcher } from '../../../utils/fetcher';
 
 const ProfileMain = () => {
   const [userData, setUserData] = useState({
@@ -11,6 +13,14 @@ const ProfileMain = () => {
     instance: '',
   });
   const [isChange, setIsChange] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetcher('/user');
+      setUserData(response.data);
+    };
+    fetchData();
+  }, []);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -61,41 +71,18 @@ const ProfileMain = () => {
           <div className='mb-2 block'>
             <Label htmlFor='province' value='Provinsi' />
           </div>
-          <Dropdown
-            label='province'
-            dismissOnClick={false}
-            renderTrigger={() => (
-              <TextInput
-                id='province'
-                value={userData.province}
-                type='text'
-                placeholder='Provinsi'
-                shadow
-                readOnly
-              />
-            )}
+          <Select
+            id='province'
+            required
+            value={userData.province}
+            onChange={handleChange}
           >
-            <Dropdown.Item
-              onClick={() => handleDropdownChange('province', 'Jawa Tengah')}
-            >
-              Jawa Tengah
-            </Dropdown.Item>
-            <Dropdown.Item
-              onClick={() => handleDropdownChange('province', 'Jawa Barat')}
-            >
-              Jawa Barat
-            </Dropdown.Item>
-            <Dropdown.Item
-              onClick={() => handleDropdownChange('province', 'Jawa Timur')}
-            >
-              Jawa Timur
-            </Dropdown.Item>
-            <Dropdown.Item
-              onClick={() => handleDropdownChange('province', 'Jawa Utara')}
-            >
-              Jawa Utara
-            </Dropdown.Item>
-          </Dropdown>
+            {province.map((item) => (
+              <option key={item.id} value={item.name}>
+                {item.name}
+              </option>
+            ))}
+          </Select>
         </div>
 
         <Button
@@ -125,36 +112,16 @@ const ProfileMain = () => {
           <div className='mb-2 block'>
             <Label htmlFor='gender' value='Jenis Kelamin' />
           </div>
-          <Dropdown
-            label='gender'
-            dismissOnClick={false}
-            renderTrigger={() => (
-              <TextInput
-                id='gender'
-                value={userData.gender}
-                type='text'
-                placeholder='Gender'
-                shadow
-                readOnly
-              />
-            )}
+          <Select
+            id='gender'
+            name='gender'
+            required
+            value={userData.gender}
+            onChange={handleChange}
           >
-            <Dropdown.Item
-              onClick={() => handleDropdownChange('gender', 'Laki-Laki')}
-            >
-              Laki-Laki
-            </Dropdown.Item>
-            <Dropdown.Item
-              onClick={() => handleDropdownChange('gender', 'Perempuan')}
-            >
-              Perempuan
-            </Dropdown.Item>
-            <Dropdown.Item
-              onClick={() => handleDropdownChange('gender', 'Helikopter')}
-            >
-              Helikopter
-            </Dropdown.Item>
-          </Dropdown>
+            <option value='male'>Laki Laki</option>
+            <option value='female'>Perempuan</option>
+          </Select>
         </div>
         <div>
           <div className='mb-2 block'>

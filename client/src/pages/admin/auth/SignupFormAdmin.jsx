@@ -2,10 +2,16 @@ import { Dropdown } from 'flowbite-react';
 import { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const SignupFormAdmin = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [form, setForm] = useState({ email: '', password: '', name: '' });
+  const [form, setForm] = useState({
+    email: '',
+    password: '',
+    name: '',
+    adminKey: '',
+  });
   const [type, setType] = useState('');
 
   const handleChange = (e) => {
@@ -16,8 +22,28 @@ const SignupFormAdmin = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const createAdmin = async () => {
+    if (type === 'admin') {
+      try {
+        const response = await axios.post('/api/admin/signup', {
+          name: form.name,
+          email: form.email,
+          password: form.password,
+          adminKey: form.adminKey,
+        });
+        console.log(response);
+      } catch (error) {
+        console.error('this error from signup admin', error);
+      }
+    }
+    if (type === 'questioner') {
+      console.log('type questioner');
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    await createAdmin();
     console.log('Form data:', form);
   };
 
@@ -154,9 +180,9 @@ const SignupFormAdmin = () => {
                 <div className='relative flex items-center'>
                   <input
                     type={showPassword ? 'text' : 'password'}
-                    name='password'
-                    id='password'
-                    value={form.password}
+                    name='adminKey'
+                    id='adminKey'
+                    value={form.adminKey}
                     onChange={handleChange}
                     placeholder='••••••••'
                     className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'

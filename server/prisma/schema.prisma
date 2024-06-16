@@ -10,34 +10,22 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 model User {
-  id            Int         @id @default(autoincrement())
-  name          String
-  email         String      @unique
+  id            Int @id @default(autoincrement())
+  email         String  @unique
   password      String
-  province      String
-  phone         String
-  gender        String
-  instance      String
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
+  profile       Profile?
   scores        Score[]
   balance       Balance?
   transactions  Transaction[]
   payments      Payment[]
-  paidLists PaidList[]
-}
-
-model PaidList {
-  id            Int @id @default(autoincrement())
-  userId        Int
-  tryoutListId  Int
-  user          User      @relation(fields: [userId], references: [id])
-  tryoutList    TryoutList @relation(fields: [tryoutListId], references: [id])
-  @@unique([userId, tryoutListId])
+  paidLists      PaidList[]
 }
 
 model Admin {
@@ -58,6 +46,29 @@ model Questioner {
   updatedAt     DateTime    @updatedAt
   tryoutLists   TryoutList[]
 }
+
+model Profile {
+  id            Int         @id @default(autoincrement())
+  userId        Int         @unique
+  name          String
+  province      String
+  phone         String
+  gender        Gender
+  instance      String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  user          User      @relation(fields: [userId], references: [id])
+}
+
+model PaidList {
+  id            Int @id @default(autoincrement())
+  userId        Int
+  tryoutListId  Int
+  user          User      @relation(fields: [userId], references: [id])
+  tryoutList    TryoutList @relation(fields: [tryoutListId], references: [id])
+  @@unique([userId, tryoutListId])
+}
+
 
 model TryoutList {
   id            Int         @id @default(autoincrement())
@@ -81,7 +92,11 @@ model Tryout {
   type           TryoutType
   number         Int
   question       String
-  answer         String
+  scoreA         Int
+  scoreB         Int
+  scoreC         Int
+  scoreD         Int
+  scoreE         Int
   explanation    String
   imageUrl       String?
   optionA        String
@@ -119,25 +134,54 @@ model Balance {
 }
 
 model Transaction {
-  id          Int @id @default(autoincrement())
+  id          Int         @id @default(autoincrement())
   userId      Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  user         User      @relation(fields: [userId], references: [id])
+  amount      BigInt
+  status      TransactionStatus     @default(unpaid)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  user        User        @relation(fields: [userId], references: [id])
 }
 
 model Payment {
   id              Int @id @default(autoincrement())
   userId          Int
   tryoutListId    Int
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
   user            User      @relation(fields: [userId], references: [id])
   tryoutList      TryoutList @relation(fields: [tryoutListId],references: [id])
+}
+
+model Information {
+  id          Int @id @default(autoincrement())
+  title       String
+  description String?
+  imageUrl    String?
+  type        InformationType
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 enum TryoutType {
   TIU
   TWK
   TKP
+}
+
+enum InformationType {
+  banner
+  info
+  news
+}
+
+enum TransactionStatus {
+  unpaid
+  checking
+  paid
+}
+
+enum Gender {
+  male
+  female
 }

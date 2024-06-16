@@ -23,7 +23,6 @@ const ProtectedRoute = ({ children }) => {
   if (!token) {
     return <Navigate to='/auth/signin' />;
   }
-  console.log({ token, expired });
   return children;
 };
 
