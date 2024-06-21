@@ -6,6 +6,8 @@ import {
   Textarea,
   TextInput,
 } from 'flowbite-react';
+import { fetchQuestioner } from '../../utils/fetchQuestioner';
+import { useParams } from 'react-router-dom';
 
 const TryoutEditor = () => {
   const [tryout, setTryout] = useState({
@@ -29,12 +31,55 @@ const TryoutEditor = () => {
   const [activeNumber, setActiveNumber] = useState(1);
   const [isSave, setIsSave] = useState(false);
 
+  const { id } = useParams();
+
   const handleType = (newType) => () => {
     setTryout((prevState) => ({
       ...prevState,
       type: newType,
     }));
   };
+
+  useEffect(() => {
+    const fetchSoal = async () => {
+      try {
+        const response = await fetchQuestioner.get(
+          `/tryout/${id}/${activeNumber}`
+        );
+        const { soal, totalSoal } = response.data;
+
+        const getNumbers = () => {
+          const result = [];
+          for (let i = 1; i <= totalSoal; i++) {
+            result.push(i);
+          }
+          return result;
+        };
+
+        setNumbers(getNumbers());
+        setTryout({
+          number: soal.number,
+          type: soal.type,
+          question: soal.question,
+          explanation: soal.explanation,
+          optionA: soal.optionA,
+          optionB: soal.optionB,
+          optionC: soal.optionC,
+          optionD: soal.optionD,
+          optionE: soal.optionE,
+          scoreA: soal.scoreA,
+          scoreB: soal.scoreB,
+          scoreC: soal.scoreC,
+          scoreD: soal.scoreD,
+          scoreE: soal.scoreE,
+        });
+      } catch (error) {
+        console.error('Error fetching soal:', error);
+      }
+    };
+
+    fetchSoal();
+  }, [id, activeNumber]);
 
   useEffect(() => {
     const originalTryout = {
@@ -94,8 +139,28 @@ const TryoutEditor = () => {
     });
   };
 
+  const createSoal = async () => {
+    const response = await fetchQuestioner.post(`/tryout-editor/${id}`, {
+      number: tryout.number,
+      question: tryout.question,
+      scoreA: tryout.scoreA,
+      scoreB: tryout.scoreB,
+      scoreC: tryout.scoreC,
+      scoreD: tryout.scoreD,
+      scoreE: tryout.scoreE,
+      explanation: tryout.explanation,
+      optionA: tryout.optionA,
+      optionB: tryout.optionB,
+      optionC: tryout.optionC,
+      optionD: tryout.optionD,
+      optionE: tryout.optionE,
+      type: tryout.type,
+    });
+    console.log('success', response);
+  };
+
   const handleSave = () => {
-    console.log(tryout);
+    createSoal();
   };
 
   const handleSaveAndNext = () => {
@@ -141,9 +206,9 @@ const TryoutEditor = () => {
               color={'success'}
               dismissOnClick={true}
             >
-              <Dropdown.Item onClick={handleType('TIU')}>TIU</Dropdown.Item>
-              <Dropdown.Item onClick={handleType('TWK')}>TWK</Dropdown.Item>
-              <Dropdown.Item onClick={handleType('TKP')}>TKP</Dropdown.Item>
+              <Dropdown.Item onClick={handleType('tiu')}>TIU</Dropdown.Item>
+              <Dropdown.Item onClick={handleType('twk')}>TWK</Dropdown.Item>
+              <Dropdown.Item onClick={handleType('tkp')}>TKP</Dropdown.Item>
             </Dropdown>
           </div>
           <div>

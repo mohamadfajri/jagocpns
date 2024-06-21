@@ -23,7 +23,6 @@ const AdminRoute = ({ children }) => {
   if (!token) {
     return <Navigate to='/admin/auth/signin' />;
   }
-  console.log({ token, expired });
   return children;
 };
 

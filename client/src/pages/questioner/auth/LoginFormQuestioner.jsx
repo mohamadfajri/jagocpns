@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useQuestioner } from '../../../stores/useQuestioner';
+import axios from 'axios';
 
 const LoginFormQuestioner = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,10 +19,17 @@ const LoginFormQuestioner = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const signIn = async () => {
+    const response = await axios.post('/api/questioner/signin', {
+      email: form.email,
+      password: form.password,
+    });
+    setToken(response.data.token);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form data:', form);
-    setToken('aezakmi');
+    await signIn();
     navigate('/questioner/dashboard');
   };
 

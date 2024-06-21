@@ -77,7 +77,7 @@ const App = () => {
         />
         <Route path='questioner/auth/signout' element={<SignOutQuestioner />} />
         <Route path='questioner/dashboard' element={<QuestionerDashboard />} />
-        <Route path='questioner/editor' element={<TryoutEditor />} />
+        <Route path='questioner/editor/:id' element={<TryoutEditor />} />
         <Route
           path='admin/*'
           element={

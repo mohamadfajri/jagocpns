@@ -1,36 +1,156 @@
 import {
   Button,
   Drawer,
+  FileInput,
+  Label,
   Modal,
   Pagination,
+  Select,
   Table,
+  Textarea,
   TextInput,
 } from 'flowbite-react';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { fetchAdmin } from '../../utils/fetchAdmin';
 
 const CrudTryoutList = () => {
+  const [form, setForm] = useState({
+    id: '',
+    title: '',
+    price: '',
+    description: '',
+    status: false,
+    image: null,
+  });
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const data = [
-    {
-      id: 1,
-      title: 'Apple MacBook Pro 17"',
-      price: 'Silver',
-      desc: 'Laptop',
-    },
-    {
-      id: 2,
-      title: 'Microsoft Surface Pro',
-      price: 'White',
-      desc: 'Laptop PC',
-    },
-  ];
+  const [data, setData] = useState([{}]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPage] = useState(1);
+  const [id, setId] = useState();
 
   const navigate = useNavigate();
 
-  const handleClose = () => setIsOpen(false);
+  const fetchData = async (p) => {
+    const page = p ? p : 1;
+    const response = await fetchAdmin(`/tryout?page=${page}`);
+    setData(response.data.data);
+    setTotalPage(response.data.meta.totalPages);
+  };
+
+  const fetchSingle = async (id) => {
+    const response = await fetchAdmin(`tryout/${id}`);
+    setForm({
+      id: response.data.id,
+      title: response.data.title,
+      price: parseInt(response.data.price),
+      description: response.data.description,
+      status: response.data.status,
+      image: null,
+    });
+  };
+
+  const handleOpen = () => {
+    setForm({
+      title: '',
+      price: '',
+      description: '',
+      status: false,
+      image: null,
+    });
+    setIsOpen(true);
+  };
+
+  const updateData = async (e) => {
+    e.preventDefault();
+
+    try {
+      await fetchAdmin.patch(
+        `/tryout/${form.id}`,
+        {
+          title: form.title,
+          price: form.price,
+          description: form.description,
+          image: form.image,
+          status: form.status,
+        },
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+      await fetchData();
+      setIsOpenEdit(false);
+    } catch (error) {
+      console.error('Error updating data:', error);
+      // Optionally, you can add further error handling here, such as showing an error message to the user
+    }
+  };
+
+  useEffect(() => {
+    fetchData(page);
+  }, [page]);
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setForm({ ...form, [id]: value });
+  };
+
+  const handleFile = (e) => {
+    const file = e.target.files[0];
+    console.log(file);
+
+    setForm((prevForm) => ({
+      ...prevForm,
+      image: file,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetchAdmin.post(
+        '/tryout',
+        {
+          title: form.title,
+          price: form.price,
+          description: form.description,
+          image: form.image,
+          status: form.status,
+        },
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+      console.log('Form submitted successfully:', response.data);
+      setForm({
+        title: '',
+        price: '',
+        description: '',
+        status: false,
+        image: null,
+      });
+      await fetchData();
+      setIsOpen(false);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
+  };
+  const deleteData = async (id) => {
+    await fetchAdmin.delete(`/tryout/${id}`);
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+    setIsOpenEdit(false);
+  };
 
   return (
     <div className='py-4 ml-64 dark:bg-black min-h-screen'>
@@ -47,7 +167,7 @@ const CrudTryoutList = () => {
           />
         </div>
         <div className='max-w-md ml-8'>
-          <Button onClick={() => setIsOpen(true)} color={'blue'} size={'sm'}>
+          <Button onClick={handleOpen} color={'blue'} size={'sm'}>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 24 24'
@@ -70,6 +190,7 @@ const CrudTryoutList = () => {
             <Table.HeadCell>Title</Table.HeadCell>
             <Table.HeadCell>Price</Table.HeadCell>
             <Table.HeadCell>Desc</Table.HeadCell>
+            <Table.HeadCell>Status</Table.HeadCell>
             <Table.HeadCell>Action</Table.HeadCell>
           </Table.Head>
           <Table.Body className='divide-y'>
@@ -82,7 +203,12 @@ const CrudTryoutList = () => {
                   {item.title}
                 </Table.Cell>
                 <Table.Cell>{item.price}</Table.Cell>
-                <Table.Cell>{item.desc}</Table.Cell>
+                <Table.Cell>{item.description}</Table.Cell>
+                {item.status === true ? (
+                  <Table.Cell className='text-green-500'>Online</Table.Cell>
+                ) : (
+                  <Table.Cell className='text-red-500'>Not Online</Table.Cell>
+                )}
                 <Table.Cell>
                   <ul className='flex space-x-2'>
                     <li>
@@ -109,7 +235,11 @@ const CrudTryoutList = () => {
                     </li>
                     <li>
                       <Button
-                        onClick={() => setIsOpen(true)}
+                        onClick={async () => {
+                          setIsOpenEdit(true);
+                          await fetchSingle(item.id);
+                          console.log(form.status);
+                        }}
                         color={'blue'}
                         size={'xs'}
                       >
@@ -131,7 +261,10 @@ const CrudTryoutList = () => {
                     </li>
                     <li>
                       <Button
-                        onClick={() => setOpenModal(true)}
+                        onClick={() => {
+                          setOpenModal(true);
+                          setId(item.id);
+                        }}
                         color={'failure'}
                         size={'xs'}
                       >
@@ -156,20 +289,157 @@ const CrudTryoutList = () => {
           </Table.Body>
         </Table>
       </div>
-      <div className='flex overflow-x-auto sm:justify-center mt-8'>
+      <div className='flex overflow-x-auto sm:justify-center mt-2'>
         <Pagination
-          currentPage={1}
-          totalPages={100}
-          onPageChange={() => {
-            console.log('changed');
+          currentPage={page}
+          totalPages={totalPages}
+          onPageChange={(p) => {
+            setPage(p);
           }}
           showIcons
         />
       </div>
+
+      {/* create tryout */}
       <Drawer open={isOpen} onClose={handleClose} position='right'>
-        <Drawer.Header title='Drawer' />
-        <Drawer.Items></Drawer.Items>
+        <Drawer.Header title='Create Tryout' />
+        <Drawer.Items>
+          <form onSubmit={handleSubmit}>
+            <div className='flex max-w-md flex-col gap-4'>
+              <div>
+                <div className='mb-2 block'>
+                  <Label htmlFor='title' value='Judul' />
+                </div>
+                <TextInput
+                  id='title'
+                  type='text'
+                  sizing='sm'
+                  value={form.title}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <div className='mb-2 block'>
+                  <Label htmlFor='price' value='Harga' />
+                </div>
+                <TextInput
+                  id='price'
+                  type='text'
+                  sizing='sm'
+                  value={form.price}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <div className='mb-2 block'>
+                  <Label htmlFor='description' value='Deskripsi' />
+                </div>
+                <Textarea
+                  id='description'
+                  required
+                  rows={4}
+                  value={form.description}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <div className='mb-2 block'>
+                  <Label htmlFor='image' value='Gambar' />
+                </div>
+                <FileInput
+                  size={'sm'}
+                  type='file'
+                  id='image'
+                  onChange={handleFile}
+                />
+              </div>
+              <div>
+                <div className='mb-2 block'>
+                  <Button type='submit' color={'success'}>
+                    Submit
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </Drawer.Items>
       </Drawer>
+
+      {/* edit tryout */}
+      <Drawer open={isOpenEdit} onClose={handleClose} position='right'>
+        <Drawer.Header title='Edit Tryout' />
+        <Drawer.Items>
+          <form onSubmit={updateData}>
+            <div className='flex max-w-md flex-col gap-4'>
+              <Select
+                onChange={handleChange}
+                value={form.status}
+                id='status'
+                required
+              >
+                <option value='true'>Online</option>
+                <option value='false'>Not Online</option>
+              </Select>
+
+              <div>
+                <div className='mb-2 block'>
+                  <Label htmlFor='title' value='Judul' />
+                </div>
+                <TextInput
+                  id='title'
+                  type='text'
+                  sizing='sm'
+                  value={form.title}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <div className='mb-2 block'>
+                  <Label htmlFor='price' value='Harga' />
+                </div>
+                <TextInput
+                  id='price'
+                  type='text'
+                  sizing='sm'
+                  value={form.price}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <div className='mb-2 block'>
+                  <Label htmlFor='description' value='Deskripsi' />
+                </div>
+                <Textarea
+                  id='description'
+                  required
+                  rows={4}
+                  value={form.description}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <div className='mb-2 block'>
+                  <Label htmlFor='image' value='Gambar' />
+                </div>
+                <FileInput
+                  size={'sm'}
+                  type='file'
+                  id='image'
+                  onChange={handleFile}
+                />
+              </div>
+              <div>
+                <div className='mb-2 block'>
+                  <Button type='submit' color={'success'}>
+                    Submit
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </Drawer.Items>
+      </Drawer>
+
       <Modal
         show={openModal}
         size='md'
@@ -184,7 +454,14 @@ const CrudTryoutList = () => {
               Are you sure you want to delete this item?
             </h3>
             <div className='flex justify-center gap-4'>
-              <Button color={'failure'} onClick={() => setOpenModal(false)}>
+              <Button
+                color={'failure'}
+                onClick={async () => {
+                  setOpenModal(false);
+                  await deleteData(id);
+                  await fetchData();
+                }}
+              >
                 Yes, Im sure
               </Button>
               <Button color={'gray'} onClick={() => setOpenModal(false)}>

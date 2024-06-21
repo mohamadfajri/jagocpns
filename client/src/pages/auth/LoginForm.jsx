@@ -4,11 +4,13 @@ import logo from '../../assets/images/logo-extend.png';
 import { Link } from 'react-router-dom';
 import useAuth from '../../stores/useAuth';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { fetcher } from '../../utils/fetcher';
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({ email: '', password: '' });
-  const { setToken } = useAuth();
+  const { setToken, setProfile } = useAuth();
 
   const navigate = useNavigate();
 
@@ -20,10 +22,30 @@ const LoginForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const signIn = async () => {
+    try {
+      const response = await axios.post('/api/user/signin', {
+        email: form.email,
+        password: form.password,
+      });
+      setToken(response.data.token);
+    } catch (error) {
+      console.error('Error signing in:', error);
+      // Optionally, handle the error in the UI or provide feedback to the user
+      // For example: setError('Sign in failed. Please try again.');
+    }
+  };
+
+  const getProfile = async () => {
+    const response = await fetcher.get('/user');
+    setProfile({ profile: response.data });
+    console.log(response.data);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form data:', form);
-    setToken('aezakmi');
+    await signIn();
+    await getProfile();
     navigate('/app/dashboard');
   };
 

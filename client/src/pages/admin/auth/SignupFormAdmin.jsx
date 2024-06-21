@@ -37,7 +37,17 @@ const SignupFormAdmin = () => {
       }
     }
     if (type === 'questioner') {
-      console.log('type questioner');
+      try {
+        const response = await axios.post('/api/questioner/signup', {
+          name: form.name,
+          email: form.email,
+          password: form.password,
+          adminKey: form.adminKey,
+        });
+        console.log(response);
+      } catch (error) {
+        console.error('this error from signup admin', error);
+      }
     }
   };
 

@@ -44,7 +44,6 @@ model Questioner {
   password      String
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
-  tryoutLists   TryoutList[]
 }
 
 model Profile {
@@ -76,20 +75,19 @@ model TryoutList {
   price         BigInt
   imageUrl      String
   description   String
-  questionerId  Int
+  status        Boolean @default(false)
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
   tryouts       Tryout[]
   scores        Score[]
   payments      Payment[]
-  questioner    Questioner  @relation(fields: [questionerId], references: [id])
   paidLists PaidList[]
 }
 
 model Tryout {
   id             Int         @id @default(autoincrement())
   tryoutListId   Int
-  type           TryoutType
+  type           String
   number         Int
   question       String
   scoreA         Int
@@ -163,10 +161,8 @@ model Information {
   updatedAt   DateTime @updatedAt
 }
 
-enum TryoutType {
-  TIU
-  TWK
-  TKP
+model Answer {
+  id Int  @id @default(autoincrement())
 }
 
 enum InformationType {
