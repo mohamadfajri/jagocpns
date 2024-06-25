@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import useAuth from '../../stores/useAuth';
+import image from '../../assets/hero.png';
 
 const HeroSection = () => {
   const { token } = useAuth();
@@ -40,10 +41,7 @@ const HeroSection = () => {
           )}
         </div>
         <div className='my-6 sm:my-0 lg:mt-0 lg:col-span-5 lg:flex'>
-          <img
-            src='https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/phone-mockup.png'
-            alt='mockup'
-          />
+          <img src={image} alt='mockup' />
         </div>
       </div>
     </section>
