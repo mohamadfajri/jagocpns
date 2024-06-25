@@ -4,7 +4,7 @@ const questionerOnly = (req, res, next) => {
   const token = req.headers['authorization'];
 
   if (token) {
-    jwt.verify(token.split(' ')[1], 'secret', (err, user) => {
+    jwt.verify(token.split(' ')[1], process.env.SECRET, (err, user) => {
       if (err) {
         return res.sendStatus(403);
       }
