@@ -13,7 +13,7 @@ const createTryout = async (req, res) => {
       data: {
         title,
         price: BigInt(price),
-        imageUrl: `/uploads/${image.filename}`,
+        imageUrl: req.fileURL,
         description,
       },
     });
@@ -103,7 +103,7 @@ const updateTryout = async (req, res) => {
     };
 
     if (image) {
-      updatedData.imageUrl = `/uploads/${image.filename}`;
+      updatedData.imageUrl = req.fileURL;
     }
 
     const updatedTryout = await prisma.tryoutList.update({
