@@ -21,7 +21,9 @@ const TableRank = () => {
   useEffect(() => {
     const getData = async () => {
       const response = await axios.get(
-        `/api/public/rank?page=${page}&tryoutListId=${active}`
+        `${
+          import.meta.env.VITE_API_URL
+        }/api/public/rank?page=${page}&tryoutListId=${active}`
       );
       const fResponse = response.data.data.map((item) => ({
         name: item.name,
@@ -49,7 +51,9 @@ const TableRank = () => {
     event.preventDefault();
 
     const response = await axios.get(
-      `/api/public/rank?page=${page}&tryoutListId=${active}&name=${searchTerm}`
+      `${
+        import.meta.env.VITE_API_URL
+      }/api/public/rank?page=${page}&tryoutListId=${active}&name=${searchTerm}`
     );
 
     const fResponse = response.data.data.map((item) => ({

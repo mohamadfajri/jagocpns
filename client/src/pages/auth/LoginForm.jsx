@@ -27,10 +27,13 @@ const LoginForm = () => {
 
   const signIn = async () => {
     try {
-      const response = await axios.post('/api/user/signin', {
-        email: form.email,
-        password: form.password,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/user/signin`,
+        {
+          email: form.email,
+          password: form.password,
+        }
+      );
       setToken(response.data.token);
       setAlert({ title: 'Info!', message: 'Login Berhasil', color: 'success' });
       setStatus(true);

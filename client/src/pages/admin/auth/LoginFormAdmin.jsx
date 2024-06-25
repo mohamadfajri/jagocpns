@@ -22,10 +22,13 @@ const LoginFormAdmin = () => {
 
   const siginIn = async () => {
     try {
-      const response = await axios.post('/api/admin/signin', {
-        email: form.email,
-        password: form.password,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/admin/signin`,
+        {
+          email: form.email,
+          password: form.password,
+        }
+      );
       setToken(response.data.token);
     } catch (error) {
       console.error('this error coming from sign in adminn', error);

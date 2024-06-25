@@ -35,10 +35,13 @@ const SignupForm = () => {
 
   const signUp = async () => {
     try {
-      const response = await axios.post('/api/user/signup', {
-        email: form.email,
-        password: form.password,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/user/signup`,
+        {
+          email: form.email,
+          password: form.password,
+        }
+      );
       console.log('Sign-up successful:', response);
     } catch (error) {
       if (error.response) {
@@ -56,10 +59,13 @@ const SignupForm = () => {
 
   const signIn = async () => {
     try {
-      const response = await axios.post('/api/user/signin', {
-        email: form.email,
-        password: form.password,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/user/signin`,
+        {
+          email: form.email,
+          password: form.password,
+        }
+      );
       setToken(response.data.token);
     } catch (error) {
       console.error('this error on signing in', error);

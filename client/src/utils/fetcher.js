@@ -2,7 +2,7 @@ import axios from 'axios';
 import useAuth from '../stores/useAuth';
 
 const fetcher = axios.create({
-  baseURL: '/api',
+  baseURL: 'https://api.jagocpns.id/api',
 });
 
 fetcher.interceptors.request.use(

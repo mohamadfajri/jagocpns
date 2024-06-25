@@ -25,12 +25,15 @@ const SignupFormAdmin = () => {
   const createAdmin = async () => {
     if (type === 'admin') {
       try {
-        const response = await axios.post('/api/admin/signup', {
-          name: form.name,
-          email: form.email,
-          password: form.password,
-          adminKey: form.adminKey,
-        });
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/api/admin/signup`,
+          {
+            name: form.name,
+            email: form.email,
+            password: form.password,
+            adminKey: form.adminKey,
+          }
+        );
         console.log(response);
       } catch (error) {
         console.error('this error from signup admin', error);
@@ -38,12 +41,15 @@ const SignupFormAdmin = () => {
     }
     if (type === 'questioner') {
       try {
-        const response = await axios.post('/api/questioner/signup', {
-          name: form.name,
-          email: form.email,
-          password: form.password,
-          adminKey: form.adminKey,
-        });
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/api/questioner/signup`,
+          {
+            name: form.name,
+            email: form.email,
+            password: form.password,
+            adminKey: form.adminKey,
+          }
+        );
         console.log(response);
       } catch (error) {
         console.error('this error from signup admin', error);
