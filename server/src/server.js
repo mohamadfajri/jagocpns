@@ -5,7 +5,6 @@ const questionerRoutes = require('./routes/questioner');
 const publicRoutes = require('./routes/public');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
-const upload = require('./utils/multer');
 
 const app = express();
 const port = process.env.PORT;

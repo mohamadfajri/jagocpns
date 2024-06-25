@@ -30,7 +30,7 @@ const upload = async (req, res, next) => {
 
   const { data, error } = await supabase.storage
     .from('images')
-    .upload(`public/${dateTime}`, file.data, {
+    .upload(`public`, file.data, {
       cacheControl: '3600',
       upsert: false,
     });
@@ -39,7 +39,7 @@ const upload = async (req, res, next) => {
     return res.status(500).send(error.message);
   }
 
-  req.fileURL = `${SUPABASE_URL}/storage/v1/object/public/${data.path}`;
+  req.fileURL = `${SUPABASE_URL}/storage/v1/object/public/${dateTime}`;
   next();
 };
 
