@@ -11,11 +11,6 @@ const upload = async (req, res, next) => {
 
   const file = req.files.file;
 
-  const acceptType = ['image/png', 'image/jpg', 'image/jpeg'];
-  if (!acceptType.includes(file.mimetype)) {
-    return res.status(400).send('Invalid file type.');
-  }
-
   const formatDateTime = () => {
     const now = new Date();
     const year = now.getFullYear();
