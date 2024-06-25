@@ -5,11 +5,11 @@ const SUPABASE_KEY = process.env.SUPABASE_KEY;
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const upload = async (req, res, next) => {
-  if (!req.file) {
+  if (!req.image) {
     return res.status(400).send('No files were uploaded.');
   }
 
-  const file = req.file;
+  const file = req.image;
 
   const formatDateTime = () => {
     const now = new Date();
