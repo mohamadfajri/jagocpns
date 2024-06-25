@@ -4,6 +4,7 @@ const adminRoutes = require('./routes/admin');
 const questionerRoutes = require('./routes/questioner');
 const publicRoutes = require('./routes/public');
 const path = require('path');
+const cors = require('cors');
 
 const upload = require('./utils/multer');
 
@@ -18,6 +19,12 @@ app.use((err, req, res, next) => {
   }
   next();
 });
+
+const corsOptions = {
+  origin: 'https://jagocpns.id',
+};
+
+app.use(cors(corsOptions));
 
 app.use('/api', userRoutes);
 app.use('/api', adminRoutes);
