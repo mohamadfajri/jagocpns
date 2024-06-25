@@ -13,4 +13,41 @@ const counterUser = async (req, res) => {
   }
 };
 
-module.exports = { counterUser };
+const createOwnerr = async (req, res) => {
+  const { tryoutListId, userId } = req.body;
+
+  try {
+    // Cek apakah user sudah memiliki ownership untuk tryoutList ini
+    const existingOwnership = await prisma.ownership.findFirst({
+      where: {
+        userId: userId,
+        tryoutListId: parseInt(tryoutListId),
+      },
+    });
+
+    if (existingOwnership) {
+      return res
+        .status(400)
+        .json({ message: 'Anda sudah memiliki ownership untuk tryout ini' });
+    }
+
+    // Tambahkan ownership baru
+    const newOwnership = await prisma.ownership.create({
+      data: {
+        userId: userId,
+        tryoutListId: parseInt(tryoutListId),
+      },
+    });
+
+    res.status(201).json({
+      message: 'Ownership berhasil ditambahkan',
+      ownership: newOwnership,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: 'Gagal menambahkan ownership', error: error.message });
+  }
+};
+
+module.exports = { counterUser, createOwnerr };

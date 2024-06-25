@@ -6,11 +6,14 @@ import useAuth from '../../stores/useAuth';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { fetcher } from '../../utils/fetcher';
+import { useAlert } from '../../stores/useAlert';
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({ email: '', password: '' });
   const { setToken, setProfile } = useAuth();
+
+  const { setAlert, setStatus } = useAlert();
 
   const navigate = useNavigate();
 
@@ -29,10 +32,15 @@ const LoginForm = () => {
         password: form.password,
       });
       setToken(response.data.token);
+      setAlert({ title: 'Info!', message: 'Login Berhasil', color: 'success' });
+      setStatus(true);
     } catch (error) {
-      console.error('Error signing in:', error);
-      // Optionally, handle the error in the UI or provide feedback to the user
-      // For example: setError('Sign in failed. Please try again.');
+      setAlert({
+        title: 'Error!',
+        message: `${error.response.data.message}`,
+        color: 'failure',
+      });
+      setStatus(true);
     }
   };
 

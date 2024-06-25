@@ -59,7 +59,7 @@ const BuyTryOut = () => {
       <section>
         <div className='m-4 p-4 border rounded-lg'>
           <h1 className='text-2xl'>Beli Tryout</h1>
-          {tryouts ? (
+          {!tryouts ? (
             <div className='rounded-lg p-4 my-2 border grid grid-cols-5 gap-4'>
               {tryouts?.map((tryout) => (
                 <TryoutCard

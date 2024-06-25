@@ -1,34 +1,58 @@
-import { Dropdown } from 'flowbite-react';
-import { useState } from 'react';
+import { Select } from 'flowbite-react';
+import { useEffect, useState } from 'react';
 import { useRank } from '../../../stores/useRank';
-const dropdowns = [
-  { id: 1, title: 'Tryout 1' },
-  { id: 2, title: 'Tryout 2' },
-  { id: 3, title: 'Tryout 3' },
-  { id: 4, title: 'Tryout 4' },
-];
+import { fetcher } from '../../../utils/fetcher';
+
 const DropdownRank = () => {
   const [active, setActive] = useState();
-  const { set } = useRank();
+  const { setActive: setId } = useRank();
+  const [dropdowns, setDropdowns] = useState([]);
+
+  useEffect(() => {
+    const getList = async () => {
+      try {
+        const response = await fetcher.get('/user/getTryoutList');
+        const list = response.data.data.map((item) => ({
+          id: item.id,
+          title: item.title,
+        }));
+        setDropdowns(list);
+      } catch (error) {
+        console.error('Error fetching tryout list:', error);
+      }
+    };
+
+    getList();
+  }, []);
+
+  const handleSelectChange = (event) => {
+    const selectedId = event.target.value;
+    const selectedItem = dropdowns.find(
+      (item) => item.id === parseInt(selectedId)
+    );
+    if (selectedItem) {
+      setActive(selectedItem.title);
+      setId(selectedItem.id);
+    }
+  };
+
   return (
-    <Dropdown
-      color={'blue'}
-      label={!active ? 'Pilih Tryout' : active}
-      dismissOnClick={true}
-    >
-      {dropdowns.map((item) => (
-        <Dropdown.Item
-          as='button'
-          key={item.id}
-          onClick={() => {
-            setActive(item.title);
-            set(item.id);
-          }}
-        >
-          {item.title}
-        </Dropdown.Item>
-      ))}
-    </Dropdown>
+    <div>
+      <Select
+        color={'blue'}
+        value={!active ? '' : active}
+        onChange={handleSelectChange}
+      >
+        <option value='' disabled>
+          Pilih Tryout
+        </option>
+        {dropdowns.map((item) => (
+          <option key={item.id} value={item.id}>
+            {item.title}
+          </option>
+        ))}
+      </Select>
+    </div>
   );
 };
 

@@ -1,103 +1,120 @@
-import { Table } from 'flowbite-react';
+import { Button, Table, TextInput } from 'flowbite-react';
+import { useRank } from '../../../stores/useRank';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const TableRank = () => {
+  const { active, page, setTotalPage } = useRank();
+  const [data, setData] = useState([
+    {
+      name: '',
+      rank: '',
+      province: '',
+      twk: '',
+      tiu: '',
+      tkp: '',
+      total: '',
+      status: '',
+    },
+  ]);
+
+  useEffect(() => {
+    const getData = async () => {
+      const response = await axios.get(
+        `/api/public/rank?page=${page}&tryoutListId=${active}`
+      );
+      const fResponse = response.data.data.map((item) => ({
+        name: item.name,
+        rank: item.rank,
+        province: item.province,
+        twk: item.twk,
+        tiu: item.tiu,
+        tkp: item.tkp,
+        total: item.total,
+        status: item.status,
+      }));
+      setData(fResponse);
+      setTotalPage(response.data.totalPages);
+    };
+    getData();
+  }, [active, page, setTotalPage]);
+
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleInputChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    const response = await axios.get(
+      `/api/public/rank?page=${page}&tryoutListId=${active}&name=${searchTerm}`
+    );
+
+    const fResponse = response.data.data.map((item) => ({
+      name: item.name,
+      rank: item.rank,
+      province: item.province,
+      twk: item.twk,
+      tiu: item.tiu,
+      tkp: item.tkp,
+      total: item.total,
+      status: item.status,
+    }));
+    setData(fResponse);
+  };
   return (
-    <div className='overflow-x-auto'>
-      <Table striped>
-        <Table.Head>
-          <Table.HeadCell>Rank</Table.HeadCell>
-          <Table.HeadCell>Nama</Table.HeadCell>
-          <Table.HeadCell>Provinsi</Table.HeadCell>
-          <Table.HeadCell>TWK</Table.HeadCell>
-          <Table.HeadCell>TIU</Table.HeadCell>
-          <Table.HeadCell>TKP</Table.HeadCell>
-          <Table.HeadCell>Total</Table.HeadCell>
-          <Table.HeadCell>Keterangan</Table.HeadCell>
-        </Table.Head>
-        <Table.Body className='divide-y'>
-          <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800'>
-            <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
-              {'Apple MacBook Pro 17"'}
-            </Table.Cell>
-            <Table.Cell>Sliver</Table.Cell>
-            <Table.Cell>Laptop</Table.Cell>
-            <Table.Cell>$2999</Table.Cell>
-            <Table.Cell>
-              <a
-                href='#'
-                className='font-medium text-cyan-600 hover:underline dark:text-cyan-500'
+    <>
+      <div className='w-fit mb-4'>
+        <form className='flex space-x-2' onSubmit={handleFormSubmit}>
+          <TextInput
+            id='search'
+            type='text'
+            sizing='md'
+            placeholder='Masukan Pencarian'
+            value={searchTerm}
+            onChange={handleInputChange}
+          />
+          <Button color={'success'} type='submit'>
+            Search
+          </Button>
+        </form>
+      </div>
+      <div className='overflow-x-auto'>
+        <Table>
+          <Table.Head>
+            <Table.HeadCell>Rank</Table.HeadCell>
+            <Table.HeadCell>Nama</Table.HeadCell>
+            <Table.HeadCell>Provinsi</Table.HeadCell>
+            <Table.HeadCell>TWK</Table.HeadCell>
+            <Table.HeadCell>TIU</Table.HeadCell>
+            <Table.HeadCell>TKP</Table.HeadCell>
+            <Table.HeadCell>Total</Table.HeadCell>
+            <Table.HeadCell>Keterangan</Table.HeadCell>
+          </Table.Head>
+          <Table.Body className='divide-y'>
+            {data.map((item, index) => (
+              <Table.Row
+                key={index}
+                className={`${
+                  item.status === 'Lulus' ? 'bg-white' : 'bg-red-500 text-white'
+                } dark:border-gray-700 dark:bg-gray-800`}
               >
-                Edit
-              </a>
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800'>
-            <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
-              Microsoft Surface Pro
-            </Table.Cell>
-            <Table.Cell>White</Table.Cell>
-            <Table.Cell>Laptop PC</Table.Cell>
-            <Table.Cell>$1999</Table.Cell>
-            <Table.Cell>
-              <a
-                href='#'
-                className='font-medium text-cyan-600 hover:underline dark:text-cyan-500'
-              >
-                Edit
-              </a>
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800'>
-            <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
-              Magic Mouse 2
-            </Table.Cell>
-            <Table.Cell>Black</Table.Cell>
-            <Table.Cell>Accessories</Table.Cell>
-            <Table.Cell>$99</Table.Cell>
-            <Table.Cell>
-              <a
-                href='#'
-                className='font-medium text-cyan-600 hover:underline dark:text-cyan-500'
-              >
-                Edit
-              </a>
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800'>
-            <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
-              Google Pixel Phone
-            </Table.Cell>
-            <Table.Cell>Gray</Table.Cell>
-            <Table.Cell>Phone</Table.Cell>
-            <Table.Cell>$799</Table.Cell>
-            <Table.Cell>
-              <a
-                href='#'
-                className='font-medium text-cyan-600 hover:underline dark:text-cyan-500'
-              >
-                Edit
-              </a>
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800'>
-            <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
-              Apple Watch 5
-            </Table.Cell>
-            <Table.Cell>Red</Table.Cell>
-            <Table.Cell>Wearables</Table.Cell>
-            <Table.Cell>$999</Table.Cell>
-            <Table.Cell>
-              <a
-                href='#'
-                className='font-medium text-cyan-600 hover:underline dark:text-cyan-500'
-              >
-                Edit
-              </a>
-            </Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table>
-    </div>
+                <Table.Cell>{item.rank}</Table.Cell>
+                <Table.Cell>{item.name}</Table.Cell>
+                <Table.Cell>{item.province}</Table.Cell>
+                <Table.Cell>{item.twk}</Table.Cell>
+                <Table.Cell>{item.tiu}</Table.Cell>
+                <Table.Cell>{item.tkp}</Table.Cell>
+                <Table.Cell>{item.total}</Table.Cell>
+                <Table.Cell>{item.status}</Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table>
+      </div>
+    </>
   );
 };
 

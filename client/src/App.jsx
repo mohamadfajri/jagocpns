@@ -11,7 +11,6 @@ import ToDashboard from './pages/ToDashboard';
 import NotFound from './pages/NotFound';
 import ScoreModal from './components/app/MyTryout/ScoreModal';
 import TryoutModal from './components/app/MyTryout/TryoutModal';
-import StartTryout from './pages/StartTryout';
 import RankingPage from './pages/RankingPage';
 import TopupTab from './components/app/Topup/TopupTab';
 import InformationPage from './pages/InformationPage';
@@ -36,11 +35,14 @@ import QuestionerDashboard from './pages/questioner/QuestionerDashboard';
 import TryoutEditor from './pages/questioner/TryoutEditor';
 import ShowTryout from './pages/admin/ShowTryout';
 import FillProfile from './pages/auth/FillProfile';
+import TryoutCbt from './pages/TryoutCbt';
+import AlertNotif from './components/Alert';
 
 const App = () => {
   return (
     <>
       {/* <DarkToggle /> */}
+      <AlertNotif />
       <Routes>
         <Route path='*' element={<NotFound />} />
         <Route path='/' element={<Navbar />}>
@@ -92,7 +94,7 @@ const App = () => {
           <Route path='topup-manager/' element={<TopupManager />} />
           <Route path='crud/tryout/:id' element={<ShowTryout />} />
         </Route>
-        <Route path='start-tryout/:id' element={<StartTryout />} />
+        <Route path='start-tryout/:id' element={<TryoutCbt />} />
         <Route path='review/:id' element={<TryoutReview />} />
         <Route path='auth/signin' element={<LoginForm />} />
         <Route path='auth/signup' element={<SignupForm />} />
