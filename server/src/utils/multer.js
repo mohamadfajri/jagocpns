@@ -5,11 +5,11 @@ const SUPABASE_KEY = process.env.SUPABASE_KEY;
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const upload = async (req, res, next) => {
-  if (!req.files || Object.keys(req.files).length === 0) {
+  if (!req.file) {
     return res.status(400).send('No files were uploaded.');
   }
 
-  const file = req.files.file;
+  const file = req.file;
 
   const formatDateTime = () => {
     const now = new Date();
@@ -25,10 +25,7 @@ const upload = async (req, res, next) => {
 
   const { data, error } = await supabase.storage
     .from('images')
-    .upload(`public`, file.data, {
-      cacheControl: '3600',
-      upsert: false,
-    });
+    .upload(`public`, file);
 
   if (error) {
     console.log(error);
