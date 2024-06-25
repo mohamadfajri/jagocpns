@@ -19,7 +19,7 @@ app.use((err, req, res, next) => {
 });
 
 const corsOptions = {
-  origin: 'https://jagocpns.id',
+  origin: ['https://jagocpns.id', 'http://localhost:5173'],
 };
 
 app.use(cors(corsOptions));

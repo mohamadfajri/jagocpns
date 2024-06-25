@@ -2,11 +2,6 @@ const prisma = require('../../utils/prismaClient');
 
 const createTryout = async (req, res) => {
   const { title, price, description } = req.body;
-  const image = req.file;
-
-  if (!image) {
-    return res.status(400).json({ error: 'Image is required' });
-  }
 
   try {
     await prisma.tryoutList.create({

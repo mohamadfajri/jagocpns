@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom';
 
 const TryoutEditor = () => {
   const [tryout, setTryout] = useState({
+    image: null,
     number: '',
     type: '',
     question: '',
@@ -39,6 +40,15 @@ const TryoutEditor = () => {
       type: newType,
     }));
   };
+
+  useEffect(() => {
+    const setType = () => {
+      if (activeNumber <= 30) {
+        setTryout((prev) => ({ ...prev, type: 'tiu' }));
+      }
+    };
+    setType();
+  }, [activeNumber]);
 
   useEffect(() => {
     const fetchSoal = async () => {
@@ -140,23 +150,40 @@ const TryoutEditor = () => {
   };
 
   const createSoal = async () => {
-    const response = await fetchQuestioner.post(`/tryout-editor/${id}`, {
-      number: tryout.number,
-      question: tryout.question,
-      scoreA: tryout.scoreA,
-      scoreB: tryout.scoreB,
-      scoreC: tryout.scoreC,
-      scoreD: tryout.scoreD,
-      scoreE: tryout.scoreE,
-      explanation: tryout.explanation,
-      optionA: tryout.optionA,
-      optionB: tryout.optionB,
-      optionC: tryout.optionC,
-      optionD: tryout.optionD,
-      optionE: tryout.optionE,
-      type: tryout.type,
-    });
+    const response = await fetchQuestioner.post(
+      `/tryout-editor/${id}`,
+      {
+        number: tryout.number,
+        question: tryout.question,
+        scoreA: tryout.scoreA,
+        scoreB: tryout.scoreB,
+        scoreC: tryout.scoreC,
+        scoreD: tryout.scoreD,
+        scoreE: tryout.scoreE,
+        explanation: tryout.explanation,
+        optionA: tryout.optionA,
+        optionB: tryout.optionB,
+        optionC: tryout.optionC,
+        optionD: tryout.optionD,
+        optionE: tryout.optionE,
+        type: tryout.type,
+        image: tryout.image,
+      },
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
     console.log('success', response);
+  };
+  const handleFile = (e) => {
+    const file = e.target.files[0];
+
+    setTryout((prevForm) => ({
+      ...prevForm,
+      image: file,
+    }));
   };
 
   const handleSave = () => {
@@ -221,7 +248,7 @@ const TryoutEditor = () => {
             />
           </div>
           <div>
-            <FileInput id='imageUrl' />
+            <FileInput id='image' onChange={handleFile} />
           </div>
           <div>
             <ul className='space-y-2'>

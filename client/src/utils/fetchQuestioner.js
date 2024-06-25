@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useQuestioner } from '../stores/useQuestioner';
 
 const fetchQuestioner = axios.create({
-  baseURL: 'https://jagocpns.id/api',
+  baseURL: `${import.meta.env.VITE_API_URL}/api`,
 });
 
 fetchQuestioner.interceptors.request.use(

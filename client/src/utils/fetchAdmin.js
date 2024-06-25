@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useAdmin } from '../stores/useAdmin';
 
 const fetchAdmin = axios.create({
-  baseURL: 'https://api.jagocpns.id/api/admin',
+  baseURL: `${import.meta.env.VITE_API_URL}/api/admin`,
 });
 
 fetchAdmin.interceptors.request.use(

@@ -19,13 +19,11 @@ const createSoal = async (req, res) => {
     optionE,
   } = req.body;
 
-  const image = req.file;
-
   try {
     const existingSoal = await prisma.tryout.findFirst({
       where: {
         tryoutListId: tryoutListId,
-        number: number,
+        number: parseInt(number),
       },
     });
 
@@ -44,9 +42,7 @@ const createSoal = async (req, res) => {
           scoreD: parseInt(scoreD),
           scoreE: parseInt(scoreE),
           explanation,
-          imageUrl: image
-            ? `/uploads/${image.filename}`
-            : existingSoal.imageUrl,
+          imageUrl: req.imageUrl ? req.imageUrl : '',
           optionA,
           optionB,
           optionC,
@@ -68,7 +64,7 @@ const createSoal = async (req, res) => {
           scoreD: parseInt(scoreD),
           scoreE: parseInt(scoreE),
           explanation,
-          imageUrl: image ? `/uploads/${image.filename}` : '',
+          imageUrl: req.imageUrl ? req.imageUrl : '',
           optionA,
           optionB,
           optionC,

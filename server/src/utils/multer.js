@@ -5,11 +5,11 @@ const SUPABASE_KEY = process.env.SUPABASE_KEY;
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const upload = async (req, res, next) => {
-  if (!req.image) {
-    return res.status(400).send('No files were uploaded.');
+  if (!req.files || !req.files.image) {
+    return next();
   }
 
-  const file = req.image;
+  const file = req.files.image;
 
   const formatDateTime = () => {
     const now = new Date();
@@ -19,20 +19,22 @@ const upload = async (req, res, next) => {
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
     const seconds = String(now.getSeconds()).padStart(2, '0');
-    return `${year}-${month}-${day}_${hours}:${minutes}:${seconds}`;
+    return `${year}-${month}-${day}-${hours}-${minutes}-${seconds}`;
   };
+
   const dateTime = formatDateTime();
+  const fileName = `public/${dateTime}`;
 
   const { data, error } = await supabase.storage
     .from('images')
-    .upload(`public`, file);
+    .upload(fileName, file.data);
 
   if (error) {
     console.log(error);
     return res.status(500).send(error.message);
   }
 
-  req.fileURL = `${SUPABASE_URL}/storage/v1/object/public/${dateTime}`;
+  req.imageUrl = `${SUPABASE_URL}/storage/v1/object/public/images/${fileName}`;
   next();
 };
 
