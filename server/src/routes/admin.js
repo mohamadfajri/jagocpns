@@ -15,6 +15,18 @@ const {
   deleteTryout,
 } = require('../controllers/admin/tryoutList');
 const upload = require('../utils/multer');
+const {
+  getAllFreeForm,
+  confirmRequest,
+  deleteRequest,
+  confirmAll,
+  handleDeleteAll,
+} = require('../controllers/admin/freeform');
+const {
+  getAllTransactions,
+  acceptTransaction,
+  rejectTransaction,
+} = require('../controllers/admin/transaction');
 const router = express.Router();
 
 router.post('/admin/signup', createAdmin);
@@ -28,5 +40,13 @@ router.get('/admin/tryout', adminOnly, getTryout);
 router.get('/admin/tryout/:id', adminOnly, getTryoutById);
 router.patch('/admin/tryout/:id', adminOnly, upload, updateTryout);
 router.delete('/admin/tryout/:id', adminOnly, deleteTryout);
+router.get('/admin/freeform', adminOnly, getAllFreeForm);
+router.post('/admin/accform', adminOnly, confirmRequest);
+router.delete('/admin/deleteform/:id', adminOnly, deleteRequest);
+router.post('/admin/confirmallform', adminOnly, confirmAll);
+router.delete('/admin/deleteallform', adminOnly, handleDeleteAll);
+router.get('/admin/transaction', adminOnly, getAllTransactions);
+router.post('/admin/transaction', adminOnly, acceptTransaction);
+router.delete('/admin/transaction', adminOnly, rejectTransaction);
 
 module.exports = router;

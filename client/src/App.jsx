@@ -37,6 +37,8 @@ import ShowTryout from './pages/admin/ShowTryout';
 import FillProfile from './pages/auth/FillProfile';
 import TryoutCbt from './pages/TryoutCbt';
 import AlertNotif from './components/Alert';
+import FreeForm from './pages/FreeForm';
+import FreeFormApproval from './pages/admin/FreeFormApproval';
 
 const App = () => {
   return (
@@ -92,6 +94,7 @@ const App = () => {
           <Route path='crud/user/' element={<CrudUser />} />
           <Route path='crud/tryout/' element={<CrudTryoutList />} />
           <Route path='topup-manager/' element={<TopupManager />} />
+          <Route path='freeform/' element={<FreeFormApproval />} />
           <Route path='crud/tryout/:id' element={<ShowTryout />} />
         </Route>
         <Route path='start-tryout/:id' element={<TryoutCbt />} />
@@ -100,6 +103,14 @@ const App = () => {
         <Route path='auth/signup' element={<SignupForm />} />
         <Route path='auth/profile' element={<FillProfile />} />
         <Route path='auth/signout' element={<SignOut />} />
+        <Route
+          path='free/:id'
+          element={
+            <ProtectedRoute>
+              <FreeForm />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </>
   );

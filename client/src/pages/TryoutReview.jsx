@@ -1,61 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import watermark from '../assets/images/watermark.png';
+import { fetcher } from '../utils/fetcher';
+import { useParams } from 'react-router-dom';
 
 const TryoutReview = () => {
+  const { id } = useParams();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [questions, setQuestions] = useState([
     {
-      question: 'What is the capital of France?',
-      choices: [
-        { text: 'Paris', key: 'a' },
-        { text: 'London', key: 'b' },
-        { text: 'Rome', key: 'c' },
-      ],
-      answer: 'a',
-      explain: 'Paris is the capital and most populous city of France.',
-    },
-    {
-      question: 'Which planet is known as the Red Planet?',
-      choices: [
-        { text: 'Earth', key: 'a' },
-        { text: 'Mars', key: 'b' },
-        { text: 'Jupiter', key: 'c' },
-      ],
-      answer: 'b',
-      explain:
-        'Mars is known as the Red Planet because of its reddish appearance.',
-    },
-    {
-      question: 'What is the largest ocean on Earth?',
-      choices: [
-        { text: 'Atlantic Ocean', key: 'a' },
-        { text: 'Indian Ocean', key: 'b' },
-        { text: 'Pacific Ocean', key: 'c' },
-      ],
-      answer: 'c',
-      explain:
-        'The Pacific Ocean is the largest and deepest of the world’s oceans.',
-    },
-    {
-      question: 'Who wrote "Romeo and Juliet"?',
-      choices: [
-        { text: 'William Shakespeare', key: 'a' },
-        { text: 'Jane Austen', key: 'b' },
-        { text: 'Mark Twain', key: 'c' },
-      ],
-      answer: 'a',
-      explain: 'William Shakespeare is the author of "Romeo and Juliet".',
-    },
-    {
-      question: 'What is the chemical symbol for gold?',
-      choices: [
-        { text: 'Au', key: 'a' },
-        { text: 'Ag', key: 'b' },
-        { text: 'Pb', key: 'c' },
-      ],
-      answer: 'a',
-      explain:
-        'The chemical symbol for gold is Au, derived from the Latin word "aurum".',
+      question: '',
+      imageUrl: '',
+      imageExplanation: '',
+      choices: [{ text: '', key: '', image: '' }],
+      scoreA: '',
+      scoreB: '',
+      scoreC: '',
+      scoreD: '',
+      scoreE: '',
+      explain: '',
     },
   ]);
   const [userAnswers, setUserAnswers] = useState(['a']);
@@ -69,6 +31,35 @@ const TryoutReview = () => {
     }
     return score;
   };
+
+  useEffect(() => {
+    const getSoal = async () => {
+      const { data } = await fetcher.get(`/user/review/${id}`);
+      console.log(data);
+      const format = data.map((item) => ({
+        question: item.question,
+        imageUrl: item.imageUrl,
+        choices: [
+          { text: item.optionA, key: 'a', image: item.imageA },
+          { text: item.optionB, key: 'b', image: item.imageB },
+          { text: item.optionC, key: 'c', image: item.imageC },
+          { text: item.optionD, key: 'd', image: item.imageD },
+          { text: item.optionE, key: 'e', image: item.imageE },
+        ],
+        scoreA: item.scoreA,
+        scoreB: item.scoreB,
+        scoreC: item.scoreC,
+        scoreD: item.scoreD,
+        scoreE: item.scoreE,
+        explain: item.explanation,
+        imageExplanation: item.imageExplanation,
+      }));
+
+      setQuestions(format);
+    };
+
+    getSoal();
+  }, [id]);
 
   const handleNavigate = (index) => {
     setCurrentQuestion(index);
@@ -170,12 +161,11 @@ const TryoutReview = () => {
                 ))}
               </div>
             </div>
-
             <div
-              className='md:w-4/5 md:mt-20'
+              className='md:w-4/5 md:mt-20 overflow-y-auto'
               style={{
                 backgroundImage: `url(${watermark})`,
-                backgroundSize: 'contain',
+                backgroundSize: 'cover',
                 backgroundRepeat: 'repeat',
                 backgroundPosition: 'center',
               }}
@@ -191,9 +181,18 @@ const TryoutReview = () => {
                 <h1 className='text-3xl font-semibold mb-2 md:mb-6'>
                   Soal {currentQuestion + 1}
                 </h1>
-                <p className='mb-4 text-xl'>
-                  {questions[currentQuestion].question}
-                </p>
+                {questions[currentQuestion].question && (
+                  <p className='text-xl'>
+                    {questions[currentQuestion].question}
+                  </p>
+                )}
+                {questions[currentQuestion].imageUrl && (
+                  <img
+                    className='max-h-60'
+                    src={questions[currentQuestion].imageUrl}
+                    alt='image'
+                  />
+                )}
 
                 <div className='flex flex-col'>
                   <ul>
@@ -209,7 +208,15 @@ const TryoutReview = () => {
                           >
                             {choice.key}
                           </div>
-                          <p className='text-start'>{choice.text}</p>
+                          <div className='flex flex-col'>
+                            {choice.text && (
+                              <p className='text-start'>{choice.text}</p>
+                            )}
+                            {choice.image && (
+                              <img className='max-h-40' src={choice.image} />
+                            )}
+                          </div>
+
                           {choice.key === questions[currentQuestion].answer && (
                             <span className='ml-2 text-green-500'>
                               <svg
@@ -330,11 +337,5 @@ const TryoutReview = () => {
     </div>
   );
 };
-
-const EmptyPage = ({ title }) => (
-  <div>
-    <h1>{title}</h1>
-  </div>
-);
 
 export default TryoutReview;

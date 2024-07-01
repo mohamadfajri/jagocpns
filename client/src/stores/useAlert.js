@@ -1,23 +1,29 @@
 import { create } from 'zustand';
 
 const useAlert = create((set) => ({
-  status: false,
   alert: {
-    color: '',
-    title: '',
-    message: '',
+    color: null,
+    title: null,
+    message: null,
   },
-  setAlert: (value) =>
+  setAlert: (value) => {
     set({
-      alert: { color: value.color, title: value.title, message: value.message },
-    }),
-  setStatus: (value) => {
-    set({ status: value });
-    if (value === true) {
-      setTimeout(() => {
-        set({ status: false });
-      }, 5000);
-    }
+      alert: {
+        color: value.color,
+        title: value.title,
+        message: value.message,
+      },
+    });
+
+    setTimeout(() => {
+      set({
+        alert: {
+          color: null,
+          title: null,
+          message: null,
+        },
+      });
+    }, 5000);
   },
 }));
 

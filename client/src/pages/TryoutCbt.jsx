@@ -21,6 +21,11 @@ const TryoutCbt = () => {
     optionD: '',
     optionE: '',
     answer: '',
+    imageA: '',
+    imageB: '',
+    imageC: '',
+    imageD: '',
+    imageE: '',
   });
 
   const [number, setNumber] = useState([]);
@@ -54,6 +59,11 @@ const TryoutCbt = () => {
         optionC: response.data.optionC,
         optionD: response.data.optionD,
         optionE: response.data.optionE,
+        imageA: response.data.imageA,
+        imageB: response.data.imageB,
+        imageC: response.data.imageC,
+        imageD: response.data.imageD,
+        imageE: response.data.imageE,
       });
     };
 
@@ -166,16 +176,21 @@ const TryoutCbt = () => {
             </div>
           </aside>
           <div className='pt-8 h-screen w-4/5'>
-            <div className='space-y-6 h-4/5 pl-12'>
-              <h1 className='font-semibold text-xl my-2'>
-                Soal {activeNumber}
-              </h1>
+            <div className='space-y-6 h-4/5 pb-2 pl-12 overflow-y-auto'>
+              {soal.question && (
+                <h1 className='font-semibold text-xl my-2'>
+                  Soal {activeNumber}
+                </h1>
+              )}
+              {soal.imageUrl && (
+                <img className='max-h-60' src={soal.imageUrl} alt='' />
+              )}
               <div className='soal'>{soal.question}</div>
               <ul className='space-y-4'>
-                <li>
+                <li className='flex items-center'>
                   <button
                     onClick={() => createAnswer('optionA')}
-                    className={`btn btn-sm py-2 px-4 rounded-lg border border-black ${
+                    className={`h-fit btn btn-sm py-2 px-4 rounded-lg border border-black ${
                       answer === 'optionA'
                         ? 'bg-blue-500 text-white'
                         : 'bg-white text-black'
@@ -183,12 +198,19 @@ const TryoutCbt = () => {
                   >
                     A
                   </button>
-                  <span className='mx-4 font-normal'>{soal.optionA}</span>
+                  <span>
+                    {soal.optionA && (
+                      <p className='mx-4 font-normal'>{soal.optionA}</p>
+                    )}
+                    {soal.imageA && (
+                      <img className='mx-4 max-h-44' src={soal.imageA} />
+                    )}
+                  </span>
                 </li>
-                <li>
+                <li className='flex items-center'>
                   <button
                     onClick={() => createAnswer('optionB')}
-                    className={`btn btn-sm py-2 px-4 rounded-lg border border-black ${
+                    className={`h-fit btn btn-sm py-2 px-4 rounded-lg border border-black ${
                       answer === 'optionB'
                         ? 'bg-blue-500 text-white'
                         : 'bg-white text-black'
@@ -196,12 +218,19 @@ const TryoutCbt = () => {
                   >
                     B
                   </button>
-                  <span className='mx-4 font-normal'>{soal.optionB}</span>
+                  <span>
+                    {soal.optionB && (
+                      <p className='mx-4 font-normal'>{soal.optionB}</p>
+                    )}
+                    {soal.imageB && (
+                      <img className='mx-4 max-h-44' src={soal.imageB} />
+                    )}
+                  </span>
                 </li>
-                <li>
+                <li className='flex items-center'>
                   <button
                     onClick={() => createAnswer('optionC')}
-                    className={`btn btn-sm py-2 px-4 rounded-lg border border-black ${
+                    className={`h-fit btn btn-sm py-2 px-4 rounded-lg border border-black ${
                       answer === 'optionC'
                         ? 'bg-blue-500 text-white'
                         : 'bg-white text-black'
@@ -209,12 +238,19 @@ const TryoutCbt = () => {
                   >
                     C
                   </button>
-                  <span className='mx-4 font-normal'>{soal.optionC}</span>
+                  <span>
+                    {soal.optionC && (
+                      <p className='mx-4 font-normal'>{soal.optionC}</p>
+                    )}
+                    {soal.imageC && (
+                      <img className='mx-4 max-h-44' src={soal.imageC} />
+                    )}
+                  </span>
                 </li>
-                <li>
+                <li className='flex items-center'>
                   <button
                     onClick={() => createAnswer('optionD')}
-                    className={`btn btn-sm py-2 px-4 rounded-lg border border-black ${
+                    className={`h-fit btn btn-sm py-2 px-4 rounded-lg border border-black ${
                       answer === 'optionD'
                         ? 'bg-blue-500 text-white'
                         : 'bg-white text-black'
@@ -222,12 +258,19 @@ const TryoutCbt = () => {
                   >
                     D
                   </button>
-                  <span className='mx-4 font-normal'>{soal.optionD}</span>
+                  <span>
+                    {soal.optionD && (
+                      <p className='mx-4 font-normal'>{soal.optionD}</p>
+                    )}
+                    {soal.imageD && (
+                      <img className='mx-4 max-h-44' src={soal.imageD} />
+                    )}
+                  </span>
                 </li>
-                <li>
+                <li className='flex items-center'>
                   <button
                     onClick={() => createAnswer('optionE')}
-                    className={`btn btn-sm py-2 px-4 rounded-lg border border-black ${
+                    className={`h-fit btn btn-sm py-2 px-4 rounded-lg border border-black ${
                       answer === 'optionE'
                         ? 'bg-blue-500 text-white'
                         : 'bg-white text-black'
@@ -235,7 +278,14 @@ const TryoutCbt = () => {
                   >
                     E
                   </button>
-                  <span className='mx-4 font-normal'>{soal.optionE}</span>
+                  <span>
+                    {soal.optionE && (
+                      <p className='mx-4 font-normal'>{soal.optionE}</p>
+                    )}
+                    {soal.imageE && (
+                      <img className='mx-4 max-h-44' src={soal.imageE} />
+                    )}
+                  </span>
                 </li>
               </ul>
 

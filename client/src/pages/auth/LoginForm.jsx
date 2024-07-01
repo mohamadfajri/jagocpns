@@ -13,7 +13,7 @@ const LoginForm = () => {
   const [form, setForm] = useState({ email: '', password: '' });
   const { setToken, setProfile } = useAuth();
 
-  const { setAlert, setStatus } = useAlert();
+  const { setAlert } = useAlert();
 
   const navigate = useNavigate();
 
@@ -36,14 +36,12 @@ const LoginForm = () => {
       );
       setToken(response.data.token);
       setAlert({ title: 'Info!', message: 'Login Berhasil', color: 'success' });
-      setStatus(true);
     } catch (error) {
       setAlert({
         title: 'Error!',
         message: `${error.response.data.message}`,
         color: 'failure',
       });
-      setStatus(true);
     }
   };
 

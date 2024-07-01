@@ -23,6 +23,11 @@ const getSoalByNumber = async (req, res) => {
         optionC: soal.optionC,
         optionD: soal.optionD,
         optionE: soal.optionE,
+        imageA: soal.imageA,
+        imageB: soal.imageB,
+        imageC: soal.imageC,
+        imageD: soal.imageD,
+        imageE: soal.imageE,
       });
     } else {
       res.status(404).json({ error: 'Soal not found' });

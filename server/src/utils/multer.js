@@ -5,11 +5,11 @@ const SUPABASE_KEY = process.env.SUPABASE_KEY;
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const upload = async (req, res, next) => {
-  if (!req.files || !req.files.image) {
+  if (!req.files) {
     return next();
   }
 
-  const file = req.files.image;
+  const files = req.files;
 
   const formatDateTime = () => {
     const now = new Date();
@@ -23,19 +23,43 @@ const upload = async (req, res, next) => {
   };
 
   const dateTime = formatDateTime();
-  const fileName = `public/${dateTime}`;
+  const fileUploadPromises = [];
 
-  const { data, error } = await supabase.storage
-    .from('images')
-    .upload(fileName, file.data);
+  const fileFields = [
+    'image',
+    'imageA',
+    'imageB',
+    'imageC',
+    'imageD',
+    'imageE',
+    'imageExplanation',
+  ];
 
-  if (error) {
+  fileFields.forEach((field) => {
+    if (files[field]) {
+      const fileName = `public/${dateTime}-${files[field].name}`;
+      const uploadPromise = supabase.storage
+        .from('images')
+        .upload(fileName, files[field].data)
+        .then(({ data, error }) => {
+          if (error) {
+            throw new Error(error.message);
+          }
+          req[
+            `${field}`
+          ] = `${SUPABASE_URL}/storage/v1/object/public/images/${fileName}`;
+        });
+      fileUploadPromises.push(uploadPromise);
+    }
+  });
+
+  try {
+    await Promise.all(fileUploadPromises);
+    next();
+  } catch (error) {
     console.log(error);
     return res.status(500).send(error.message);
   }
-
-  req.imageUrl = `${SUPABASE_URL}/storage/v1/object/public/images/${fileName}`;
-  next();
 };
 
 module.exports = upload;

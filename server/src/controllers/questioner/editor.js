@@ -28,50 +28,45 @@ const createSoal = async (req, res) => {
     });
 
     let soal;
+    const data = {
+      type,
+      question,
+      scoreA: parseInt(scoreA),
+      scoreB: parseInt(scoreB),
+      scoreC: parseInt(scoreC),
+      scoreD: parseInt(scoreD),
+      scoreE: parseInt(scoreE),
+      explanation,
+      optionA,
+      optionB,
+      optionC,
+      optionD,
+      optionE,
+      updatedAt: new Date(),
+    };
+
+    if (req.image) data.imageUrl = req.image;
+    if (req.imageA) data.imageA = req.imageA;
+    if (req.imageB) data.imageB = req.imageB;
+    if (req.imageC) data.imageC = req.imageC;
+    if (req.imageD) data.imageD = req.imageD;
+    if (req.imageE) data.imageE = req.imageE;
+    if (req.imageExplanation) data.imageExplanation = req.imageExplanation;
+
     if (existingSoal) {
       soal = await prisma.tryout.update({
         where: {
           id: existingSoal.id,
         },
-        data: {
-          type,
-          question,
-          scoreA: parseInt(scoreA),
-          scoreB: parseInt(scoreB),
-          scoreC: parseInt(scoreC),
-          scoreD: parseInt(scoreD),
-          scoreE: parseInt(scoreE),
-          explanation,
-          imageUrl: req.imageUrl ? req.imageUrl : '',
-          optionA,
-          optionB,
-          optionC,
-          optionD,
-          optionE,
-          updatedAt: new Date(),
-        },
+        data,
       });
     } else {
       soal = await prisma.tryout.create({
         data: {
           tryoutListId: tryoutListId,
-          type,
-          number,
-          question,
-          scoreA: parseInt(scoreA),
-          scoreB: parseInt(scoreB),
-          scoreC: parseInt(scoreC),
-          scoreD: parseInt(scoreD),
-          scoreE: parseInt(scoreE),
-          explanation,
-          imageUrl: req.imageUrl ? req.imageUrl : '',
-          optionA,
-          optionB,
-          optionC,
-          optionD,
-          optionE,
+          number: parseInt(number),
           createdAt: new Date(),
-          updatedAt: new Date(),
+          ...data,
         },
       });
     }

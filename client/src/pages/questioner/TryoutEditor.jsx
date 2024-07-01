@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Button,
   Dropdown,
@@ -12,6 +12,12 @@ import { useParams } from 'react-router-dom';
 const TryoutEditor = () => {
   const [tryout, setTryout] = useState({
     image: null,
+    imageA: null,
+    imageB: null,
+    imageC: null,
+    imageD: null,
+    imageE: null,
+    imageExlanation: null,
     number: '',
     type: '',
     question: '',
@@ -27,6 +33,7 @@ const TryoutEditor = () => {
     scoreD: 0,
     scoreE: 0,
   });
+  const fileInputRef = useRef(null);
 
   const [numbers, setNumbers] = useState([1]);
   const [activeNumber, setActiveNumber] = useState(1);
@@ -168,6 +175,12 @@ const TryoutEditor = () => {
         optionE: tryout.optionE,
         type: tryout.type,
         image: tryout.image,
+        imageA: tryout.imageA,
+        imageB: tryout.imageB,
+        imageC: tryout.imageC,
+        imageD: tryout.imageD,
+        imageE: tryout.imageE,
+        imageExlanation: tryout.imageExlanation,
       },
       {
         headers: {
@@ -178,16 +191,20 @@ const TryoutEditor = () => {
     console.log('success', response);
   };
   const handleFile = (e) => {
+    const { id } = e.target;
     const file = e.target.files[0];
-
     setTryout((prevForm) => ({
       ...prevForm,
-      image: file,
+      [id]: file,
     }));
   };
 
   const handleSave = () => {
     createSoal();
+  };
+
+  const clearFileInput = () => {
+    console.log(fileInputRef);
   };
 
   const handleSaveAndNext = () => {
@@ -198,6 +215,7 @@ const TryoutEditor = () => {
       return newNumber;
     });
     handleClear();
+    clearFileInput();
   };
 
   return (
@@ -248,7 +266,7 @@ const TryoutEditor = () => {
             />
           </div>
           <div>
-            <FileInput id='image' onChange={handleFile} />
+            <FileInput ref={fileInputRef} id='image' onChange={handleFile} />
           </div>
           <div>
             <ul className='space-y-2'>
@@ -261,6 +279,11 @@ const TryoutEditor = () => {
                   required
                   value={tryout.optionA}
                   onChange={handleInputChange}
+                />
+                <FileInput
+                  ref={fileInputRef}
+                  id='imageA'
+                  onChange={handleFile}
                 />
                 <TextInput
                   className='w-1/5'
@@ -283,6 +306,11 @@ const TryoutEditor = () => {
                   value={tryout.optionB}
                   onChange={handleInputChange}
                 />
+                <FileInput
+                  ref={fileInputRef}
+                  id='imageB'
+                  onChange={handleFile}
+                />
                 <TextInput
                   className='w-1/5'
                   id='scoreB'
@@ -303,6 +331,11 @@ const TryoutEditor = () => {
                   required
                   value={tryout.optionC}
                   onChange={handleInputChange}
+                />
+                <FileInput
+                  ref={fileInputRef}
+                  id='imageC'
+                  onChange={handleFile}
                 />
                 <TextInput
                   className='w-1/5'
@@ -325,6 +358,11 @@ const TryoutEditor = () => {
                   value={tryout.optionD}
                   onChange={handleInputChange}
                 />
+                <FileInput
+                  ref={fileInputRef}
+                  id='imageD'
+                  onChange={handleFile}
+                />
                 <TextInput
                   className='w-1/5'
                   id='scoreD'
@@ -345,6 +383,11 @@ const TryoutEditor = () => {
                   required
                   value={tryout.optionE}
                   onChange={handleInputChange}
+                />
+                <FileInput
+                  ref={fileInputRef}
+                  id='imageE'
+                  onChange={handleFile}
                 />
                 <TextInput
                   className='w-1/5'
@@ -367,6 +410,11 @@ const TryoutEditor = () => {
               rows={4}
               value={tryout.explanation}
               onChange={handleInputChange}
+            />
+            <FileInput
+              ref={fileInputRef}
+              id='imageExlanation'
+              onChange={handleFile}
             />
           </div>
           <div className='flex space-x-2'>

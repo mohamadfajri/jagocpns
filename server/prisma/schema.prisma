@@ -13,7 +13,6 @@ datasource db {
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
-        
 
 model User {
   id           Int           @id @default(autoincrement())
@@ -28,6 +27,7 @@ model User {
   payments     Payment[]
   paidLists    PaidList[]
   ownerships   Ownership[]
+  freeForms    FreeForm[]
 }
 
 model Admin {
@@ -88,26 +88,32 @@ model TryoutList {
 }
 
 model Tryout {
-  id           Int        @id @default(autoincrement())
-  tryoutListId Int
-  type         String
-  number       Int
-  question     String
-  scoreA       Int
-  scoreB       Int
-  scoreC       Int
-  scoreD       Int
-  scoreE       Int
-  explanation  String
-  imageUrl     String?
-  optionA      String
-  optionB      String
-  optionC      String
-  optionD      String
-  optionE      String
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  tryoutList   TryoutList @relation(fields: [tryoutListId], references: [id])
+  id               Int        @id @default(autoincrement())
+  tryoutListId     Int
+  type             String
+  number           Int
+  question         String?
+  scoreA           Int
+  scoreB           Int
+  scoreC           Int
+  scoreD           Int
+  scoreE           Int
+  explanation      String
+  imageExplanation String?
+  imageUrl         String?
+  optionA          String?
+  imageA           String?
+  optionB          String?
+  imageB           String?
+  optionC          String?
+  imageC           String?
+  optionD          String?
+  imageD           String?
+  optionE          String?
+  imageE           String?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  tryoutList       TryoutList @relation(fields: [tryoutListId], references: [id])
 }
 
 model Score {
@@ -141,6 +147,7 @@ model Transaction {
   userId    Int
   amount    BigInt
   status    TransactionStatus @default(unpaid)
+  imageUrl  String?
   createdAt DateTime          @default(now())
   updatedAt DateTime          @updatedAt
   user      User              @relation(fields: [userId], references: [id])
@@ -182,6 +189,13 @@ model Ownership {
   tryoutListId Int
   user         User       @relation(fields: [userId], references: [id])
   tryoutList   TryoutList @relation(fields: [tryoutListId], references: [id])
+}
+
+model FreeForm {
+  id           Int  @id @default(autoincrement())
+  userId       Int
+  tryoutListId Int
+  user         User @relation(fields: [userId], references: [id])
 }
 
 enum InformationType {

@@ -2,11 +2,14 @@ import { Button, TextInput } from 'flowbite-react';
 import TopupInfo from '../components/app/Topup/TopupInfo';
 import { useState } from 'react';
 import { useTopup } from '../stores/useTopup';
+import { fetcher } from '../utils/fetcher';
+import { useAlert } from '../stores/useAlert';
 
 const TopUpPage = () => {
   const [inputValue, setInputValue] = useState('');
   const [total, setTotal] = useState(0);
   const { set } = useTopup();
+  const { setAlert } = useAlert();
 
   const updateTotal = (event) => {
     const value = event.target.value;
@@ -25,6 +28,22 @@ const TopUpPage = () => {
       currency: 'IDR',
       minimumFractionDigits: 0,
     }).format(number);
+  };
+
+  const createTransaction = async () => {
+    try {
+      const { data } = await fetcher.post('/user/transaction', {
+        amount: total,
+      });
+      setAlert({ title: 'Info!', message: data.message, color: 'success' });
+      set(true);
+    } catch (error) {
+      setAlert({
+        title: 'Error!',
+        message: error.response.data.message,
+        color: 'failure',
+      });
+    }
   };
 
   return (
@@ -59,7 +78,7 @@ const TopUpPage = () => {
             placeholder='Disabled readonly input'
             readOnly
           />
-          <Button as={'button'} onClick={() => set(true)} color='blue'>
+          <Button as={'button'} onClick={createTransaction} color='blue'>
             Buat Pesanan
           </Button>
         </div>

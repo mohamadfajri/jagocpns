@@ -1,0 +1,13 @@
+-- AlterTable
+ALTER TABLE "Tryout" ADD COLUMN     "imageA" TEXT,
+ADD COLUMN     "imageB" TEXT,
+ADD COLUMN     "imageC" TEXT,
+ADD COLUMN     "imageD" TEXT,
+ADD COLUMN     "imageE" TEXT,
+ADD COLUMN     "imageExplanation" TEXT,
+ALTER COLUMN "question" DROP NOT NULL,
+ALTER COLUMN "optionA" DROP NOT NULL,
+ALTER COLUMN "optionB" DROP NOT NULL,
+ALTER COLUMN "optionC" DROP NOT NULL,
+ALTER COLUMN "optionD" DROP NOT NULL,
+ALTER COLUMN "optionE" DROP NOT NULL;
