@@ -262,6 +262,26 @@ const createScore = async (req, res) => {
   }
 };
 
+const getAllSoalById = async (req, res) => {
+  const tryoutListId = req.params.id;
+
+  try {
+    const tryouts = await prisma.tryout.findMany({
+      where: {
+        tryoutListId: Number(tryoutListId),
+      },
+      orderBy: {
+        number: 'asc',
+      },
+    });
+
+    res.status(200).json(tryouts);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Failed to get tryouts by tryoutListId' });
+  }
+};
+
 module.exports = {
   createScore,
   getSoalByNumber,
@@ -269,4 +289,5 @@ module.exports = {
   createAnswer,
   getAnswer,
   getIsAnswer,
+  getAllSoalById,
 };

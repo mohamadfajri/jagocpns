@@ -17,7 +17,6 @@ const createOwnerr = async (req, res) => {
   const { tryoutListId, userId } = req.body;
 
   try {
-    // Cek apakah user sudah memiliki ownership untuk tryoutList ini
     const existingOwnership = await prisma.ownership.findFirst({
       where: {
         userId: userId,
@@ -31,7 +30,6 @@ const createOwnerr = async (req, res) => {
         .json({ message: 'Anda sudah memiliki ownership untuk tryout ini' });
     }
 
-    // Tambahkan ownership baru
     const newOwnership = await prisma.ownership.create({
       data: {
         userId: userId,

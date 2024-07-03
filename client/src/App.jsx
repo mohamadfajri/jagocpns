@@ -35,10 +35,10 @@ import QuestionerDashboard from './pages/questioner/QuestionerDashboard';
 import TryoutEditor from './pages/questioner/TryoutEditor';
 import ShowTryout from './pages/admin/ShowTryout';
 import FillProfile from './pages/auth/FillProfile';
-import TryoutCbt from './pages/TryoutCbt';
 import AlertNotif from './components/Alert';
 import FreeForm from './pages/FreeForm';
 import FreeFormApproval from './pages/admin/FreeFormApproval';
+import CbtTryout from './pages/CbtTryout';
 
 const App = () => {
   return (
@@ -97,7 +97,7 @@ const App = () => {
           <Route path='freeform/' element={<FreeFormApproval />} />
           <Route path='crud/tryout/:id' element={<ShowTryout />} />
         </Route>
-        <Route path='start-tryout/:id' element={<TryoutCbt />} />
+        <Route path='start-tryout/:id' element={<CbtTryout />} />
         <Route path='review/:id' element={<TryoutReview />} />
         <Route path='auth/signin' element={<LoginForm />} />
         <Route path='auth/signup' element={<SignupForm />} />

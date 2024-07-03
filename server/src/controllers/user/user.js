@@ -177,6 +177,47 @@ const getUserTryouts = async (req, res) => {
   }
 };
 
+const getListByUserId = async (req, res) => {
+  const userId = req.user.id;
+
+  try {
+    const ownerships = await prisma.ownership.findMany({
+      where: {
+        userId: Number(userId),
+      },
+      include: {
+        tryoutList: true,
+      },
+    });
+
+    const done = ownerships.filter((ownership) => ownership.isDone);
+    const undone = ownerships.filter((ownership) => !ownership.isDone);
+
+    const formatDone = done.map((d) => ({
+      id: d.id,
+      tryoutListId: d.tryoutListId,
+      title: d.tryoutList.title,
+      imageUrl: d.tryoutList.imageUrl,
+      description: d.tryoutList.description,
+    }));
+    const formatUndone = undone.map((d) => ({
+      id: d.id,
+      tryoutListId: d.tryoutListId,
+      title: d.tryoutList.title,
+      imageUrl: d.tryoutList.imageUrl,
+      description: d.tryoutList.description,
+    }));
+
+    res.status(200).json({
+      done: formatDone,
+      undone: formatUndone,
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Failed to get ownerships by user ID' });
+  }
+};
+
 module.exports = {
   createUser,
   createProfile,
@@ -184,4 +225,5 @@ module.exports = {
   userSignin,
   changePassword,
   getUserTryouts,
+  getListByUserId,
 };

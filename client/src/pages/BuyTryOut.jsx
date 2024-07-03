@@ -1,73 +1,35 @@
 import { Outlet } from 'react-router-dom';
 import TryoutCard from '../components/app/MyTryout/TryoutCard';
+import { useEffect, useState } from 'react';
+import { fetcher } from '../utils/fetcher';
 
 const BuyTryOut = () => {
-  const tryouts = [
-    {
-      id: 1,
-      title: 'Tryout 1',
-      desc: 'SKD 1 Juli 2024 - 5 Juli 2024',
-    },
-    {
-      id: 2,
-      title: 'Tryout 2',
-      desc: 'SKD 6 Juli 2024 - 10 Juli 2024',
-    },
-    {
-      id: 3,
-      title: 'Tryout 3',
-      desc: 'SKD 11 Juli 2024 - 15 Juli 2024',
-    },
-    {
-      id: 4,
-      title: 'Tryout 4',
-      desc: 'SKD 16 Juli 2024 - 20 Juli 2024',
-    },
-    {
-      id: 5,
-      title: 'Tryout 5',
-      desc: 'SKD 21 Juli 2024 - 25 Juli 2024',
-    },
-    {
-      id: 6,
-      title: 'Tryout 6',
-      desc: 'SKD 1 Juli 2024 - 5 Juli 2024',
-    },
-    {
-      id: 7,
-      title: 'Tryout 7',
-      desc: 'SKD 6 Juli 2024 - 10 Juli 2024',
-    },
-    {
-      id: 8,
-      title: 'Tryout 8',
-      desc: 'SKD 11 Juli 2024 - 15 Juli 2024',
-    },
-    {
-      id: 9,
-      title: 'Tryout 9',
-      desc: 'SKD 16 Juli 2024 - 20 Juli 2024',
-    },
-    {
-      id: 10,
-      title: 'Tryout 10',
-      desc: 'SKD 21 Juli 2024 - 25 Juli 2024',
-    },
-  ];
+  const [tryouts, setTryouts] = useState([{}]);
+
+  useEffect(() => {
+    const getTryouts = async () => {
+      const { data } = await fetcher.get('/public/tryouts');
+      setTryouts(data);
+    };
+    getTryouts();
+  }, []);
+
   return (
     <div className='sm:p-10 sm:ml-64 dark:bg-black min-h-screen'>
       <section>
         <div className='m-4 p-4 border rounded-lg'>
           <h1 className='text-2xl'>Beli Tryout</h1>
-          {!tryouts ? (
+          {tryouts ? (
             <div className='rounded-lg p-4 my-2 border grid grid-cols-5 gap-4'>
-              {tryouts?.map((tryout) => (
+              {tryouts?.map((tryout, index) => (
                 <TryoutCard
                   title={tryout.title}
-                  desc={tryout.desc}
-                  key={tryout.id}
+                  desc={tryout.description}
+                  key={index}
                   action={'Beli'}
                   url={`/app/tryoutstore/${tryout.id}`}
+                  imageUrl={tryout.imageUrl}
+                  price={tryout.price}
                 />
               ))}
             </div>

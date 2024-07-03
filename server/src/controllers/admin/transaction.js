@@ -87,6 +87,7 @@ const getAllTransactions = async (req, res) => {
 
 const acceptTransaction = async (req, res) => {
   const { id } = req.body;
+  const adminId = req.user.id;
 
   try {
     const transaction = await prisma.transaction.update({
@@ -98,11 +99,51 @@ const acceptTransaction = async (req, res) => {
       },
     });
 
+    const { userId, amount } = transaction;
+    const roundedAmount = Math.round(parseInt(amount) / 1000) * 1000;
+
+    // Check if there's an existing balance for the userId
+    const existingBalance = await prisma.balance.findUnique({
+      where: {
+        userId: userId,
+      },
+      select: {
+        id: true,
+        amount: true,
+      },
+    });
+
+    if (existingBalance) {
+      // If balance exists, update the existing balance
+      const updatedAmount =
+        BigInt(existingBalance.amount) + BigInt(roundedAmount);
+      await prisma.balance.update({
+        where: {
+          id: existingBalance.id,
+        },
+        data: {
+          amount: updatedAmount,
+        },
+      });
+    } else {
+      // If no balance exists, create a new balance entry
+      await prisma.balance.create({
+        data: {
+          userId: userId,
+          adminId: adminId,
+          amount: BigInt(roundedAmount),
+        },
+      });
+    }
+
     res.status(200).json({
-      message: 'Transaction accepted successfully',
+      message: 'Transaction accepted successfully and balance updated',
     });
   } catch (error) {
-    res.status(500).json({ message: 'Failed to accept transaction' });
+    console.error('Error:', error);
+    res
+      .status(500)
+      .json({ message: 'Failed to accept transaction and update balance' });
   }
 };
 

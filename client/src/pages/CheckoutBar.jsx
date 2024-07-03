@@ -2,19 +2,33 @@ import { Drawer, Label, Modal, TextInput, theme } from 'flowbite-react';
 import { HiShoppingCart } from 'react-icons/hi';
 import { twMerge } from 'tailwind-merge';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
+import { fetcher } from '../utils/fetcher';
+import { useAlert } from '../stores/useAlert';
 
 const CheckoutBar = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [isJoin, setIsJoin] = useState(false);
-  const [lists, setLists] = useState([
-    { id: 1, email: 'asepbensin@gmail.com' },
-    { id: 2, email: 'benitomussolini@gmail.com' },
-    { id: 4, email: 'adolfhitler@gmail.com' },
-  ]);
+  const [lists, setLists] = useState([{}]);
   const [newEmail, setNewEmail] = useState('');
   const [openModal, setOpenModal] = useState(false);
+  const [data, setData] = useState({});
+  const { setAlert } = useAlert();
+
+  useEffect(() => {
+    const getMine = async () => {
+      const { data } = await fetcher('/user');
+      setLists([
+        {
+          id: data.userId,
+          email: data.email,
+        },
+      ]);
+      console.log(data);
+    };
+    getMine();
+  }, []);
 
   const handleClose = () => {
     setIsOpen(false);
@@ -25,20 +39,40 @@ const CheckoutBar = () => {
 
   const handleRemove = (id) => {
     setLists((prevLists) => prevLists.filter((list) => list.id !== id));
+    console.log(lists);
   };
-  const handleAdd = () => {
+  const handleAdd = async (e) => {
+    e.preventDefault();
     if (newEmail.trim() !== '') {
-      const newId = lists.length > 0 ? lists[lists.length - 1].id + 1 : 1;
-      setLists([...lists, { id: newId, email: newEmail }]);
+      try {
+        const { data } = await fetcher.get(`/user/search?email=${newEmail}`);
+        setLists([...lists, { id: data.id, email: data.email }]);
+        console.log(lists);
+      } catch (error) {
+        setAlert({
+          title: 'Error!',
+          message: error.response.data.message,
+          color: 'failure',
+        });
+      }
       setNewEmail('');
     }
   };
 
   const location = useLocation();
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const handleJoin = () => {
     setIsJoin(!isJoin);
+  };
+
+  const formatIDR = (number) => {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0,
+    }).format(number);
   };
 
   useEffect(() => {
@@ -47,6 +81,34 @@ const CheckoutBar = () => {
       setIsOpen(true);
     }
   }, [location.pathname]);
+
+  useEffect(() => {
+    const getTryoutById = async () => {
+      const { data } = await fetcher(`/public/tryout/${id}`);
+      setData(data);
+    };
+    getTryoutById();
+  }, [id]);
+
+  const handleChange = async (e) => {
+    setNewEmail(e.target.value);
+  };
+
+  const handleCheckout = async () => {
+    try {
+      const { data } = await fetcher.post('/user/checkout', {
+        target: lists,
+        tryoutListId: id,
+      });
+      setAlert({ title: 'Sukses!', message: data.message, color: 'success' });
+    } catch (error) {
+      setAlert({
+        title: 'Gagal!',
+        message: error.response.data.message,
+        color: 'failure',
+      });
+    }
+  };
 
   return (
     <>
@@ -59,7 +121,7 @@ const CheckoutBar = () => {
                 Judul Tryout
               </Label>
               <div className='border rounded-lg p-2 font-medium'>
-                <h1>Tryout 1</h1>
+                <h1>{data.title}</h1>
               </div>
             </div>
             <div className='mb-6'>
@@ -67,7 +129,7 @@ const CheckoutBar = () => {
                 Deskripsi
               </Label>
               <div className='border rounded-lg p-2 font-medium'>
-                <p>SKD blablablablablabl 1 Juli 2024 - 5 Juli 2024</p>
+                <p>{data.description}</p>
               </div>
             </div>
             <div className='mb-6'>
@@ -75,7 +137,7 @@ const CheckoutBar = () => {
                 Total Harga
               </Label>
               <div className='border rounded-lg p-2 font-medium'>
-                <p>Rp 32.000</p>
+                <p>{formatIDR(data.price)}</p>
               </div>
             </div>
             <label className='inline-flex items-center cursor-pointer my-4'>
@@ -95,16 +157,16 @@ const CheckoutBar = () => {
               <div className='mb-6'>
                 <div className='mb-2'>
                   <TextInput
-                    disabled={lists.length >= 4}
+                    disabled={lists?.length >= 5}
                     id='guests'
                     name='guests'
                     placeholder='Masukan 4 email peserta lain'
                     value={newEmail}
-                    onChange={(e) => setNewEmail(e.target.value)}
+                    onChange={handleChange}
                     type='search'
                     rightIcon={() => (
                       <button
-                        disabled={lists.length >= 4}
+                        disabled={lists?.length >= 5}
                         onClick={handleAdd}
                         size='sm'
                         className='[&>span]:items-center [&>span]:px-2 [&>span]:py-0 flex font-medium text-sm border py-1 px-2 rounded-lg bg-[#155E75] text-white'
@@ -126,16 +188,17 @@ const CheckoutBar = () => {
                 </div>
                 <div>
                   <ul className='flex flex-col space-y-2'>
-                    {lists.map((list) => (
-                      <li key={list.id} className='flex flex-row'>
+                    {lists.map((list, index) => (
+                      <li key={index} className='flex flex-row'>
                         <span className='bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300'>
-                          {list.email.length > 25
+                          {list.email?.length > 25
                             ? list.email.slice(0, 25) + '...'
                             : list.email}
                         </span>
                         <button
+                          disabled={index === 0}
                           type='button'
-                          className='bg-gray-100 rounded-lg'
+                          className='bg-gray-100 rounded-lg disabled:hidden'
                           onClick={() => handleRemove(list.id)}
                         >
                           <svg
@@ -158,9 +221,12 @@ const CheckoutBar = () => {
               </div>
             )}
             <button
-              disabled={!(lists.length === 4) && isJoin}
+              disabled={!(lists?.length === 5) && isJoin}
               type='button'
-              onClick={() => setOpenModal(true)}
+              onClick={() => {
+                setOpenModal(true);
+                console.log(lists);
+              }}
               className='font-medium bg-jago-4 hover:bg-orange-600 rounded-lg disabled:cursor-not-allowed disabled:hover:bg-gray-300 disabled:bg-gray-300 text-white flex py-2 px-4'
             >
               Buat Pesanan
@@ -182,7 +248,10 @@ const CheckoutBar = () => {
               </h3>
               <div className='flex justify-center gap-4'>
                 <button
-                  onClick={() => setOpenModal(false)}
+                  onClick={() => {
+                    setOpenModal(false);
+                    handleCheckout();
+                  }}
                   className='inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
                 >
                   Lanjutkan

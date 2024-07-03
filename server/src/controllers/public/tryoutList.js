@@ -1,9 +1,18 @@
-const prisma = require('../../prismaClient');
+const prisma = require('../../utils/prismaClient');
 
 const getAllTryout = async (req, res) => {
   try {
-    const tryouts = await prisma.tryoutList.findMany();
-    return res.status(200).json({ tryouts });
+    const tryouts = await prisma.tryoutList.findMany({
+      where: {
+        status: true,
+      },
+    });
+    const format = tryouts.map((t) => ({
+      ...t,
+      price: t.price.toString(),
+    }));
+
+    return res.status(200).json(format);
   } catch (error) {
     console.error('Error:', error);
     return res.status(500).json({
@@ -19,6 +28,7 @@ const getTryoutById = async (req, res) => {
     const tryout = await prisma.tryoutList.findUnique({
       where: {
         id: parseInt(id),
+        status: true,
       },
     });
 
@@ -26,7 +36,9 @@ const getTryoutById = async (req, res) => {
       return res.status(404).json({ message: 'Tryout tidak ditemukan' });
     }
 
-    return res.status(200).json(tryout);
+    const format = { ...tryout, price: tryout.price.toString() };
+
+    return res.status(200).json(format);
   } catch (error) {
     console.error('Error:', error);
     return res.status(500).json({

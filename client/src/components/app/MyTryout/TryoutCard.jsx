@@ -1,15 +1,18 @@
 /* eslint-disable react/prop-types */
 import { Link } from 'react-router-dom';
 
-const TryoutCard = ({ title, desc, action, url }) => {
+const TryoutCard = ({ title, desc, action, url, imageUrl, price }) => {
+  const formatIDR = (number) => {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0,
+    }).format(number);
+  };
   return (
     <div className='max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700'>
       <a href='#'>
-        <img
-          className='rounded-t-lg'
-          src='/docs/images/blog/image-1.jpg'
-          alt=''
-        />
+        <img className='rounded-t-lg' src={imageUrl} alt='' />
       </a>
       <div className='p-5'>
         <h5 className='mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
@@ -19,6 +22,11 @@ const TryoutCard = ({ title, desc, action, url }) => {
         <p className='mb-3 font-normal text-gray-700 dark:text-gray-400'>
           {desc}
         </p>
+        {price && (
+          <p className='mb-3 font-normal text-gray-700 dark:text-gray-400'>
+            {formatIDR(price)}
+          </p>
+        )}
         <Link
           to={url}
           className='inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-orange-700 rounded-lg hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'

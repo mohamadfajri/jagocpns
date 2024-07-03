@@ -1,29 +1,44 @@
-const getEmail = async (req, res) => {
-  const { searchParams } = req.query;
+const prisma = require('../../utils/prismaClient');
 
+const searchEmail = async (req, res) => {
   try {
-    const emails = await prisma.email.findMany({
-      where: {
-        address: {
-          contains: searchParams,
-          mode: 'insensitive',
-        },
-      },
-    });
+    const { email } = req.query;
+    const userEmail = req.user.email;
 
-    if (emails.length === 0) {
-      return res.status(404).json({
-        message:
-          'Tidak ada email yang ditemukan dengan parameter pencarian tersebut',
+    if (!email || email.length < 4) {
+      return res.status(400).json({
+        message: 'Email harus memiliki minimal 4 karakter',
       });
     }
 
-    return res.status(200).json(emails);
-  } catch (error) {
-    return res
-      .status(500)
-      .json({
-        message: `Terjadi kesalahan saat mencoba mencari data email ${error}`,
+    if (email === userEmail) {
+      return res.status(400).json({
+        message: 'Anda memasukan email anda sendiri',
       });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    if (user) {
+      return res.status(200).json({
+        id: user.id,
+        email: user.email,
+      });
+    } else {
+      return res.status(404).json({
+        message: 'Email tidak ditemukan',
+      });
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    return res.status(500).json({
+      message: 'Terjadi kesalahan saat mencari email',
+    });
   }
 };
+
+module.exports = { searchEmail };

@@ -5,12 +5,14 @@ const {
   userSignin,
   changePassword,
   createProfile,
+  getListByUserId,
 } = require('../controllers/user/user');
 const {
   createTransaction,
   getTransactionStatus,
   getTransaction,
   createVerification,
+  checkout,
 } = require('../controllers/user/transaction');
 const userOnly = require('../middlewares/userOnly');
 const {
@@ -20,12 +22,14 @@ const {
   getAnswer,
   getIsAnswer,
   createScore,
+  getAllSoalById,
 } = require('../controllers/user/cbt');
 const { getTryout } = require('../controllers/admin/tryoutList');
 const ownerOnly = require('../middlewares/ownerOnly');
 const { createFreeForm } = require('../controllers/admin/freeform');
 const { getReview } = require('../controllers/user/review');
 const upload = require('../utils/multer');
+const { searchEmail } = require('../controllers/public/email');
 
 const router = express.Router();
 
@@ -43,9 +47,13 @@ router.get('/user/cbt-data/:id', userOnly, getSoalData);
 router.post('/user/cbt', userOnly, createAnswer);
 router.get('/user/get-answer', userOnly, getAnswer);
 router.get('/user/get-answered', userOnly, getIsAnswer);
+router.get('/user/getallsoal/:id', ownerOnly, userOnly, getAllSoalById);
 router.post('/user/finish/:toId', userOnly, createScore);
 router.get('/user/getTryoutList', userOnly, getTryout);
 router.post('/user/free/:tryoutListId', userOnly, createFreeForm);
 router.get('/user/review/:tryoutListId', userOnly, getReview);
+router.get('/user/search', userOnly, searchEmail);
+router.post('/user/checkout', userOnly, checkout);
+router.get('/user/mylists', userOnly, getListByUserId);
 
 module.exports = router;

@@ -1,34 +1,24 @@
 import { Link, Outlet } from 'react-router-dom';
 import TryoutCard from '../components/app/MyTryout/TryoutCard';
+import { useEffect, useState } from 'react';
+import { fetcher } from '../utils/fetcher';
 
 const Mytryout = () => {
-  const tryouts = [
-    {
-      id: 1,
-      title: 'Tryout 1',
-      desc: 'SKD 1 Juli 2024 - 5 Juli 2024',
-    },
-    {
-      id: 2,
-      title: 'Tryout 2',
-      desc: 'SKD 6 Juli 2024 - 10 Juli 2024',
-    },
-    {
-      id: 3,
-      title: 'Tryout 3',
-      desc: 'SKD 11 Juli 2024 - 15 Juli 2024',
-    },
-    {
-      id: 4,
-      title: 'Tryout 4',
-      desc: 'SKD 16 Juli 2024 - 20 Juli 2024',
-    },
-    {
-      id: 5,
-      title: 'Tryout 5',
-      desc: 'SKD 21 Juli 2024 - 25 Juli 2024',
-    },
-  ];
+  const [done, setDone] = useState([{}]);
+  const [unDone, setUndone] = useState([{}]);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const { data } = await fetcher.get('/user/mylists');
+        setDone(data.done);
+        setUndone(data.undone);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getData();
+  }, []);
 
   return (
     <>
@@ -37,15 +27,16 @@ const Mytryout = () => {
           <section className='h-1/2'>
             <div className='m-4 p-4 border rounded-lg'>
               <h1 className='text-2xl'>Belum Dikerjakan</h1>
-              {tryouts ? (
+              {unDone.length !== 0 ? (
                 <div className='rounded-lg p-4 my-2 border grid grid-cols-5 gap-4'>
-                  {tryouts?.map((tryout) => (
+                  {unDone?.map((tryout, index) => (
                     <TryoutCard
                       title={tryout.title}
-                      desc={tryout.desc}
-                      key={tryout.id}
+                      desc={tryout.description}
+                      key={index}
                       action={'kerjakan'}
-                      url={`tryout/${tryout.id}`}
+                      url={`tryout/${tryout.tryoutListId}`}
+                      imageUrl={tryout.imageUrl}
                     />
                   ))}
                 </div>
@@ -68,15 +59,16 @@ const Mytryout = () => {
           <section className='h-1/2'>
             <div className='m-4 p-4 border rounded-lg'>
               <h1 className='text-2xl'>Sudah Dikerjakan</h1>
-              {tryouts ? (
+              {done.length !== 0 ? (
                 <div className='rounded-lg p-4 my-2 border grid grid-cols-5 gap-4'>
-                  {tryouts?.map((tryout) => (
+                  {done?.map((tryout, index) => (
                     <TryoutCard
                       title={tryout.title}
                       desc={tryout.desc}
-                      key={tryout.id}
+                      key={index}
                       action={'nilai saya'}
-                      url={`score/${tryout.id}`}
+                      url={`score/${tryout.tryoutListId}`}
+                      imageUrl={tryout.imageUrl}
                     />
                   ))}
                 </div>

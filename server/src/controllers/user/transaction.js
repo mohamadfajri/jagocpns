@@ -142,7 +142,7 @@ const getTransaction = async (req, res) => {
 
   try {
     const transaction = await prisma.transaction.findFirst({
-      where: { userId: parseInt(userId) },
+      where: { userId: parseInt(userId), status: 'unpaid' || 'checking' },
       include: {
         user: {
           select: {
@@ -182,9 +182,98 @@ const getTransaction = async (req, res) => {
     };
 
     res.status(200).json(response);
+    console.log(transaction);
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ message: 'Failed to fetch transaction' });
+  }
+};
+
+const checkout = async (req, res) => {
+  const userId = Number(req.user.id); // Convert req.user.id to a number
+  const { tryoutListId, target } = req.body;
+
+  // Validate target array
+  if (!Array.isArray(target) || target.length === 0) {
+    return res.status(400).json({ message: 'Target list is invalid or empty' });
+  }
+
+  // Extract ids from the target array and validate them
+  const targetIds = target.map((user) => Number(user.id));
+  if (targetIds.some((id) => isNaN(id))) {
+    return res
+      .status(400)
+      .json({ message: 'One or more target IDs are invalid' });
+  }
+
+  try {
+    // Fetch the price of the tryout
+    const tryout = await prisma.tryoutList.findUnique({
+      where: { id: Number(tryoutListId) },
+      select: { price: true },
+    });
+
+    if (!tryout) {
+      return res.status(404).json({ message: 'Tryout not found' });
+    }
+
+    const tryoutPrice = Number(tryout.price);
+    const totalPrice = BigInt(tryoutPrice * target.length);
+
+    // Fetch the user's balance
+    const userBalance = await prisma.balance.findUnique({
+      where: { userId },
+      select: { amount: true },
+    });
+
+    if (!userBalance) {
+      return res.status(404).json({ message: 'User balance not found' });
+    }
+
+    if (userBalance.amount < totalPrice) {
+      return res.status(400).json({ message: 'Saldo tidak cukup' });
+    }
+
+    // Check if any target users already own the tryout
+    const existingOwnerships = await prisma.ownership.findMany({
+      where: {
+        tryoutListId: Number(tryoutListId),
+        userId: {
+          in: targetIds,
+        },
+      },
+      include: {
+        user: true, // To get user details like email
+      },
+    });
+
+    if (existingOwnerships.length > 0) {
+      const userEmails = existingOwnerships.map(
+        (ownership) => ownership.user.email
+      );
+      return res.status(400).json({
+        message: `User(s) ${userEmails.join(', ')} sudah memiliki tryout ini`,
+      });
+    }
+
+    // Deduct the total price from the user's balance
+    await prisma.balance.update({
+      where: { userId },
+      data: { amount: userBalance.amount - totalPrice },
+    });
+
+    // Create entries in the Ownership table
+    const ownerships = targetIds.map((targetUserId) => ({
+      userId: targetUserId,
+      tryoutListId: Number(tryoutListId),
+    }));
+
+    await prisma.ownership.createMany({ data: ownerships });
+
+    res.status(200).json({ message: 'Pembelian tryout berhasil' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Terjadi kesalahan saat checkout' });
   }
 };
 
@@ -194,4 +283,5 @@ module.exports = {
   getTransactionStatus,
   getTransaction,
   getSuccessTransaction,
+  checkout,
 };

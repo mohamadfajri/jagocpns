@@ -187,6 +187,7 @@ model Ownership {
   id           Int        @id @default(autoincrement())
   userId       Int
   tryoutListId Int
+  isDone       Boolean    @default(false)
   user         User       @relation(fields: [userId], references: [id])
   tryoutList   TryoutList @relation(fields: [tryoutListId], references: [id])
 }
