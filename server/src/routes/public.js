@@ -5,6 +5,7 @@ const { createOwnerr } = require('../controllers/public/user');
 const {
   getAllTryout,
   getTryoutById,
+  getFreeTryouts,
 } = require('../controllers/public/tryoutList');
 
 const router = express.Router();
@@ -14,5 +15,6 @@ router.get('/public/rank', getUserRankingsByTryout);
 router.post('/createowner', createOwnerr);
 router.get('/public/tryouts', getAllTryout);
 router.get('/public/tryout/:id', getTryoutById);
+router.get('/public/freetryouts', getFreeTryouts);
 
 module.exports = router;

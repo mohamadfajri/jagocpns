@@ -1,7 +1,12 @@
-const SlideContent = () => {
+import { Link } from 'react-router-dom';
+
+// eslint-disable-next-line react/prop-types
+const SlideContent = ({ imageUrl, url }) => {
   return (
     <div className='max-w-screen-xl'>
-      <img src='https://placehold.co/1270x370' alt='image' />
+      <Link to={url}>
+        <img src={imageUrl} alt='image' />
+      </Link>
     </div>
   );
 };

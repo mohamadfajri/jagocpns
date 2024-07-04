@@ -58,7 +58,7 @@ const HiUser = () => {
           <h1 className='text-2xl font-medium'>
             Selamat {great}, {nameRes}.
           </h1>
-          <p className='my-2'>Selamat datang di Dashboard JagoCPNS.</p>
+          <p className='my-2'>Selamat datang di Website JagoCPNS.</p>
         </div>
         <div className='my-8 flex flex-col justify-start'>
           <Link
@@ -71,9 +71,18 @@ const HiUser = () => {
       </div>
       <div className='border-l slider-container sm:w-4/5 mt-14 sm:mt-0 w-full'>
         <Slider {...settings}>
-          <SlideContent />
-          <SlideContent />
-          <SlideContent />
+          <SlideContent
+            imageUrl={
+              'https://ghcdsezrgytedkcpribk.supabase.co/storage/v1/object/public/information/Selamat_Datang_di_JagoCpns.id_(1).png'
+            }
+            url={'/free/10'}
+          />
+          <SlideContent
+            url={'/app/dashboard'}
+            imageUrl={
+              'https://ghcdsezrgytedkcpribk.supabase.co/storage/v1/object/public/information/Selamat_Datang_di_JagoCpns.id_(2).png'
+            }
+          />{' '}
         </Slider>
       </div>
       <div className='flex flex-col sm:hidden p-6'>

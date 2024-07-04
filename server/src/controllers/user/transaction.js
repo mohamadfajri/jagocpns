@@ -92,9 +92,16 @@ const getSuccessTransaction = async (req, res) => {
       return res.status(404).json({ message: 'No paid transactions found' });
     }
 
+    const format = transactions.map((t) => ({
+      id: t.id,
+      date: t.updatedAt,
+      description: `Topup saldo JAGOCPNS ${t.id}`,
+      amount: t.amount.toString(),
+    }));
+
     res.status(200).json({
       message: 'Paid transactions retrieved successfully',
-      data: transactions,
+      data: format,
     });
   } catch (error) {
     console.error('Error:', error);
@@ -122,6 +129,7 @@ const getTransactionStatus = async (req, res) => {
     }
 
     res.status(200).json({
+      transaction: transaction.status,
       status:
         transaction.status === 'unpaid'
           ? true
@@ -171,7 +179,10 @@ const getTransaction = async (req, res) => {
 
   try {
     const transaction = await prisma.transaction.findFirst({
-      where: { userId: parseInt(userId), status: 'unpaid' || 'checking' },
+      where: {
+        userId: parseInt(userId),
+        OR: [{ status: 'unpaid' }, { status: 'checking' }],
+      },
       include: {
         user: {
           select: {

@@ -75,4 +75,29 @@ const getTryoutByName = async (req, res) => {
   }
 };
 
-module.exports = { getAllTryout, getTryoutById, getTryoutByName };
+const getFreeTryouts = async (req, res) => {
+  try {
+    const freeTryouts = await prisma.tryoutList.findMany({
+      where: {
+        price: 0,
+      },
+    });
+    const format = freeTryouts.map((item) => ({
+      id: item.id,
+      title: item.title,
+      description: item.description,
+      imageUrl: item.imageUrl,
+    }));
+    return res.status(200).json(format);
+  } catch (error) {
+    console.error('Error fetching free tryouts:', error);
+    return res.status(500).json({ message: 'Failed to fetch free tryouts' });
+  }
+};
+
+module.exports = {
+  getAllTryout,
+  getTryoutById,
+  getTryoutByName,
+  getFreeTryouts,
+};

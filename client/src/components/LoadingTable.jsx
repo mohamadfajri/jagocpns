@@ -4,11 +4,11 @@ const LoadingTable = () => {
   return (
     <>
       <div className='flex justify-center space-x-2 items-center'>
-        <Button disabled color='gray'>
+        <Button size={'xl'} disabled color='gray'>
           <Spinner
             color={'info'}
             aria-label='Alternate spinner button example'
-            size='sm'
+            size='md'
           />
           <span className='pl-3'>Loading...</span>
         </Button>

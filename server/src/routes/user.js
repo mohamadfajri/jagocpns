@@ -6,6 +6,7 @@ const {
   changePassword,
   createProfile,
   getListByUserId,
+  getSummary,
 } = require('../controllers/user/user');
 const {
   createTransaction,
@@ -14,6 +15,7 @@ const {
   createVerification,
   checkout,
   cancelTransaction,
+  getSuccessTransaction,
 } = require('../controllers/user/transaction');
 const userOnly = require('../middlewares/userOnly');
 const {
@@ -36,6 +38,7 @@ const router = express.Router();
 
 router.get('/user', userOnly, getUser);
 router.post('/user/profile', userOnly, createProfile);
+router.get('/user/summary', userOnly, getSummary);
 router.post('/user/signup', createUser);
 router.post('/user/signin', userSignin);
 router.patch('/user/changepassword', changePassword);
@@ -44,6 +47,7 @@ router.delete('/user/transaction', userOnly, cancelTransaction);
 router.post('/user/transaction/verify', userOnly, upload, createVerification);
 router.get('/user/transaction', userOnly, getTransactionStatus);
 router.get('/user/transaction/data', userOnly, getTransaction);
+router.get('/user/transaction/success', userOnly, getSuccessTransaction);
 router.get('/user/cbt/:id/:num', ownerOnly, userOnly, getSoalByNumber);
 router.get('/user/cbt-data/:id', userOnly, getSoalData);
 router.post('/user/answer/:id', ownerOnly, userOnly, createAnswer);

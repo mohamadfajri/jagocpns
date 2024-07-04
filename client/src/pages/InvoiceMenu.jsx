@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Button, FileInput, Label } from 'flowbite-react';
 import qris from '../assets/images/qris.jpeg';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { fetcher } from '../utils/fetcher';
 import { useAlert } from '../stores/useAlert';
 import { useTopup } from '../stores/useTopup';
@@ -12,11 +12,26 @@ const InvoiceMenu = () => {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const { set } = useTopup();
+  const [status, setStatus] = useState('unpaid');
 
   const handleFile = (e) => {
     const file = e.target.files[0];
     setImage(file);
   };
+
+  useEffect(() => {
+    const getStatus = async () => {
+      setLoading(true);
+      const { data } = await fetcher.get('/user/transaction');
+      if (data.transaction === 'checking') {
+        setLoading(true);
+        setStatus(data.transaction);
+      } else {
+        setLoading(false);
+      }
+    };
+    getStatus();
+  }, []);
 
   const createVerification = async (e) => {
     e.preventDefault();
@@ -35,7 +50,6 @@ const InvoiceMenu = () => {
         }
       );
       setAlert({ title: 'Info!', message: data.message, color: 'success' });
-      setLoading(false);
     } catch (error) {
       setAlert({
         title: 'Info!',
@@ -48,10 +62,13 @@ const InvoiceMenu = () => {
 
   const handleCancel = async () => {
     try {
+      setLoading(true);
       const { data } = await fetcher.delete('/user/transaction');
       setAlert({ title: 'Success', message: data.message, color: 'success' });
       set(false);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       setAlert({
         title: 'Gagal',
         message: error.response.data.message,
@@ -98,6 +115,15 @@ const InvoiceMenu = () => {
                 memverifikasi .
               </p>
             </li>
+            <li>
+              <p>
+                6. Apabila status <strong>{"'CHECKING'"}</strong> dan anda ingin
+                membatalkan pesanan silahkan hubungi{' '}
+                <a className='text-blue-500 hover:underline' href='#'>
+                  admin
+                </a>
+              </p>
+            </li>
           </ul>
         </div>
         <div className='mb-2'>
@@ -105,15 +131,20 @@ const InvoiceMenu = () => {
             <Label htmlFor='bukti' value='Upload Bukti Transfer' />
           </div>
           <FileInput
+            disabled={loading}
             ref={fileInputRef}
             id='bukti'
             sizing='sm'
             onChange={handleFile}
           />
         </div>
+        <div className='border rounded-lg p-2 w-fit text-white bg-green-400 my-2'>
+          <h1>Status : {status.toUpperCase()}</h1>
+        </div>
 
         <div className='flex justify-center space-x-2'>
           <Button
+            disabled={loading}
             type='button'
             onClick={handleCancel}
             size='sm'

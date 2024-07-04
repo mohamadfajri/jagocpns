@@ -217,6 +217,35 @@ const getListByUserId = async (req, res) => {
   }
 };
 
+const getSummary = async (req, res) => {
+  const userId = req.user.id;
+
+  try {
+    const balance = await prisma.balance.findUnique({
+      where: {
+        userId: userId,
+      },
+      select: {
+        amount: true,
+      },
+    });
+    const myOwnTryoutsCount = await prisma.ownership.count({
+      where: {
+        userId: userId,
+      },
+    });
+    const totalUserCount = await prisma.user.count();
+    res.status(200).json({
+      balance: balance ? balance.amount.toString() : 0,
+      myOwnTryouts: myOwnTryoutsCount ? myOwnTryoutsCount : 0,
+      totalUser: totalUserCount,
+    });
+  } catch (error) {
+    console.error('Error fetching summary:', error);
+    res.status(500).json({ message: 'Failed to fetch summary' });
+  }
+};
+
 module.exports = {
   createUser,
   createProfile,
@@ -225,4 +254,5 @@ module.exports = {
   changePassword,
   getUserTryouts,
   getListByUserId,
+  getSummary,
 };

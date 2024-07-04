@@ -1,8 +1,17 @@
 import { useEffect, useState } from 'react';
 import NewsList from './NewsList';
+import { fetcher } from '../../../utils/fetcher';
 
 const NewsSection = () => {
+  const formatIDR = (number) => {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0,
+    }).format(number);
+  };
   const [day, setDay] = useState(0);
+  const [data, setData] = useState({});
 
   const countdownTo = () => {
     // Get the current date and time
@@ -21,6 +30,14 @@ const NewsSection = () => {
   useEffect(() => {
     countdownTo();
   }, []);
+
+  useEffect(() => {
+    const getData = async () => {
+      const { data } = await fetcher.get('/user/summary');
+      setData(data);
+    };
+    getData();
+  }, []);
   return (
     <div className='flex sm:flex-row flex-col mt-12 p-4 sm:p-0'>
       <div className='sm:w-1/3 w-full'>
@@ -28,19 +45,21 @@ const NewsSection = () => {
           <li>
             <div className='m-4 p-4 border rounded-lg text-center'>
               <h1 className='text-xs'>Saldo Saya</h1>
-              <h2 className='text-2xl font-semibold'>Rp 100.000,00</h2>
+              <h2 className='text-2xl font-semibold'>
+                {formatIDR(data.balance)}
+              </h2>
             </div>
           </li>
           <li>
             <div className='m-4 p-4 border rounded-lg text-center'>
               <h1 className='text-xs'>Paket Tryout Saya</h1>
-              <h2 className='text-2xl font-semibold'>3</h2>
+              <h2 className='text-2xl font-semibold'>{data.myOwnTryouts}</h2>
             </div>
           </li>
           <li>
             <div className='m-4 p-4 border rounded-lg text-center'>
               <h1 className='text-xs'>Jumlah User Terdaftar</h1>
-              <h2 className='text-2xl font-semibold'>3</h2>
+              <h2 className='text-2xl font-semibold'>{data.totalUser}</h2>
             </div>
           </li>
         </ul>

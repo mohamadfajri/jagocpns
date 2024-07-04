@@ -8,7 +8,7 @@ const createTryout = async (req, res) => {
       data: {
         title,
         price: BigInt(price),
-        imageUrl: req.fileURL,
+        imageUrl: req.image,
         description,
       },
     });
