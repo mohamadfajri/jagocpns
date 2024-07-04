@@ -213,7 +213,6 @@ const getListByUserId = async (req, res) => {
       undone: formatUndone,
     });
   } catch (error) {
-    console.error('Error:', error);
     res.status(500).json({ message: 'Failed to get ownerships by user ID' });
   }
 };

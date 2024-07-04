@@ -44,7 +44,7 @@ router.get('/user/transaction', userOnly, getTransactionStatus);
 router.get('/user/transaction/data', userOnly, getTransaction);
 router.get('/user/cbt/:id/:num', ownerOnly, userOnly, getSoalByNumber);
 router.get('/user/cbt-data/:id', userOnly, getSoalData);
-router.post('/user/cbt', userOnly, createAnswer);
+router.post('/user/answer/:id', ownerOnly, userOnly, createAnswer);
 router.get('/user/get-answer', userOnly, getAnswer);
 router.get('/user/get-answered', userOnly, getIsAnswer);
 router.get('/user/getallsoal/:id', ownerOnly, userOnly, getAllSoalById);

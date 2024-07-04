@@ -1,22 +1,28 @@
 import { useEffect, useState } from 'react';
 import { fetcher } from '../utils/fetcher';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Button, Modal } from 'flowbite-react';
+import { useCbt } from '../stores/useCbt';
+import { useAlert } from '../stores/useAlert';
 
 const CbtTryout = () => {
   const [soal, setSoal] = useState([]);
   const [activeSoal, setActiveSoal] = useState({});
   const [numbers, setNumbers] = useState([]);
   const [activeNumber, setActiveNumber] = useState(1);
-  const [answers, setAnswers] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [timeLeft, setTimeLeft] = useState('00:00');
+  const { answers, setAnswers, setIsWorking, initialTime, setInitialTime } =
+    useCbt();
+  const [timeLeft, setTimeLeft] = useState('02:00:00');
   const { id } = useParams();
+  const { setAlert } = useAlert();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getSoal = async () => {
       try {
-        const { data } = await fetcher.get(`/user/getallsoal/${id}`);
+        const response = await fetcher.get(`/user/getallsoal/${id}`);
+        const { data } = response;
         const createNumbers = (total) => {
           const numbers = [];
           for (let i = 1; i <= total; i++) {
@@ -28,14 +34,111 @@ const CbtTryout = () => {
         setSoal(data);
         setNumbers(createNumbers(data.length));
         setActiveSoal(data[0]);
-        setAnswers(Array(data.length).fill('x')); // Initialize answers with 'x'
+        setIsWorking(id);
       } catch (error) {
         console.error('Failed to fetch soals:', error);
+        navigate('/app/dashboard');
+        setAlert({
+          title: 'Error!',
+          message: error.response.data.message,
+          color: 'failure',
+        });
       }
     };
 
     getSoal();
-  }, [id]);
+  }, [id, setAnswers, setIsWorking, navigate, setAlert]);
+
+  useEffect(() => {
+    if (initialTime) {
+      const now = new Date().getTime();
+      const initial = new Date(initialTime).getTime();
+      const diff = now - initial;
+
+      if (diff >= 2 * 60 * 60 * 1000) {
+        setTimeLeft('00:00:00');
+      } else {
+        const remainingTime = 2 * 60 * 60 * 1000 - diff;
+        const hours = Math.floor(remainingTime / (1000 * 60 * 60));
+        const minutes = Math.floor(
+          (remainingTime % (1000 * 60 * 60)) / (1000 * 60)
+        );
+        const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+        setTimeLeft(
+          `${String(hours).padStart(2, '0')}:${String(minutes).padStart(
+            2,
+            '0'
+          )}:${String(seconds).padStart(2, '0')}`
+        );
+      }
+    } else {
+      const now = new Date();
+      setInitialTime(now);
+      setTimeLeft('02:00:00');
+    }
+  }, [initialTime, setInitialTime]);
+
+  useEffect(() => {
+    const postAnswers = async () => {
+      try {
+        const { data } = await fetcher.post(`/user/answer/${id}`, {
+          answers: answers,
+        });
+        setAlert({ title: 'Sukses!', message: data.message, color: 'success' });
+        setIsWorking(null);
+        setInitialTime(null);
+        setAnswers([]);
+      } catch (error) {
+        setAlert({
+          title: 'Gagal!',
+          message: error.response.data.error,
+          color: 'failure',
+        });
+      }
+    };
+
+    if (timeLeft === '00:00:00') {
+      postAnswers();
+      navigate('/app/dashboard');
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setTimeLeft((prevTime) => {
+        const [hours, minutes, seconds] = prevTime.split(':').map(Number);
+        const totalSeconds = hours * 3600 + minutes * 60 + seconds - 1;
+
+        if (totalSeconds <= 0) return '00:00:00';
+
+        const newHours = Math.floor(totalSeconds / 3600);
+        const newMinutes = Math.floor((totalSeconds % 3600) / 60);
+        const newSeconds = totalSeconds % 60;
+
+        return [
+          String(newHours).padStart(2, '0'),
+          String(newMinutes).padStart(2, '0'),
+          String(newSeconds).padStart(2, '0'),
+        ].join(':');
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [
+    timeLeft,
+    navigate,
+    answers,
+    id,
+    setAlert,
+    setIsWorking,
+    setInitialTime,
+    setAnswers,
+  ]);
+
+  useEffect(() => {
+    if (answers.length === 0) {
+      setAnswers(Array(soal.length).fill('x'));
+    }
+  }, [setAnswers, answers.length, soal]);
 
   const handleNavigate = (index) => {
     setActiveSoal(soal[index]);
@@ -46,10 +149,12 @@ const CbtTryout = () => {
     const newAnswers = [...answers];
     newAnswers[activeNumber - 1] = key;
     setAnswers(newAnswers);
+    console.log(newAnswers);
   };
 
   const handleConfirm = () => {
     console.log('Answers submitted:', answers);
+    postAnswers();
     setShowModal(false);
   };
 
@@ -71,6 +176,25 @@ const CbtTryout = () => {
 
   const callNextAndSubmit = () => {
     setShowModal(true);
+  };
+
+  const postAnswers = async () => {
+    try {
+      const { data } = await fetcher.post(`/user/answer/${id}`, {
+        answers: answers,
+      });
+      setAlert({ title: 'Sukses!', message: data.message, color: 'success' });
+      setIsWorking(null);
+      setInitialTime(null);
+      setAnswers([]);
+      navigate('/app/dashboard');
+    } catch (error) {
+      setAlert({
+        title: 'Gagal!',
+        message: error.response.data.error,
+        color: 'failure',
+      });
+    }
   };
 
   const renderOption = (key, text, image) => (

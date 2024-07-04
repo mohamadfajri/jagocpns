@@ -67,49 +67,112 @@ const getSoalData = async (req, res) => {
 };
 
 const createAnswer = async (req, res) => {
-  const { tryoutListId, number, answer } = req.body;
-  const { id } = req.user;
+  const userId = req.user.id;
+  const { id: tryoutListId } = req.params;
+  const { answers } = req.body;
 
-  if (!tryoutListId || !number || answer === undefined) {
-    return res.status(400).json({ error: 'Missing required fields' });
+  if (!Array.isArray(answers) || answers.length === 0) {
+    return res.status(400).json({ message: 'Invalid answers array' });
   }
 
+  const answerData = answers.map((answer, index) => ({
+    tryoutListId: parseInt(tryoutListId),
+    number: index + 1,
+    userId: userId,
+    answer: `option${answer}`,
+  }));
+
   try {
-    const existingAnswer = await prisma.answer.findFirst({
+    const createdAnswers = await prisma.answer.createMany({
+      data: answerData,
+    });
+    const userAnswers = await prisma.answer.findMany({
       where: {
-        AND: [
-          { tryoutListId: parseInt(tryoutListId) },
-          { userId: parseInt(id) },
-          { number: parseInt(number) },
-        ],
+        userId: userId,
+        tryoutListId: parseInt(tryoutListId),
       },
     });
 
-    let result;
-    if (existingAnswer) {
-      result = await prisma.answer.update({
-        where: {
-          id: existingAnswer.id,
-        },
-        data: {
-          answer,
-        },
-      });
-    } else {
-      result = await prisma.answer.create({
-        data: {
-          tryoutListId: parseInt(tryoutListId),
-          number,
-          userId: parseInt(id),
-          answer,
-        },
-      });
-    }
+    const tryouts = await prisma.tryout.findMany({
+      where: {
+        tryoutListId: parseInt(tryoutListId),
+      },
+    });
 
-    res.status(200).json(result);
+    let tiuScore = 0;
+    let twkScore = 0;
+    let tkpScore = 0;
+
+    userAnswers.forEach((answer) => {
+      const tryout = tryouts.find((t) => t.number === answer.number);
+      if (tryout) {
+        let score = 0;
+        switch (answer.answer) {
+          case 'optionA':
+            score = tryout.scoreA;
+            break;
+          case 'optionB':
+            score = tryout.scoreB;
+            break;
+          case 'optionC':
+            score = tryout.scoreC;
+            break;
+          case 'optionD':
+            score = tryout.scoreD;
+            break;
+          case 'optionE':
+            score = tryout.scoreE;
+            break;
+          default:
+            break;
+        }
+
+        if (tryout.type === 'tiu') {
+          tiuScore += score;
+        } else if (tryout.type === 'twk') {
+          twkScore += score;
+        } else if (tryout.type === 'tkp') {
+          tkpScore += score;
+        }
+      }
+    });
+
+    const totalScore = tiuScore + twkScore + tkpScore;
+
+    const newScore = await prisma.score.create({
+      data: {
+        userId: userId,
+        tryoutListId: parseInt(tryoutListId),
+        tiu: tiuScore,
+        twk: twkScore,
+        tkp: tkpScore,
+        total: totalScore,
+      },
+    });
+    await prisma.ownership.updateMany({
+      where: {
+        userId: userId,
+        tryoutListId: parseInt(tryoutListId),
+      },
+      data: {
+        isDone: true,
+      },
+    });
+
+    return res.status(201).json({
+      message: 'Jawaban berhasil disubmit!',
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to create or update answer' });
+    if (error.code === 'P2002') {
+      return res.status(400).json({ error: 'Data sudah ada' });
+    } else {
+      return res
+        .status(500)
+        .json({
+          message:
+            'Failed to submit answers, calculate score, and update isDone status',
+        });
+    }
   }
 };
 
