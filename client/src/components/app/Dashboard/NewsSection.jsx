@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import NewsList from './NewsList';
 import { fetcher } from '../../../utils/fetcher';
+import { Spinner } from 'flowbite-react';
 
 const NewsSection = () => {
   const formatIDR = (number) => {
@@ -12,6 +13,7 @@ const NewsSection = () => {
   };
   const [day, setDay] = useState(0);
   const [data, setData] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const countdownTo = () => {
     // Get the current date and time
@@ -33,8 +35,14 @@ const NewsSection = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const { data } = await fetcher.get('/user/summary');
-      setData(data);
+      try {
+        setLoading(true);
+        const { data } = await fetcher.get('/user/summary');
+        setData(data);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+      }
     };
     getData();
   }, []);
@@ -46,20 +54,24 @@ const NewsSection = () => {
             <div className='m-4 p-4 border rounded-lg text-center'>
               <h1 className='text-xs'>Saldo Saya</h1>
               <h2 className='text-2xl font-semibold'>
-                {formatIDR(data.balance)}
+                {loading ? <Spinner /> : formatIDR(data.balance)}
               </h2>
             </div>
           </li>
           <li>
             <div className='m-4 p-4 border rounded-lg text-center'>
               <h1 className='text-xs'>Paket Tryout Saya</h1>
-              <h2 className='text-2xl font-semibold'>{data.myOwnTryouts}</h2>
+              <h2 className='text-2xl font-semibold'>
+                {loading ? <Spinner /> : data.myOwnTryouts}
+              </h2>
             </div>
           </li>
           <li>
             <div className='m-4 p-4 border rounded-lg text-center'>
               <h1 className='text-xs'>Jumlah User Terdaftar</h1>
-              <h2 className='text-2xl font-semibold'>{data.totalUser}</h2>
+              <h2 className='text-2xl font-semibold'>
+                {loading ? <Spinner /> : data.totalUser}
+              </h2>
             </div>
           </li>
         </ul>
