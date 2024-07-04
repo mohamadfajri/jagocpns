@@ -27,13 +27,13 @@ const Mytryout = () => {
 
   return (
     <>
-      <div className='sm:p-10 sm:ml-64 dark:bg-black min-h-screen'>
+      <div className='mt-12 sm:mt-0 sm:p-10 sm:ml-64 dark:bg-black min-h-screen'>
         <main className='flex flex-col'>
-          <section className='h-1/2'>
+          <section className='sm:h-1/2'>
             <div className='m-4 p-4 border rounded-lg'>
-              <h1 className='text-2xl'>Belum Dikerjakan</h1>
+              <h1 className='sm:text-2xl'>Belum Dikerjakan</h1>
               {unDone.length !== 0 ? (
-                <div className='rounded-lg p-4 my-2 border grid grid-cols-5 gap-4'>
+                <div className='rounded-lg p-4 my-2 border grid grid-cols-2 sm:grid-cols-5 gap-4'>
                   {isLoading ? (
                     <LoadingTable />
                   ) : (
@@ -50,7 +50,7 @@ const Mytryout = () => {
                   )}
                 </div>
               ) : (
-                <div className='flex space-x-1 justify-center text-lg m-4'>
+                <div className='flex space-x-1 justify-center sm:text-lg m-4'>
                   <h2>
                     Anda belum memiliki tryout,silahkan membeli terlebih dahulu
                     di
@@ -67,9 +67,9 @@ const Mytryout = () => {
           </section>
           <section className='h-1/2'>
             <div className='m-4 p-4 border rounded-lg'>
-              <h1 className='text-2xl'>Sudah Dikerjakan</h1>
+              <h1 className='sm:text-2xl'>Sudah Dikerjakan</h1>
               {done.length !== 0 ? (
-                <div className='rounded-lg p-4 my-2 border grid grid-cols-5 gap-4'>
+                <div className='rounded-lg p-4 my-2 border grid sm:grid-cols-5 grid-cols-2 gap-4'>
                   {isLoading ? (
                     <LoadingTable />
                   ) : (
@@ -86,7 +86,7 @@ const Mytryout = () => {
                   )}
                 </div>
               ) : (
-                <div className='flex space-x-1 justify-center text-lg m-4'>
+                <div className='flex space-x-1 justify-center sm:text-lg m-4'>
                   <h2>
                     Anda belum mengerjakan tryout apapun, silahkan kerjakan
                     terlebih dahulu!

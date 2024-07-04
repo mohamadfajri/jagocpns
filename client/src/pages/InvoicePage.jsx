@@ -14,7 +14,7 @@ const InvoicePage = () => {
     getTransaction();
   }, [setData]);
   return (
-    <div className='p-4 border rounded-lg flex justify-center space-x-8'>
+    <div className='p-4 border rounded-lg flex flex-col sm:flex-row justify-center sm:space-x-8 space-y-6 sm:space-y-0'>
       <InvoiceTopup />
       <InvoiceMenu />
     </div>

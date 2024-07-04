@@ -19,12 +19,12 @@ const BuyTryOut = () => {
   }, []);
 
   return (
-    <div className='sm:p-10 sm:ml-64 dark:bg-black min-h-screen'>
+    <div className='sm:p-10 sm:ml-64 dark:bg-black min-h-screen mt-14 sm:mt-0'>
       <section>
         <div className='m-4 p-4 border rounded-lg'>
           <h1 className='text-2xl'>Beli Tryout</h1>
           {tryouts ? (
-            <div className='rounded-lg p-4 my-2 border grid grid-cols-5 gap-4'>
+            <div className='rounded-lg p-4 my-2 border grid grid-cols-2 sm:grid-cols-5 gap-4'>
               {isLoading ? (
                 <LoadingTable />
               ) : (

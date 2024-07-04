@@ -15,7 +15,7 @@ const TryoutCard = ({ title, desc, action, url, imageUrl, price }) => {
         <img className='rounded-t-lg' src={imageUrl} alt='' />
       </a>
       <div className='p-5'>
-        <h5 className='mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
+        <h5 className='mb-2 sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
           {title}
         </h5>
 
@@ -29,7 +29,7 @@ const TryoutCard = ({ title, desc, action, url, imageUrl, price }) => {
         )}
         <Link
           to={url}
-          className='inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-orange-700 rounded-lg hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
+          className='inline-flex items-center sm:px-3 sm:py-2 p-2 text-sm font-medium text-center text-white bg-orange-700 rounded-lg hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
         >
           {action}
           <svg

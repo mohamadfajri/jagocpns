@@ -137,7 +137,11 @@ const CheckoutBar = () => {
                 Total Harga
               </Label>
               <div className='border rounded-lg p-2 font-medium'>
-                <p>{formatIDR(data.price)}</p>
+                <p>
+                  {isJoin
+                    ? formatIDR((data.price * 5) / 2)
+                    : formatIDR(data.price)}
+                </p>
               </div>
             </div>
             <label className='inline-flex items-center cursor-pointer my-4'>
