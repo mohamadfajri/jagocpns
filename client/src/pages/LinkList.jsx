@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetcher } from '../utils/fetcher';
+import logo from '../assets/images/logo-extend.png';
 
 const LinkList = () => {
   const [links, setlinks] = useState([{}]);
@@ -13,9 +14,12 @@ const LinkList = () => {
     getLinks();
   }, []);
   return (
-    <div className='flex flex-col items-center justify-center min-h-screen bg-gray-100'>
-      <div className='bg-white shadow-lg rounded-lg p-6 max-w-sm w-full'>
-        <h1 className='text-2xl font-bold mb-6 text-center'>My Links</h1>
+    <div className='flex flex-col items-center justify-between py-6 min-h-screen'>
+      <div className='bg-white rounded-lg p-6 max-w-sm w-full'>
+        <div className='w-full flex flex-col items-center my-8'>
+          <img src={logo} alt='logo' className='w-40' />
+          <h1 className='text-lg font-medium'>Let{"'"}s get in touch!</h1>
+        </div>
         <ul className='space-y-4'>
           {links.map((item, index) => (
             <li key={index}>
@@ -36,6 +40,7 @@ const LinkList = () => {
           ))}
         </ul>
       </div>
+      <footer>&copy;jagocpns.id 2024</footer>
     </div>
   );
 };

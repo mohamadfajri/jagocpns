@@ -1,5 +1,8 @@
 const express = require('express');
-const { getInformationByType } = require('../controllers/public/information');
+const {
+  getInformationByType,
+  getLinks,
+} = require('../controllers/public/information');
 const { getUserRankingsByTryout } = require('../controllers/public/ranking');
 const { createOwnerr } = require('../controllers/public/user');
 const {
@@ -15,6 +18,6 @@ router.get('/public/rank', getUserRankingsByTryout);
 router.get('/public/tryouts', getAllTryout);
 router.get('/public/tryout/:id', getTryoutById);
 router.get('/public/freetryouts', getFreeTryouts);
-router.get('/public/links', getFreeTryouts);
+router.get('/public/links', getLinks);
 
 module.exports = router;
