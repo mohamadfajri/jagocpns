@@ -29,7 +29,7 @@ const FreeForm = () => {
       <div className='flex items-center'>
         <div className='w-full'>
           <img src={logo} alt='jagocpns' className='mx-auto h-24' />
-          <div className='flex justify-between p-8 mx-auto shadow-md rounded-lg max-w-screen-lg'>
+          <div className='flex flex-col sm:flex-row justify-between p-8 mx-auto shadow-md rounded-lg max-w-screen-lg'>
             <div className='space-y-2'>
               <h1 className='text-lg font-semibold my-4'>
                 Tryout Gratis JagoCPNS

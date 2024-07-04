@@ -8,12 +8,14 @@ import TryoutSection from '../components/landing/TryoutSection';
 export default function Landing() {
   return (
     <>
-      <HeroSection />
-      <TryoutSection />
-      <TestiSection />
-      <FeatureSection />
-      <FooterSection />
-      <ContactToast />
+      <div>
+        <HeroSection />
+        <TryoutSection />
+        <TestiSection />
+        <FeatureSection />
+        <FooterSection />
+        <ContactToast />
+      </div>
     </>
   );
 }

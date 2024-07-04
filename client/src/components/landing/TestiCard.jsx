@@ -5,7 +5,7 @@ const TestiCard = ({ heading, subheading, desc }) => {
       <div className='flex flex-col items-center pb-10'>
         <img
           className='w-24 h-24 mb-3 rounded-full shadow-sm m-6'
-          src='http://www.gravatar.com/avatar/?d=mp'
+          src='https://ghcdsezrgytedkcpribk.supabase.co/storage/v1/object/public/information/image.png'
           alt='Bonnie image'
         />
         <h5 className='mb-1 text-xl font-medium text-gray-900 dark:text-white'>
