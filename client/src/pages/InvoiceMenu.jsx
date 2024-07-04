@@ -4,12 +4,14 @@ import qris from '../assets/images/qris.jpeg';
 import { useRef, useState } from 'react';
 import { fetcher } from '../utils/fetcher';
 import { useAlert } from '../stores/useAlert';
+import { useTopup } from '../stores/useTopup';
 
 const InvoiceMenu = () => {
   const fileInputRef = useRef(null);
   const { setAlert } = useAlert();
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { set } = useTopup();
 
   const handleFile = (e) => {
     const file = e.target.files[0];
@@ -41,6 +43,20 @@ const InvoiceMenu = () => {
         color: 'failure',
       });
       setLoading(false);
+    }
+  };
+
+  const handleCancel = async () => {
+    try {
+      const { data } = await fetcher.delete('/user/transaction');
+      setAlert({ title: 'Success', message: data.message, color: 'success' });
+      set(false);
+    } catch (error) {
+      setAlert({
+        title: 'Gagal',
+        message: error.response.data.message,
+        color: 'failure',
+      });
     }
   };
 
@@ -97,7 +113,12 @@ const InvoiceMenu = () => {
         </div>
 
         <div className='flex justify-center space-x-2'>
-          <Button size='sm' color='failure'>
+          <Button
+            type='button'
+            onClick={handleCancel}
+            size='sm'
+            color='failure'
+          >
             Batalkan Topup
           </Button>
           <Button disabled={loading} type='submit' size='sm' color='success'>

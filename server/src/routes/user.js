@@ -13,6 +13,7 @@ const {
   getTransaction,
   createVerification,
   checkout,
+  cancelTransaction,
 } = require('../controllers/user/transaction');
 const userOnly = require('../middlewares/userOnly');
 const {
@@ -39,6 +40,7 @@ router.post('/user/signup', createUser);
 router.post('/user/signin', userSignin);
 router.patch('/user/changepassword', changePassword);
 router.post('/user/transaction', userOnly, createTransaction);
+router.delete('/user/transaction', userOnly, cancelTransaction);
 router.post('/user/transaction/verify', userOnly, upload, createVerification);
 router.get('/user/transaction', userOnly, getTransactionStatus);
 router.get('/user/transaction/data', userOnly, getTransaction);

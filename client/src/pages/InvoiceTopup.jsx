@@ -134,7 +134,7 @@ const InvoiceTopup = () => {
                   Total
                 </th>
                 <td className='pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0'>
-                  {data.amount}
+                  {formatIDR(data.amount)}
                 </td>
               </tr>
             </tfoot>

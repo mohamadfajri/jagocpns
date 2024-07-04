@@ -2,19 +2,24 @@ import { Link, Outlet } from 'react-router-dom';
 import TryoutCard from '../components/app/MyTryout/TryoutCard';
 import { useEffect, useState } from 'react';
 import { fetcher } from '../utils/fetcher';
+import LoadingTable from '../components/LoadingTable';
 
 const Mytryout = () => {
   const [done, setDone] = useState([{}]);
   const [unDone, setUndone] = useState([{}]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
       try {
+        setIsLoading(true);
         const { data } = await fetcher.get('/user/mylists');
         setDone(data.done);
         setUndone(data.undone);
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
+        setIsLoading(false);
       }
     };
     getData();
@@ -29,16 +34,20 @@ const Mytryout = () => {
               <h1 className='text-2xl'>Belum Dikerjakan</h1>
               {unDone.length !== 0 ? (
                 <div className='rounded-lg p-4 my-2 border grid grid-cols-5 gap-4'>
-                  {unDone?.map((tryout, index) => (
-                    <TryoutCard
-                      title={tryout.title}
-                      desc={tryout.description}
-                      key={index}
-                      action={'kerjakan'}
-                      url={`tryout/${tryout.tryoutListId}`}
-                      imageUrl={tryout.imageUrl}
-                    />
-                  ))}
+                  {isLoading ? (
+                    <LoadingTable />
+                  ) : (
+                    unDone?.map((tryout, index) => (
+                      <TryoutCard
+                        title={tryout.title}
+                        desc={tryout.description}
+                        key={index}
+                        action={'kerjakan'}
+                        url={`tryout/${tryout.tryoutListId}`}
+                        imageUrl={tryout.imageUrl}
+                      />
+                    ))
+                  )}
                 </div>
               ) : (
                 <div className='flex space-x-1 justify-center text-lg m-4'>
@@ -61,16 +70,20 @@ const Mytryout = () => {
               <h1 className='text-2xl'>Sudah Dikerjakan</h1>
               {done.length !== 0 ? (
                 <div className='rounded-lg p-4 my-2 border grid grid-cols-5 gap-4'>
-                  {done?.map((tryout, index) => (
-                    <TryoutCard
-                      title={tryout.title}
-                      desc={tryout.desc}
-                      key={index}
-                      action={'nilai saya'}
-                      url={`score/${tryout.tryoutListId}`}
-                      imageUrl={tryout.imageUrl}
-                    />
-                  ))}
+                  {isLoading ? (
+                    <LoadingTable />
+                  ) : (
+                    done?.map((tryout, index) => (
+                      <TryoutCard
+                        title={tryout.title}
+                        desc={tryout.desc}
+                        key={index}
+                        action={'nilai saya'}
+                        url={`score/${tryout.tryoutListId}`}
+                        imageUrl={tryout.imageUrl}
+                      />
+                    ))
+                  )}
                 </div>
               ) : (
                 <div className='flex space-x-1 justify-center text-lg m-4'>

@@ -8,6 +8,7 @@ const SignOut = () => {
 
   useEffect(() => {
     removeToken();
+    localStorage.clear();
     navigate('/auth/signin');
   }, [removeToken, navigate]);
 

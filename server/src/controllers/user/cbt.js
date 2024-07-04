@@ -166,12 +166,10 @@ const createAnswer = async (req, res) => {
     if (error.code === 'P2002') {
       return res.status(400).json({ error: 'Data sudah ada' });
     } else {
-      return res
-        .status(500)
-        .json({
-          message:
-            'Failed to submit answers, calculate score, and update isDone status',
-        });
+      return res.status(500).json({
+        message:
+          'Failed to submit answers, calculate score, and update isDone status',
+      });
     }
   }
 };
@@ -327,8 +325,23 @@ const createScore = async (req, res) => {
 
 const getAllSoalById = async (req, res) => {
   const tryoutListId = req.params.id;
+  const userId = req.user.id;
 
   try {
+    const ownership = await prisma.ownership.findFirst({
+      where: {
+        userId: Number(userId),
+        tryoutListId: Number(tryoutListId),
+        isDone: true,
+      },
+    });
+
+    if (ownership) {
+      return res
+        .status(400)
+        .json({ message: 'Anda sudah mengerjakan tryout ini' });
+    }
+
     const tryouts = await prisma.tryout.findMany({
       where: {
         tryoutListId: Number(tryoutListId),
@@ -338,7 +351,25 @@ const getAllSoalById = async (req, res) => {
       },
     });
 
-    res.status(200).json(tryouts);
+    const format = tryouts.map((t) => ({
+      id: t.id,
+      createdAt: t.createdAt,
+      imageA: t.imageA,
+      imageB: t.imageB,
+      imageC: t.imageC,
+      imageD: t.imageD,
+      imageE: t.imageE,
+      imageUrl: t.imageUrl,
+      number: t.number,
+      optionA: t.optionA,
+      optionB: t.optionB,
+      optionC: t.optionC,
+      optionD: t.optionD,
+      optionE: t.optionE,
+      type: t.type,
+    }));
+
+    res.status(200).json(format);
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ message: 'Failed to get tryouts by tryoutListId' });

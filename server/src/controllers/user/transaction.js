@@ -137,6 +137,35 @@ const getTransactionStatus = async (req, res) => {
   }
 };
 
+const cancelTransaction = async (req, res) => {
+  const userId = req.user.id;
+
+  try {
+    const transaction = await prisma.transaction.findFirst({
+      where: {
+        userId: userId,
+        status: 'unpaid',
+      },
+    });
+
+    if (!transaction) {
+      return res.status(404).json({ message: 'No unpaid transaction found' });
+    }
+    await prisma.transaction.delete({
+      where: {
+        id: transaction.id,
+      },
+    });
+
+    return res
+      .status(200)
+      .json({ message: 'Transaction cancelled successfully' });
+  } catch (error) {
+    console.error('Error cancelling transaction:', error);
+    return res.status(500).json({ message: 'Failed to cancel transaction' });
+  }
+};
+
 const getTransaction = async (req, res) => {
   const userId = req.user.id;
 
@@ -182,7 +211,6 @@ const getTransaction = async (req, res) => {
     };
 
     res.status(200).json(response);
-    console.log(transaction);
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ message: 'Failed to fetch transaction' });
@@ -190,15 +218,13 @@ const getTransaction = async (req, res) => {
 };
 
 const checkout = async (req, res) => {
-  const userId = Number(req.user.id); // Convert req.user.id to a number
+  const userId = Number(req.user.id);
   const { tryoutListId, target } = req.body;
 
-  // Validate target array
   if (!Array.isArray(target) || target.length === 0) {
     return res.status(400).json({ message: 'Target list is invalid or empty' });
   }
 
-  // Extract ids from the target array and validate them
   const targetIds = target.map((user) => Number(user.id));
   if (targetIds.some((id) => isNaN(id))) {
     return res
@@ -207,7 +233,6 @@ const checkout = async (req, res) => {
   }
 
   try {
-    // Fetch the price of the tryout
     const tryout = await prisma.tryoutList.findUnique({
       where: { id: Number(tryoutListId) },
       select: { price: true },
@@ -220,7 +245,6 @@ const checkout = async (req, res) => {
     const tryoutPrice = Number(tryout.price);
     const totalPrice = BigInt(tryoutPrice * target.length);
 
-    // Fetch the user's balance
     const userBalance = await prisma.balance.findUnique({
       where: { userId },
       select: { amount: true },
@@ -234,7 +258,6 @@ const checkout = async (req, res) => {
       return res.status(400).json({ message: 'Saldo tidak cukup' });
     }
 
-    // Check if any target users already own the tryout
     const existingOwnerships = await prisma.ownership.findMany({
       where: {
         tryoutListId: Number(tryoutListId),
@@ -243,7 +266,7 @@ const checkout = async (req, res) => {
         },
       },
       include: {
-        user: true, // To get user details like email
+        user: true,
       },
     });
 
@@ -256,13 +279,11 @@ const checkout = async (req, res) => {
       });
     }
 
-    // Deduct the total price from the user's balance
     await prisma.balance.update({
       where: { userId },
       data: { amount: userBalance.amount - totalPrice },
     });
 
-    // Create entries in the Ownership table
     const ownerships = targetIds.map((targetUserId) => ({
       userId: targetUserId,
       tryoutListId: Number(tryoutListId),
@@ -284,4 +305,5 @@ module.exports = {
   getTransaction,
   getSuccessTransaction,
   checkout,
+  cancelTransaction,
 };
