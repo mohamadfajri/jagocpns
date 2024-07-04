@@ -39,6 +39,7 @@ import AlertNotif from './components/Alert';
 import FreeForm from './pages/FreeForm';
 import FreeFormApproval from './pages/admin/FreeFormApproval';
 import CbtTryout from './pages/CbtTryout';
+import LinkList from './pages/LinkList';
 
 const App = () => {
   return (
@@ -103,6 +104,7 @@ const App = () => {
         <Route path='auth/signup' element={<SignupForm />} />
         <Route path='auth/profile' element={<FillProfile />} />
         <Route path='auth/signout' element={<SignOut />} />
+        <Route path='links' element={<LinkList />} />
         <Route
           path='free/:id'
           element={

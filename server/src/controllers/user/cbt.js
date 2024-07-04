@@ -354,6 +354,7 @@ const getAllSoalById = async (req, res) => {
     const format = tryouts.map((t) => ({
       id: t.id,
       createdAt: t.createdAt,
+      question: t.question,
       imageA: t.imageA,
       imageB: t.imageB,
       imageC: t.imageC,

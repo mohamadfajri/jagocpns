@@ -23,4 +23,13 @@ const getInformationByType = async (req, res) => {
   }
 };
 
-module.exports = { getInformationByType };
+const getLinks = async (req, res) => {
+  try {
+    const links = await prisma.links.findMany();
+    res.status(200).json(links);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch links' });
+  }
+};
+
+module.exports = { getInformationByType, getLinks };

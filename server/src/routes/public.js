@@ -12,9 +12,9 @@ const router = express.Router();
 
 router.get('/public/information/:type', getInformationByType);
 router.get('/public/rank', getUserRankingsByTryout);
-router.post('/createowner', createOwnerr);
 router.get('/public/tryouts', getAllTryout);
 router.get('/public/tryout/:id', getTryoutById);
 router.get('/public/freetryouts', getFreeTryouts);
+router.get('/public/links', getFreeTryouts);
 
 module.exports = router;
