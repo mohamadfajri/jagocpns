@@ -30,9 +30,10 @@ const {
 const { getTryout } = require('../controllers/admin/tryoutList');
 const ownerOnly = require('../middlewares/ownerOnly');
 const { createFreeForm } = require('../controllers/admin/freeform');
-const { getReview } = require('../controllers/user/review');
+const { getReview, getUserAnswer } = require('../controllers/user/review');
 const upload = require('../utils/multer');
 const { searchEmail } = require('../controllers/public/email');
+const { getUserScoreById } = require('../controllers/user/score');
 
 const router = express.Router();
 
@@ -61,5 +62,7 @@ router.get('/user/review/:tryoutListId', userOnly, getReview);
 router.get('/user/search', userOnly, searchEmail);
 router.post('/user/checkout', userOnly, checkout);
 router.get('/user/mylists', userOnly, getListByUserId);
+router.get('/user/review/answer/:tryoutListId', userOnly, getUserAnswer);
+router.get('/user/myscore/:tryoutListId', userOnly, getUserScoreById);
 
 module.exports = router;

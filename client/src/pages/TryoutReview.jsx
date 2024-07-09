@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import watermark from '../assets/images/watermark.png';
 import { fetcher } from '../utils/fetcher';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const TryoutReview = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [questions, setQuestions] = useState([
@@ -11,6 +12,7 @@ const TryoutReview = () => {
       question: '',
       imageUrl: '',
       imageExplanation: '',
+      type: '',
       choices: [{ text: '', key: '', image: '' }],
       scoreA: '',
       scoreB: '',
@@ -20,7 +22,20 @@ const TryoutReview = () => {
       explain: '',
     },
   ]);
-  const [userAnswers, setUserAnswers] = useState(['a']);
+  const [userAnswers, setUserAnswers] = useState(['']);
+  useEffect(() => {
+    const getUserAnswers = async () => {
+      try {
+        const { data } = await fetcher.get(`/user/review/answer/${id}`);
+        const format = data.map((item) => item.answer);
+        setUserAnswers(format);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getUserAnswers();
+  }, [id]);
   const calculateScore = () => {
     const answers = questions.map((question) => question.answer);
     let score = 0;
@@ -39,6 +54,7 @@ const TryoutReview = () => {
       const format = data.map((item) => ({
         question: item.question,
         imageUrl: item.imageUrl,
+        type: item.type,
         choices: [
           { text: item.optionA, key: 'a', image: item.imageA },
           { text: item.optionB, key: 'b', image: item.imageB },
@@ -80,22 +96,63 @@ const TryoutReview = () => {
     event.preventDefault();
   };
 
-  const routeParamsId = 'sample_id'; // Dummy data for route parameter
+  const getScore = (answer, questionIndex) => {
+    const question = questions[questionIndex];
+
+    if (!question) return 0; // Return 0 if question is not found
+
+    switch (answer) {
+      case 'a':
+        return question.scoreA;
+      case 'b':
+        return question.scoreB;
+      case 'c':
+        return question.scoreC;
+      case 'd':
+        return question.scoreD;
+      case 'e':
+        return question.scoreE;
+      default:
+        return 0;
+    }
+  };
+
+  useEffect(() => {
+    const getScore = (answer, questionIndex) => {
+      const question = questions[questionIndex];
+
+      if (!question) return 0;
+
+      switch (answer) {
+        case 'a':
+          return question.scoreA;
+        case 'b':
+          return question.scoreB;
+        case 'c':
+          return question.scoreC;
+        case 'd':
+          return question.scoreD;
+        case 'e':
+          return question.scoreE;
+        default:
+          return 0;
+      }
+    };
+    const score = getScore('a', 0);
+    console.log(score);
+  }, [questions]);
 
   return (
     <div style={{ userSelect: 'none' }} onCopy={preventCopy}>
       {!userAnswers ? (
-        <EmptyPage title='Anda belum mengerjakan tryout ini!' />
+        <h1>Anda belum mengerjakan tryout ini!</h1>
       ) : (
         <div className='relative'>
           <div className='fixed top-0 left-0 right-0 bg-white z-10'>
             <header className='flex justify-between border-b border-black h-20'>
-              <h1 className='text-2xl m-2 md:m-6 font-medium'>
-                {routeParamsId}
-              </h1>
               <button
                 onClick={() => {
-                  /* Navigate to home */
+                  navigate('/app/mytryouts');
                 }}
                 className='w-8 h-8 m-6 hover:text-gray-700'
               >
@@ -237,8 +294,8 @@ const TryoutReview = () => {
                       </li>
                     ))}
                   </ul>
-                  {userAnswers[currentQuestion] ===
-                  questions[currentQuestion].answer ? (
+                  {getScore(userAnswers[currentQuestion], currentQuestion) ===
+                  5 ? (
                     <div className='flex w-fit p-2 bg-gray-200 text-green-600'>
                       <span className='mr-2'>
                         <svg

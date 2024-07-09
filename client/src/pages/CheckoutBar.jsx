@@ -15,6 +15,7 @@ const CheckoutBar = () => {
   const [openModal, setOpenModal] = useState(false);
   const [data, setData] = useState({});
   const { setAlert } = useAlert();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getMine = async () => {
@@ -96,17 +97,20 @@ const CheckoutBar = () => {
 
   const handleCheckout = async () => {
     try {
+      setLoading(true);
       const { data } = await fetcher.post('/user/checkout', {
         target: lists,
         tryoutListId: id,
       });
       setAlert({ title: 'Sukses!', message: data.message, color: 'success' });
+      setLoading(false);
     } catch (error) {
       setAlert({
         title: 'Gagal!',
         message: error.response.data.message,
         color: 'failure',
       });
+      setLoading(false);
     }
   };
 
@@ -225,7 +229,7 @@ const CheckoutBar = () => {
               </div>
             )}
             <button
-              disabled={!(lists?.length === 5) && isJoin}
+              disabled={(!(lists?.length === 5) && isJoin) || loading}
               type='button'
               onClick={() => {
                 setOpenModal(true);

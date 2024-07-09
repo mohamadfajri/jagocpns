@@ -1,10 +1,36 @@
 import { Modal } from 'flowbite-react';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import TableScore from './TableScore';
+import { fetcher } from '../../../utils/fetcher';
+import { useAlert } from '../../../stores/useAlert';
+import LoadingTable from '../../LoadingTable';
 
 const ScoreModal = () => {
   const [openModal, setOpenModal] = useState(true);
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(false);
+  const { id } = useParams();
+  const { setAlert } = useAlert();
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        setLoading(true);
+        const { data } = await fetcher.get(`/user/myscore/${id}`);
+        setData(data);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        setAlert({
+          title: 'Error!',
+          message: error.response.data.message,
+          color: 'failure',
+        });
+      }
+    };
+    getData();
+  }, [id, setAlert]);
 
   const navigate = useNavigate();
   const handleBack = () => {
@@ -28,18 +54,18 @@ const ScoreModal = () => {
           <div className='mb-4'>
             <div className='flex space-x-2'>
               <h1 className='font-semibold'>Judul :</h1>
-              <p className='font-normal'>Tryout 1</p>
-            </div>
-            <div className='flex space-x-2'>
-              <h1 className='font-semibold'>Ranking :</h1>
-              <p className='font-normal'>5 dari 10</p>
+              <p className='font-normal'>{data.tryoutListName}</p>
             </div>
           </div>
-          <TableScore />
+          {loading ? <LoadingTable /> : <TableScore data={data} />}
         </Modal.Body>
         <Modal.Footer>
           <button
-            onClick={handleBack}
+            onClick={() => {
+              navigate(`/review/${id}`);
+              setLoading(true);
+            }}
+            disabled={loading}
             className='inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
           >
             Lihat pembahasan

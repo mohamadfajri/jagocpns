@@ -148,7 +148,7 @@ const acceptTransaction = async (req, res) => {
 };
 
 const rejectTransaction = async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
 
   try {
     const transaction = await prisma.transaction.delete({

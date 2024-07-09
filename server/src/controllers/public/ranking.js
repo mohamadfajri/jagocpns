@@ -18,8 +18,10 @@ const getUserRankingsByTryout = async (req, res) => {
   };
 
   try {
-    // Fetch all scores without filters to determine ranking
     const allScores = await prisma.score.findMany({
+      where: {
+        tryoutListId: parseInt(tryoutListId),
+      },
       orderBy: {
         total: 'desc',
       },
@@ -37,16 +39,14 @@ const getUserRankingsByTryout = async (req, res) => {
       },
     });
 
-    // Add ranking, kelulusan, and other relevant fields
     const scoresWithDetails = allScores.map((score, index) => ({
       ...score,
-      rank: index + 1, // Temporary rank for now
+      rank: index + 1,
       name: score.user.profile.name,
       province: score.user.profile.province,
       status: isLulus(score.twk, score.tiu, score.tkp),
     }));
 
-    // Sort by kelulusan first and then by total
     scoresWithDetails.sort((a, b) => {
       if (a.status === 'Lulus' && b.status === 'Tidak Lulus') {
         return -1;
@@ -57,12 +57,10 @@ const getUserRankingsByTryout = async (req, res) => {
       }
     });
 
-    // Update rank after sorting
     scoresWithDetails.forEach((score, index) => {
       score.rank = index + 1;
     });
 
-    // Filter the scores based on query parameters
     let filteredScores = scoresWithDetails;
     if (userId)
       filteredScores = filteredScores.filter(
@@ -85,13 +83,11 @@ const getUserRankingsByTryout = async (req, res) => {
         score.name.toLowerCase().includes(name.toLowerCase())
       );
 
-    // Paginate the filtered results
     const paginatedScores = filteredScores.slice(
       (page - 1) * pageSize,
       page * pageSize
     );
 
-    // Total count of filtered scores
     const totalScores = filteredScores.length;
 
     res.json({

@@ -41,7 +41,7 @@ const History = () => {
       <Table>
         <Table.Head>
           <Table.HeadCell>Tanggal</Table.HeadCell>
-          <Table.HeadCell>Deskripsi</Table.HeadCell>
+          <Table.HeadCell>ID Topup</Table.HeadCell>
           <Table.HeadCell>Saldo</Table.HeadCell>
         </Table.Head>
         <Table.Body className='divide-y'>

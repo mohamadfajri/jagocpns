@@ -92,10 +92,20 @@ const getSuccessTransaction = async (req, res) => {
       return res.status(404).json({ message: 'No paid transactions found' });
     }
 
+    const getId = (date, id) => {
+      const ddmmyyyy = `${date.getDate().toString().padStart(2, '0')}${(
+        date.getMonth() + 1
+      )
+        .toString()
+        .padStart(2, '0')}${date.getFullYear()}`;
+      const formattedId = `JAGO-${ddmmyyyy}${id}`;
+      return formattedId;
+    };
+
     const format = transactions.map((t) => ({
       id: t.id,
       date: t.updatedAt,
-      description: `Topup saldo JAGOCPNS ${t.id}`,
+      description: getId(t.updatedAt, t.id),
       amount: t.amount.toString(),
     }));
 

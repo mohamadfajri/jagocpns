@@ -38,6 +38,17 @@ const InvoiceMenu = () => {
     const formData = new FormData();
     formData.append('image', image);
 
+    const getStatus = async () => {
+      setLoading(true);
+      const { data } = await fetcher.get('/user/transaction');
+      if (data.transaction === 'checking') {
+        setLoading(true);
+        setStatus(data.transaction);
+      } else {
+        setLoading(false);
+      }
+    };
+
     try {
       setLoading(true);
       const { data } = await fetcher.post(
@@ -49,6 +60,7 @@ const InvoiceMenu = () => {
           },
         }
       );
+      getStatus();
       setAlert({ title: 'Info!', message: data.message, color: 'success' });
     } catch (error) {
       setAlert({

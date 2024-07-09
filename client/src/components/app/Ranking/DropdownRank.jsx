@@ -4,8 +4,8 @@ import { useRank } from '../../../stores/useRank';
 import { fetcher } from '../../../utils/fetcher';
 
 const DropdownRank = () => {
-  const [active, setActive] = useState();
-  const { setActive: setId } = useRank();
+  const [active, setActive] = useState('');
+  const { setActive: setId, active: id } = useRank();
   const [dropdowns, setDropdowns] = useState([]);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ const DropdownRank = () => {
       try {
         const response = await fetcher.get('/user/getTryoutList');
         const list = response.data.data.map((item) => ({
-          id: item.id,
+          id: item.id.toString(),
           title: item.title,
         }));
         setDropdowns(list);
@@ -27,22 +27,23 @@ const DropdownRank = () => {
 
   const handleSelectChange = (event) => {
     const selectedId = event.target.value;
-    const selectedItem = dropdowns.find(
-      (item) => item.id === parseInt(selectedId)
-    );
+    setActive(selectedId);
+    const selectedItem = dropdowns.find((item) => item.id === selectedId);
     if (selectedItem) {
-      setActive(selectedItem.title);
       setId(selectedItem.id);
+      setActive(selectedItem.id);
     }
   };
 
+  useEffect(() => {
+    if (id !== null) {
+      setActive(id);
+    }
+  }, [id]);
+
   return (
     <div>
-      <Select
-        color={'blue'}
-        value={!active ? '' : active}
-        onChange={handleSelectChange}
-      >
+      <Select color={'blue'} value={active} onChange={handleSelectChange}>
         <option value='' disabled>
           Pilih Tryout
         </option>

@@ -37,6 +37,7 @@ const CbtTryout = () => {
         setIsWorking(id);
       } catch (error) {
         console.error('Failed to fetch soals:', error);
+        setIsWorking(null);
         navigate('/app/dashboard');
         setAlert({
           title: 'Error!',

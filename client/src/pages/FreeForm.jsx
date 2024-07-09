@@ -1,28 +1,43 @@
+import { useState } from 'react';
 import { Button, FileInput } from 'flowbite-react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import logo from '../assets/images/logo-extend.png';
 import { fetcher } from '../utils/fetcher';
 import { useAlert } from '../stores/useAlert';
 
 const FreeForm = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const { setAlert } = useAlert();
+  const [files, setFiles] = useState({});
+
   const handleSubmit = async () => {
     try {
       await fetcher.post(`/user/free/${id}`);
       setAlert({
         color: 'success',
         title: 'Sukses!',
-        message: 'Sedang  diverifikasi',
+        message: 'Sedang diverifikasi',
       });
+      navigate('/app/mytryouts');
     } catch (error) {
       setAlert({
         color: 'failure',
-        title: 'error',
+        title: 'Error',
         message: error.message,
       });
     }
   };
+
+  const handleFileChange = (event, key) => {
+    setFiles({
+      ...files,
+      [key]: event.target.files[0],
+    });
+  };
+
+  const allFilesSelected = Object.keys(files).length === 3;
+
   const year = new Date().getFullYear();
   return (
     <div className='flex flex-col h-screen justify-between pt-8'>
@@ -67,27 +82,40 @@ const FreeForm = () => {
                   <span className='text-jago-4 hover:underline my-2'>
                     <Link to={'#'}> jagocpnsid</Link>
                   </span>
-                  <FileInput size={'sm'} id='file-upload' />
+                  <FileInput
+                    size={'sm'}
+                    id='file-upload-1'
+                    onChange={(e) => handleFileChange(e, 'file1')}
+                  />
                 </li>
                 <li>
                   Comment dan Tag 5 Teman Kamu di :
                   <span className='text-jago-4 hover:underline my-2'>
                     <Link to={'#'}> postingan ini</Link>
                   </span>
-                  <FileInput size={'sm'} id='file-upload' />
+                  <FileInput
+                    size={'sm'}
+                    id='file-upload-2'
+                    onChange={(e) => handleFileChange(e, 'file2')}
+                  />
                 </li>
                 <li>
                   Upload/Repost ke Story Instagram Kamu :
                   <span className='text-jago-4 hover:underline my-2'>
                     <Link to={'#'}> postingan ini</Link>
                   </span>
-                  <FileInput size={'sm'} id='file-upload' />
+                  <FileInput
+                    size={'sm'}
+                    id='file-upload-3'
+                    onChange={(e) => handleFileChange(e, 'file3')}
+                  />
                 </li>
               </ul>
               <Button
                 onClick={handleSubmit}
                 color={'success'}
                 className='w-full'
+                disabled={!allFilesSelected}
               >
                 Kirim
               </Button>

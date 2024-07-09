@@ -32,4 +32,33 @@ const getReview = async (req, res) => {
   }
 };
 
-module.exports = { getReview };
+const getUserAnswer = async (req, res) => {
+  const { id: userId } = req.user;
+  const { tryoutListId } = req.params;
+
+  try {
+    const answers = await prisma.answer.findMany({
+      where: {
+        userId: parseInt(userId, 10),
+        tryoutListId: parseInt(tryoutListId, 10),
+      },
+      orderBy: {
+        number: 'asc',
+      },
+    });
+    const format = answers.map((item) => ({
+      number: item.number,
+      answer: item.answer[item.answer.length - 1].toLocaleLowerCase(),
+    }));
+
+    res.json(format);
+  } catch (error) {
+    console.error('Error fetching user answers:', error);
+    res.status(500).json({
+      success: false,
+      message: 'An error occurred while fetching user answers.',
+    });
+  }
+};
+
+module.exports = { getReview, getUserAnswer };

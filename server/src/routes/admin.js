@@ -47,6 +47,6 @@ router.post('/admin/confirmallform', adminOnly, confirmAll);
 router.delete('/admin/deleteallform', adminOnly, handleDeleteAll);
 router.get('/admin/transaction', adminOnly, getAllTransactions);
 router.post('/admin/transaction', adminOnly, acceptTransaction);
-router.delete('/admin/transaction', adminOnly, rejectTransaction);
+router.delete('/admin/transaction/:id', adminOnly, rejectTransaction);
 
 module.exports = router;

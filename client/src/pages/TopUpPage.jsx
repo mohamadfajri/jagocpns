@@ -13,12 +13,15 @@ const TopUpPage = () => {
 
   const updateTotal = (event) => {
     const value = event.target.value;
-    setInputValue(value);
     const parsedValue = parseInt(value, 10);
-    if (!isNaN(parsedValue)) {
-      setTotal(parsedValue * 20000);
-    } else {
-      setTotal(0);
+
+    if (value === '' || (parsedValue >= 1 && parsedValue <= 10)) {
+      setInputValue(value);
+      if (!isNaN(parsedValue)) {
+        setTotal(parsedValue * 20000);
+      } else {
+        setTotal(0);
+      }
     }
   };
 
@@ -60,6 +63,8 @@ const TopUpPage = () => {
             sizing='lg'
             value={inputValue}
             onChange={updateTotal}
+            min={1}
+            max={10}
           />
           <h1 className='font-medium'>Topup detail</h1>
           <TextInput

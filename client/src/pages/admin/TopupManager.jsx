@@ -9,6 +9,7 @@ import {
 } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import { fetchAdmin } from '../../utils/fetchAdmin';
+import { useAlert } from '../../stores/useAlert';
 
 const TopupManager = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -20,6 +21,7 @@ const TopupManager = () => {
   const [totalPage, setTotalPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState({ email: '', unique: '' });
+  const { setAlert } = useAlert();
 
   const formatIDR = (number) => {
     return new Intl.NumberFormat('id-ID', {
@@ -31,17 +33,59 @@ const TopupManager = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
-      const { data } = await fetchAdmin(`/transaction?page=${currentPage}`);
-      setTotalPage(data.meta.totalPages);
-      setData(data.data);
-      setLoading(false);
+      try {
+        setLoading(true);
+        const { data } = await fetchAdmin(`/transaction?page=${currentPage}`);
+        setTotalPage(data.meta.totalPages);
+        setData(data.data);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        setAlert({
+          title: 'Error!',
+          message: error.response.data.message,
+          color: 'failure',
+        });
+      }
     };
     fetchData();
-  }, [currentPage]);
+  }, [currentPage, setAlert]);
 
   const handleAcept = () => {
     setAcc(true);
+  };
+  const handleReject = async (id) => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const { data } = await fetchAdmin(`/transaction?page=${currentPage}`);
+        setTotalPage(data.meta.totalPages);
+        setData(data.data);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        setAlert({
+          title: 'Error!',
+          message: error.response.data.message,
+          color: 'failure',
+        });
+      }
+    };
+    try {
+      const { data } = await fetchAdmin.delete(`/transaction/${id}`);
+      setAlert({
+        title: 'Sukses!',
+        message: data.message,
+        color: 'success',
+      });
+      fetchData();
+    } catch (error) {
+      setAlert({
+        title: 'Gagal!',
+        message: error.response.data.message,
+        color: 'failure',
+      });
+    }
   };
 
   useEffect(() => {
@@ -67,7 +111,7 @@ const TopupManager = () => {
           acceptData();
           setAcc(false);
         }
-      }, 5000);
+      }, 2000);
     }
     return () => {
       clearTimeout(timer);
@@ -143,55 +187,61 @@ const TopupManager = () => {
               <Table.HeadCell>Action</Table.HeadCell>
             </Table.Head>
             <Table.Body className='divide-y'>
-              {data?.map((item, index) => (
-                <Table.Row
-                  key={index}
-                  className='bg-white dark:border-gray-700 dark:bg-gray-800'
-                >
-                  <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
-                    {item.name}
-                  </Table.Cell>
-                  <Table.Cell>{item.email}</Table.Cell>
-                  <Table.Cell>{item.unique}</Table.Cell>
-                  <Table.Cell>{formatIDR(item.amount)}</Table.Cell>
-                  <Table.Cell>
-                    <button
-                      onClick={() => {
-                        setDetail(item);
-                        setOpenModal(true);
-                      }}
-                      className='text-blue text-blue-500 hover:underline'
-                    >
-                      Lihat Bukti Transfer
-                    </button>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <ul className='flex space-x-2'>
-                      <li>
-                        <Button
-                          onClick={() => {
-                            setDetail(item);
-                            handleAcept();
-                          }}
-                          color={'blue'}
-                          size={'xs'}
-                        >
-                          Accept
-                        </Button>
-                      </li>
-                      <li>
-                        <Button
-                          onClick={() => setOpenModal(true)}
-                          color={'failure'}
-                          size={'xs'}
-                        >
-                          Reject
-                        </Button>
-                      </li>
-                    </ul>
-                  </Table.Cell>
-                </Table.Row>
-              ))}
+              {data.length === 0 ? (
+                data?.map((item, index) => (
+                  <Table.Row
+                    key={index}
+                    className='bg-white dark:border-gray-700 dark:bg-gray-800'
+                  >
+                    <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
+                      {item.name}
+                    </Table.Cell>
+                    <Table.Cell>{item.email}</Table.Cell>
+                    <Table.Cell>{item.unique}</Table.Cell>
+                    <Table.Cell>{formatIDR(item.amount)}</Table.Cell>
+                    <Table.Cell>
+                      <button
+                        onClick={() => {
+                          setDetail(item);
+                          setOpenModal(true);
+                        }}
+                        className='text-blue text-blue-500 hover:underline'
+                      >
+                        Lihat Bukti Transfer
+                      </button>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <ul className='flex space-x-2'>
+                        <li>
+                          <Button
+                            onClick={() => {
+                              setDetail(item);
+                              handleAcept();
+                            }}
+                            color={'blue'}
+                            size={'xs'}
+                          >
+                            Accept
+                          </Button>
+                        </li>
+                        <li>
+                          <Button
+                            onClick={() => {
+                              handleReject(item.id);
+                            }}
+                            color={'failure'}
+                            size={'xs'}
+                          >
+                            Reject
+                          </Button>
+                        </li>
+                      </ul>
+                    </Table.Cell>
+                  </Table.Row>
+                ))
+              ) : (
+                <h1 className='text-center'>Belum ada transaksi</h1>
+              )}
             </Table.Body>
           </Table>
         )}

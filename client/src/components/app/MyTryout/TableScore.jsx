@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import { Table } from 'flowbite-react';
 
-const TableScore = () => {
+const TableScore = ({ data }) => {
   return (
     <div className='overflow-x-auto'>
       <Table>
@@ -14,32 +15,32 @@ const TableScore = () => {
             <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
               TWK
             </Table.Cell>
-            <Table.Cell>65</Table.Cell>
-            <Table.Cell>LULUS</Table.Cell>
+            <Table.Cell>{data.twk}</Table.Cell>
+            <Table.Cell>{data.statusTwk}</Table.Cell>
           </Table.Row>
           <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800'>
             <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
               TIU
             </Table.Cell>
-            <Table.Cell>80</Table.Cell>
-            <Table.Cell>LULUS</Table.Cell>
+            <Table.Cell>{data.tiu}</Table.Cell>
+            <Table.Cell>{data.statusTiu}</Table.Cell>
           </Table.Row>
           <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800'>
             <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
               TKP
             </Table.Cell>
-            <Table.Cell>166</Table.Cell>
-            <Table.Cell>LULUS</Table.Cell>
+            <Table.Cell>{data.tkp}</Table.Cell>
+            <Table.Cell>{data.statusTkp}</Table.Cell>
           </Table.Row>
           <Table.Row className='bg-gray-100 dark:border-gray-700 dark:bg-gray-800'>
             <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
               Total
             </Table.Cell>
             <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
-              311
+              {data.total}
             </Table.Cell>
             <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
-              LULUS
+              {data.statusTotal}
             </Table.Cell>
           </Table.Row>
         </Table.Body>
