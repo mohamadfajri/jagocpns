@@ -1,6 +1,8 @@
 import { Button } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { fetcher } from '../../../utils/fetcher';
+import { useAlert } from '../../../stores/useAlert';
 
 const ChangePassword = () => {
   const [userData, setUserData] = useState({
@@ -12,6 +14,7 @@ const ChangePassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [miss, setMiss] = useState(false);
   const [isChange, setIsChange] = useState(false);
+  const { setAlert } = useAlert();
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -30,9 +33,29 @@ const ChangePassword = () => {
     checkMissMatch();
   }, [userData.newPassword, userData.passwordConfirmation]);
 
+  const postPassword = async () => {
+    try {
+      const { data } = await fetcher.patch('/user/changepassword', {
+        newPassword: userData.newPassword,
+        oldPassword: userData.oldPassword,
+      });
+      setAlert({
+        title: 'Berhasil!',
+        message: data.message,
+        color: 'success',
+      });
+    } catch (error) {
+      setAlert({
+        title: 'Gagal!',
+        message: error.response.data.message,
+        color: 'failure',
+      });
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(userData);
+    postPassword();
     setIsChange(false);
   };
 

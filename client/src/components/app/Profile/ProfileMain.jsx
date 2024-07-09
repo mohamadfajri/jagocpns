@@ -2,6 +2,7 @@ import { Button, Dropdown, Label, Select, TextInput } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import { province } from '../../../libs/province';
 import { fetcher } from '../../../utils/fetcher';
+import { useAlert } from '../../../stores/useAlert';
 
 const ProfileMain = () => {
   const [userData, setUserData] = useState({
@@ -13,6 +14,7 @@ const ProfileMain = () => {
     instance: '',
   });
   const [isChange, setIsChange] = useState(false);
+  const { setAlert } = useAlert();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,6 +23,31 @@ const ProfileMain = () => {
     };
     fetchData();
   }, []);
+
+  const updateProfil = async () => {
+    try {
+      const { data } = await fetcher.patch('/user/updateprofile', {
+        name: userData.name,
+        email: userData.email,
+        province: userData.province,
+        phone: userData.phone,
+        gender: userData.gender,
+        instance: userData.instance,
+      });
+
+      setAlert({
+        title: 'Berhasil!',
+        message: data.message,
+        color: 'success',
+      });
+    } catch (error) {
+      setAlert({
+        title: 'Gagal',
+        message: error.response.data.message,
+        color: 'failure',
+      });
+    }
+  };
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -35,7 +62,7 @@ const ProfileMain = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(userData);
+    updateProfil();
   };
 
   return (

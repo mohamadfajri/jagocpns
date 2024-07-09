@@ -24,9 +24,9 @@ const QuestionerTable = () => {
           <Table.HeadCell>Action</Table.HeadCell>
         </Table.Head>
         <Table.Body className='divide-y'>
-          {data.map((item) => (
+          {data.map((item, index) => (
             <Table.Row
-              key={item.id}
+              key={index}
               className='bg-white dark:border-gray-700 dark:bg-gray-800'
             >
               <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>

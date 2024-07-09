@@ -3,11 +3,13 @@ import {
   Button,
   Dropdown,
   FileInput,
+  Modal,
   Textarea,
   TextInput,
 } from 'flowbite-react';
 import { fetchQuestioner } from '../../utils/fetchQuestioner';
 import { useParams } from 'react-router-dom';
+import { useAlert } from '../../stores/useAlert';
 
 const TryoutEditor = () => {
   const [tryout, setTryout] = useState({
@@ -38,6 +40,9 @@ const TryoutEditor = () => {
   const [numbers, setNumbers] = useState([1]);
   const [activeNumber, setActiveNumber] = useState(1);
   const [isSave, setIsSave] = useState(false);
+  const { setAlert } = useAlert();
+  const [loading, setLoading] = useState(false);
+  const [warning, setWarning] = useState(false);
 
   const { id } = useParams();
 
@@ -56,6 +61,12 @@ const TryoutEditor = () => {
     };
     setType();
   }, [activeNumber]);
+
+  useEffect(() => {
+    if (numbers.length === 2) {
+      setWarning(true);
+    }
+  }, [numbers]);
 
   useEffect(() => {
     const fetchSoal = async () => {
@@ -153,42 +164,64 @@ const TryoutEditor = () => {
       scoreC: 0,
       scoreD: 0,
       scoreE: 0,
+      image: null,
+      imageA: null,
+      imageB: null,
+      imageC: null,
+      imageD: null,
+      imageE: null,
+      imageExlanation: null,
     });
   };
 
   const createSoal = async () => {
-    const response = await fetchQuestioner.post(
-      `/tryout-editor/${id}`,
-      {
-        number: tryout.number,
-        question: tryout.question,
-        scoreA: tryout.scoreA,
-        scoreB: tryout.scoreB,
-        scoreC: tryout.scoreC,
-        scoreD: tryout.scoreD,
-        scoreE: tryout.scoreE,
-        explanation: tryout.explanation,
-        optionA: tryout.optionA,
-        optionB: tryout.optionB,
-        optionC: tryout.optionC,
-        optionD: tryout.optionD,
-        optionE: tryout.optionE,
-        type: tryout.type,
-        image: tryout.image,
-        imageA: tryout.imageA,
-        imageB: tryout.imageB,
-        imageC: tryout.imageC,
-        imageD: tryout.imageD,
-        imageE: tryout.imageE,
-        imageExlanation: tryout.imageExlanation,
-      },
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
+    try {
+      setLoading(true);
+      await fetchQuestioner.post(
+        `/tryout-editor/${id}`,
+        {
+          number: tryout.number,
+          question: tryout.question,
+          scoreA: tryout.scoreA,
+          scoreB: tryout.scoreB,
+          scoreC: tryout.scoreC,
+          scoreD: tryout.scoreD,
+          scoreE: tryout.scoreE,
+          explanation: tryout.explanation,
+          optionA: tryout.optionA,
+          optionB: tryout.optionB,
+          optionC: tryout.optionC,
+          optionD: tryout.optionD,
+          optionE: tryout.optionE,
+          type: tryout.type,
+          image: tryout.image,
+          imageA: tryout.imageA,
+          imageB: tryout.imageB,
+          imageC: tryout.imageC,
+          imageD: tryout.imageD,
+          imageE: tryout.imageE,
+          imageExlanation: tryout.imageExlanation,
         },
-      }
-    );
-    console.log('success', response);
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+      setAlert({
+        title: 'Berhasil!',
+        message: 'Soal Ditambahkan!',
+        color: 'success',
+      });
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setAlert({
+        title: 'Error!',
+        message: 'Soal Gagal ditambahkan, hubungi developer!',
+        color: 'failure',
+      });
+    }
   };
   const handleFile = (e) => {
     const { id } = e.target;
@@ -203,19 +236,13 @@ const TryoutEditor = () => {
     createSoal();
   };
 
-  const clearFileInput = () => {
-    console.log(fileInputRef);
-  };
-
   const handleSaveAndNext = () => {
-    handleSave();
     setActiveNumber((prev) => {
       const newNumber = prev + 1;
       setNumbers([...numbers, newNumber]);
       return newNumber;
     });
     handleClear();
-    clearFileInput();
   };
 
   return (
@@ -418,11 +445,16 @@ const TryoutEditor = () => {
             />
           </div>
           <div className='flex space-x-2'>
-            <Button color={'failure'} size='sm' onClick={handleClear}>
+            <Button
+              disabled={loading}
+              color={'failure'}
+              size='sm'
+              onClick={handleClear}
+            >
               Clear
             </Button>
             <Button
-              disabled={!isSave}
+              disabled={!isSave | loading}
               color={'success'}
               size='sm'
               onClick={handleSave}
@@ -430,16 +462,38 @@ const TryoutEditor = () => {
               Save
             </Button>
             <Button
-              disabled={!isSave}
+              disabled={!isSave | loading}
               color={'success'}
               size='sm'
               onClick={handleSaveAndNext}
             >
-              Save and Next
+              Next
             </Button>
           </div>
         </form>
       </div>
+      <Modal show={warning} onClose={() => setWarning(false)}>
+        <Modal.Header>Warning!!!</Modal.Header>
+        <Modal.Body>
+          <div className='space-y-6'>
+            <p className='text-base leading-relaxed text-gray-500 dark:text-gray-400'>
+              Soal sudah mencapai 110
+            </p>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            color='gray'
+            onClick={() => {
+              setNumbers(numbers.slice(0, -1));
+              setActiveNumber(activeNumber - 1);
+              setWarning(false);
+            }}
+          >
+            Cancel
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

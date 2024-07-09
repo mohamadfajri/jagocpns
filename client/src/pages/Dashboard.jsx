@@ -10,10 +10,6 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    console.log(data.length);
-  }, [data]);
-
-  useEffect(() => {
     const getData = async () => {
       try {
         setIsLoading(true);

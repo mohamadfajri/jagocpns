@@ -7,6 +7,7 @@ const {
   createProfile,
   getListByUserId,
   getSummary,
+  updateProfile,
 } = require('../controllers/user/user');
 const {
   createTransaction,
@@ -42,7 +43,8 @@ router.post('/user/profile', userOnly, createProfile);
 router.get('/user/summary', userOnly, getSummary);
 router.post('/user/signup', createUser);
 router.post('/user/signin', userSignin);
-router.patch('/user/changepassword', changePassword);
+router.patch('/user/changepassword', userOnly, changePassword);
+router.patch('/user/updateprofile', userOnly, updateProfile);
 router.post('/user/transaction', userOnly, createTransaction);
 router.delete('/user/transaction', userOnly, cancelTransaction);
 router.post('/user/transaction/verify', userOnly, upload, createVerification);

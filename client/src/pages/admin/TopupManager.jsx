@@ -187,7 +187,7 @@ const TopupManager = () => {
               <Table.HeadCell>Action</Table.HeadCell>
             </Table.Head>
             <Table.Body className='divide-y'>
-              {data.length === 0 ? (
+              {data.length !== 0 ? (
                 data?.map((item, index) => (
                   <Table.Row
                     key={index}

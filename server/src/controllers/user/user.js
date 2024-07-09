@@ -110,10 +110,10 @@ const changePassword = async (req, res) => {
   const { oldPassword, newPassword } = req.body;
 
   try {
-    const { email } = req.user;
+    const { id } = req.user;
 
     const user = await prisma.user.findUnique({
-      where: { email },
+      where: { id },
     });
 
     if (!user) {
@@ -127,16 +127,46 @@ const changePassword = async (req, res) => {
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     await prisma.user.update({
-      where: { email },
+      where: { id },
       data: { password: hashedPassword },
     });
 
     return res.status(200).json({ message: 'Password berhasil diubah' });
   } catch (error) {
-    console.error('Error:', error);
+    console.log(error);
     return res
       .status(500)
       .json({ message: 'Terjadi kesalahan saat mencoba mengubah password' });
+  }
+};
+
+const updateProfile = async (req, res) => {
+  const userId = req.user.id;
+  const { name, province, phone, gender, instance } = req.body;
+
+  try {
+    const updatedProfile = await prisma.profile.update({
+      where: { userId },
+      data: {
+        name,
+        province,
+        phone,
+        gender,
+        instance,
+        updatedAt: new Date(),
+      },
+    });
+
+    res.status(200).json({
+      message: 'Profil berhasil diperbarui',
+    });
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Terjadi kesalahan saat memperbarui profil',
+      error: error.message,
+    });
   }
 };
 
@@ -255,4 +285,5 @@ module.exports = {
   getUserTryouts,
   getListByUserId,
   getSummary,
+  updateProfile,
 };
