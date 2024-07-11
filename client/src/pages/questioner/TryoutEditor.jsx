@@ -56,7 +56,13 @@ const TryoutEditor = () => {
   useEffect(() => {
     const setType = () => {
       if (activeNumber <= 30) {
+        setTryout((prev) => ({ ...prev, type: 'twk' }));
+      } else if (activeNumber <= 65) {
         setTryout((prev) => ({ ...prev, type: 'tiu' }));
+      } else if (activeNumber <= 110) {
+        setTryout((prev) => ({ ...prev, type: 'tkp' }));
+      } else {
+        setTryout((prev) => ({ ...prev, type: 'twk' }));
       }
     };
     setType();

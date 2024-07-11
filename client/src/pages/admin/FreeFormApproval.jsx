@@ -87,6 +87,7 @@ const FreeFormApproval = () => {
         title: 'Sukses!',
         message: data.message,
       });
+      getData();
     } catch (error) {
       setAlert({
         color: 'failure',
@@ -104,6 +105,7 @@ const FreeFormApproval = () => {
         title: 'Sukses!',
         message: data.message,
       });
+      getData();
     } catch (error) {
       setAlert({
         color: 'failure',
