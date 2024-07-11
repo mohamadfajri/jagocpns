@@ -251,7 +251,7 @@ const TryoutReview = () => {
                   )}
                   {questions[currentQuestion].imageUrl && (
                     <img
-                      className='max-h-60'
+                      className='max-h-44'
                       src={questions[currentQuestion].imageUrl}
                       alt='image'
                     />
@@ -397,6 +397,13 @@ const TryoutReview = () => {
                     )}
                     <h1 className='font-semibold my-2'>Pembahasan:</h1>
                     <p>{questions[currentQuestion].explain}</p>
+                    {questions[currentQuestion].imageExplanation && (
+                      <img
+                        className='max-h-44'
+                        src={questions[currentQuestion].imageExplanation}
+                        alt='image'
+                      />
+                    )}
                   </div>
                   <div className='border-b my-4 border-black'></div>
                   <div className='justify-center md:justify-start mt-4 flex flex-row'>
