@@ -123,17 +123,17 @@ const InvoiceTopup = () => {
                 <th
                   scope='row'
                   colSpan={3}
-                  className='hidden pl-4 pr-3 pt-4 text-right text-sm font-semibold text-gray-900 sm:table-cell sm:pl-0'
+                  className='hidden pl-4 pr-3 pt-4 text-right text-sm font-semibold text-red-500 sm:table-cell sm:pl-0'
                 >
                   Total
                 </th>
                 <th
                   scope='row'
-                  className='pl-6 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden'
+                  className='pl-6 pr-3 pt-4 text-left text-sm font-semibold text-red-500 sm:hidden'
                 >
                   Total
                 </th>
-                <td className='pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0'>
+                <td className='pl-3 pr-4 pt-4 text-right text-sm font-semibold text-red-500 sm:pr-0'>
                   {formatIDR(data.amount)}
                 </td>
               </tr>

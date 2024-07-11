@@ -55,19 +55,26 @@ const FreeForm = () => {
                 <li>
                   Follow Account Instagram Berikut :
                   <span className='text-jago-4 hover:underline'>
-                    <Link to={'#'}> jagocpnsid</Link>
+                    <Link
+                      to={
+                        'https://www.instagram.com/jagocpns.id?igsh=MW9jYmsxa2YwcGZ0Mg=='
+                      }
+                    >
+                      {' '}
+                      @jagocpnsid
+                    </Link>
                   </span>
                 </li>
                 <li>
                   Comment dan Tag 5 Teman Kamu di :
                   <span className='text-jago-4 hover:underline'>
-                    <Link to={'#'}> postingan ini</Link>
+                    <Link to={'#'}> Postingan ini</Link>
                   </span>
                 </li>
                 <li>
                   Upload/Repost ke Story Instagram Kamu :
                   <span className='text-jago-4 hover:underline'>
-                    <Link to={'#'}> postingan ini</Link>
+                    <Link to={'#'}> Postingan ini</Link>
                   </span>
                 </li>
               </ul>
