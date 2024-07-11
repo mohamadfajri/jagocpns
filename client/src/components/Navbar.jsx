@@ -173,7 +173,7 @@ const Navbar = () => {
                     active === 'panduan' ? 'text-orange-600' : 'text-gray-900'
                   }`}
                 >
-                  Panduan
+                  Blog
                 </button>
               </li>
             </ul>

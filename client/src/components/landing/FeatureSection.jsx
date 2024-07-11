@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const FeatureSection = () => {
   return (
     <section className='bg-white dark:bg-gray-900'>
@@ -125,8 +127,14 @@ const FeatureSection = () => {
               Group diskusi
             </h3>
             <p className='text-gray-500 dark:text-gray-400'>
-              Group diskusi yang sediakan untuk tanya jawab seputar soal dan
-              info terupdate.
+              Group diskusi yang disediakan untuk Tanya jawab seputar soal dan
+              info terupdate pendaftaran{' '}
+              <Link
+                to={'https://sscasn.bkn.go.id/ '}
+                className='text-blue-500 underline'
+              >
+                https://sscasn.bkn.go.id/
+              </Link>
             </p>
           </div>
           <div>
@@ -145,11 +153,12 @@ const FeatureSection = () => {
               </svg>
             </div>
             <h3 className='mb-2 text-xl font-bold dark:text-white'>
-              Operations
+              Tryout & Latihan Soal Gratis
             </h3>
             <p className='text-gray-500 dark:text-gray-400'>
-              Keep your company’s lights on with customizable, iterative, and
-              structured workflows built for all efficient teams and individual.
+              Kami menyediakan TryOut dan latihan soal gratis di website ini
+              yang sesuai kisi Kisi Badan kepegawaian Negara (BKN) Cpns 2024.
+              Pemberitahuan TryOut akan diumumkan di Instagram @jagocpns.id.
             </p>
           </div>
         </div>
