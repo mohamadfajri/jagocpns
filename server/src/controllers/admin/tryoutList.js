@@ -126,10 +126,31 @@ const deleteTryout = async (req, res) => {
   }
 };
 
+const getTryouts = async (req, res) => {
+  const { tryoutListId } = req.params;
+
+  try {
+    const tryouts = await prisma.tryout.findMany({
+      where: {
+        tryoutListId: parseInt(tryoutListId),
+      },
+      orderBy: {
+        number: 'asc',
+      },
+    });
+
+    res.status(200).json(tryouts);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 module.exports = {
   createTryout,
   getTryoutById,
   getTryout,
   deleteTryout,
   updateTryout,
+  getTryouts,
 };

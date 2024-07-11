@@ -13,6 +13,7 @@ const {
   getTryoutById,
   updateTryout,
   deleteTryout,
+  getTryouts,
 } = require('../controllers/admin/tryoutList');
 const upload = require('../utils/multer');
 const {
@@ -46,6 +47,7 @@ router.delete('/admin/deleteform/:id', adminOnly, deleteRequest);
 router.post('/admin/confirmallform', adminOnly, confirmAll);
 router.delete('/admin/deleteallform', adminOnly, handleDeleteAll);
 router.get('/admin/transaction', adminOnly, getAllTransactions);
+router.get('/admin/showtryouts/:tryoutListId', adminOnly, getTryouts);
 router.post('/admin/transaction', adminOnly, acceptTransaction);
 router.delete('/admin/transaction/:id', adminOnly, rejectTransaction);
 

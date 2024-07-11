@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import watermark from '../assets/images/watermark.png';
 import { fetcher } from '../utils/fetcher';
 import { useParams, useNavigate } from 'react-router-dom';
+import TableScore from '../components/app/MyTryout/TableScore';
+import { Table } from 'flowbite-react';
 
 const TryoutReview = () => {
   const navigate = useNavigate();
@@ -22,6 +24,7 @@ const TryoutReview = () => {
       explain: '',
     },
   ]);
+  const [score, setScore] = useState({});
   const [userAnswers, setUserAnswers] = useState(['']);
   useEffect(() => {
     const getUserAnswers = async () => {
@@ -36,16 +39,18 @@ const TryoutReview = () => {
 
     getUserAnswers();
   }, [id]);
-  const calculateScore = () => {
-    const answers = questions.map((question) => question.answer);
-    let score = 0;
-    for (let i = 0; i < answers.length; i++) {
-      if (answers[i] === userAnswers[i]) {
-        score++;
+
+  useEffect(() => {
+    const getScore = async () => {
+      try {
+        const { data } = await fetcher.get(`/user/myscore/${id}`);
+        setScore(data);
+      } catch (error) {
+        console.error(error);
       }
-    }
-    return score;
-  };
+    };
+    getScore();
+  }, [id]);
 
   useEffect(() => {
     const getSoal = async () => {
@@ -99,7 +104,7 @@ const TryoutReview = () => {
   const getScore = (answer, questionIndex) => {
     const question = questions[questionIndex];
 
-    if (!question) return 0; // Return 0 if question is not found
+    if (!question) return 0;
 
     switch (answer) {
       case 'a':
@@ -150,6 +155,13 @@ const TryoutReview = () => {
         <div className='relative'>
           <div className='fixed top-0 left-0 right-0 bg-white z-10'>
             <header className='flex justify-between border-b border-black h-20'>
+              <div className='hidden md:block ml-4'>
+                <img
+                  src='https://azvyntaelgowdhbadqbs.supabase.co/storage/v1/object/public/ui/logo-extend.png'
+                  alt=''
+                  className='w-auto h-20'
+                />
+              </div>
               <button
                 onClick={() => {
                   navigate('/app/mytryouts');
@@ -176,30 +188,16 @@ const TryoutReview = () => {
           <div className='flex flex-col md:flex-row md:h-screen'>
             <div className='flex flex-col md:w-1/5 border-r border-black'>
               <div className='border-b border-black mt-20'>
-                <div className='hidden md:block ml-4'>
-                  <img
-                    src='https://azvyntaelgowdhbadqbs.supabase.co/storage/v1/object/public/ui/logo-extend.png'
-                    alt=''
-                    className='w-auto h-20'
-                  />
-                </div>
-                <div className='flex justify-between mx-6 my-4'>
-                  <div className='text-center p-3 w-fit'>
-                    <h1 className='text-lg'>Jumlah Soal</h1>
-                    <h1 className='text-3xl font-medium'>{questions.length}</h1>
-                  </div>
-                  <div className='text-center p-3 w-fit'>
-                    <h1 className='text-lg'>Jawaban Benar</h1>
-                    <h1 className='text-3xl font-medium'>{calculateScore()}</h1>
+                <div className='flex justify-between mx-12 my-4'>
+                  <div className='text-start'>
+                    <TableScore data={score} />
                   </div>
                 </div>
               </div>
               <div className='border-b border-black'>
-                <div className='mx-auto my-6 text-center'>
-                  <h1 className='text-xl mb-1'>Nilai</h1>
-                  <h1 className='text-5xl font-medium'>
-                    {calculateScore() * 5}
-                  </h1>
+                <div className='text-center p-3 mx-auto w-fit'>
+                  <h1 className='text-lg'>Jumlah Soal</h1>
+                  <h1 className='text-3xl font-medium'>{questions.length}</h1>
                 </div>
               </div>
 
@@ -235,13 +233,14 @@ const TryoutReview = () => {
                 />
               </div>
               <div className='p-5 md:p-10'>
-                <h1 className='text-3xl font-semibold mb-2 md:mb-6'>
+                <h1 className='text-xl font-semibold p-1 border border-black w-fit'>
+                  {questions[currentQuestion].type.toUpperCase()}
+                </h1>
+                <h1 className='text-2xl font-semibold mb-2 md:mb-6'>
                   Soal {currentQuestion + 1}
                 </h1>
                 {questions[currentQuestion].question && (
-                  <p className='text-xl'>
-                    {questions[currentQuestion].question}
-                  </p>
+                  <p className=''>{questions[currentQuestion].question}</p>
                 )}
                 {questions[currentQuestion].imageUrl && (
                   <img
@@ -274,7 +273,7 @@ const TryoutReview = () => {
                             )}
                           </div>
 
-                          {choice.key === questions[currentQuestion].answer && (
+                          {getScore(choice.key, currentQuestion) === 5 && (
                             <span className='ml-2 text-green-500'>
                               <svg
                                 xmlns='http://www.w3.org/2000/svg'
@@ -330,6 +329,55 @@ const TryoutReview = () => {
                         </svg>
                       </span>
                       <h1>Jawaban Salah</h1>
+                    </div>
+                  )}
+
+                  {questions[currentQuestion].type === 'tiu' && (
+                    <div className='w-fit mt-4'>
+                      <Table>
+                        <Table.Body className='border border-black divide-y divide-black'>
+                          <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800'>
+                            <Table.Cell className='whitespace-nowrap font-semibold text-gray-900 dark:text-white'>
+                              Opsi
+                            </Table.Cell>
+                            <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
+                              A
+                            </Table.Cell>
+                            <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
+                              B
+                            </Table.Cell>
+                            <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
+                              C
+                            </Table.Cell>
+                            <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
+                              D
+                            </Table.Cell>
+                            <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
+                              E
+                            </Table.Cell>
+                          </Table.Row>
+                          <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800'>
+                            <Table.Cell className='whitespace-nowrap font-semibold text-gray-900 dark:text-white'>
+                              Nilai
+                            </Table.Cell>
+                            <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
+                              {questions[currentQuestion].scoreA}
+                            </Table.Cell>
+                            <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
+                              {questions[currentQuestion].scoreB}
+                            </Table.Cell>
+                            <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
+                              {questions[currentQuestion].scoreC}
+                            </Table.Cell>
+                            <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
+                              {questions[currentQuestion].scoreD}
+                            </Table.Cell>
+                            <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
+                              {questions[currentQuestion].scoreE}
+                            </Table.Cell>
+                          </Table.Row>
+                        </Table.Body>
+                      </Table>
                     </div>
                   )}
                   <h1 className='font-semibold my-2'>Pembahasan:</h1>

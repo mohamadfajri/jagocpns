@@ -23,6 +23,9 @@ const getReview = async (req, res) => {
       where: {
         tryoutListId: parseInt(tryoutListId),
       },
+      orderBy: {
+        number: 'asc',
+      },
     });
 
     res.status(200).json(tryouts);

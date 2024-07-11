@@ -63,7 +63,7 @@ const TryoutEditor = () => {
   }, [activeNumber]);
 
   useEffect(() => {
-    if (numbers.length === 2) {
+    if (numbers.length === 111) {
       setWarning(true);
     }
   }, [numbers]);
