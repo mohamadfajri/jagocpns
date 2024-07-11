@@ -332,7 +332,7 @@ const TryoutReview = () => {
                     </div>
                   )}
 
-                  {questions[currentQuestion].type === 'tiu' && (
+                  {questions[currentQuestion].type === 'tkp' && (
                     <div className='w-fit mt-4'>
                       <Table>
                         <Table.Body className='border border-black divide-y divide-black'>

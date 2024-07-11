@@ -40,6 +40,7 @@ import FreeForm from './pages/FreeForm';
 import FreeFormApproval from './pages/admin/FreeFormApproval';
 import CbtTryout from './pages/CbtTryout';
 import LinkList from './pages/LinkList';
+import ErrorCbt from './pages/ErrorCbt';
 
 const App = () => {
   return (
@@ -113,6 +114,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route path='error/:error' element={<ErrorCbt />} />
       </Routes>
     </>
   );

@@ -16,9 +16,8 @@ const NewsSection = () => {
   const [loading, setLoading] = useState(false);
 
   const countdownTo = () => {
-    // Get the current date and time
     const now = new Date();
-    const targetDate = new Date('2024-07-07T00:00:00');
+    const targetDate = new Date('2024-07-31T00:00:00');
 
     const diff = targetDate - now;
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -77,22 +76,22 @@ const NewsSection = () => {
         </ul>
       </div>
       <div className='w-full sm:w-2/3 mt-4 sm:mt-0'>
-        <div className='border rounded-lg p-4'>
+        <div className='border rounded-lg p-2'>
           <h1 className='text-2xl font-semibold m-4'>Berita Terbaru</h1>
-          <ul>
+          <ul className='overflow-y-auto max-h-72'>
             <li className='my-2 mx-4 p-2 rounded-lg border'>
               <NewsList
-                title={`Sisa ${day} Hari Lagi Menuju Tes CPNS`}
+                title={`Pendaftaran Tryout Gratis `}
                 desc={
-                  'Tes Seleksi Kemampuan Dasar CPNS akan diadakan pada tanggal 7 Juli 2024. Persiapkan diri anda dengan mengikuti tryout terbaik untuk keberhasilan tes CPNS anda hanya di JagoCPNS Indonesia.'
+                  'Silahkan Mengisi Form Persyaratan yang ada didashboard dan sudah bisa langsung mengerjakan.'
                 }
               />
             </li>
             <li className='my-2 mx-4 p-2 rounded-lg border'>
               <NewsList
-                title={'Kiamat Zombie Telah Tiba'}
+                title={`Sisa ${day} Hari Lagi Menuju Tes CPNS`}
                 desc={
-                  'Kiamat zombie adalah wabah zombie yang bisa terjadi di dunia nyata. Meskipun tidak ada bukti bahwa kiamat zombie bisa terjadi, beberapa penyakit memiliki ciri-ciri zombie.'
+                  'Tes Seleksi Kemampuan Dasar CPNS akan segera Diumumkan Oleh Menteri Pendayagunaan Aparatur Negara dan Reformasi Birokrasi (PANRB), Abdullah Azwar Anas mengumumkan, tanggal pelaksanaan seleksi nasional CPNS dan PPPK diundur. Seleksi CPNS dan PPPK akan diundur hingga bulan ini, yaitu Juli atau Agustus 2024. "Juli-Agustus, ya," ujar Azwar di Istana Kepresidenan Jakarta, Senin (1/7/2024). Terdapat Kuota CPNS sebanyak 200.000'
                 }
               />
             </li>

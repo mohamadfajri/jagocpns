@@ -1,8 +1,9 @@
-import { Button, Dropdown, Label, Select, TextInput } from 'flowbite-react';
+import { Button, Label, Select, TextInput } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import { province } from '../../../libs/province';
 import { fetcher } from '../../../utils/fetcher';
 import { useAlert } from '../../../stores/useAlert';
+import { instance } from '../../../libs/instance';
 
 const ProfileMain = () => {
   const [userData, setUserData] = useState({
@@ -52,11 +53,6 @@ const ProfileMain = () => {
   const handleChange = (e) => {
     const { id, value } = e.target;
     setUserData({ ...userData, [id]: value });
-    setIsChange(true);
-  };
-
-  const handleDropdownChange = (field, value) => {
-    setUserData({ ...userData, [field]: value });
     setIsChange(true);
   };
 
@@ -154,42 +150,19 @@ const ProfileMain = () => {
           <div className='mb-2 block'>
             <Label htmlFor='instance' value='Instansi' />
           </div>
-          <Dropdown
-            label='instance'
-            dismissOnClick={false}
-            renderTrigger={() => (
-              <TextInput
-                id='instance'
-                value={userData.instance}
-                type='text'
-                placeholder='Instance'
-                shadow
-                readOnly
-              />
-            )}
+          <Select
+            id='instance'
+            name='instance'
+            required
+            value={userData.instance}
+            onChange={handleChange}
           >
-            <Dropdown.Item
-              onClick={() =>
-                handleDropdownChange('instance', 'Kementrian Hukum')
-              }
-            >
-              Kementrian Hukum
-            </Dropdown.Item>
-            <Dropdown.Item
-              onClick={() =>
-                handleDropdownChange('instance', 'Kementrian Pertahanan')
-              }
-            >
-              Kementrian Pertahanan
-            </Dropdown.Item>
-            <Dropdown.Item
-              onClick={() =>
-                handleDropdownChange('instance', 'Kementrian Jembut')
-              }
-            >
-              Kementrian Jembut
-            </Dropdown.Item>
-          </Dropdown>
+            {instance.map((item) => (
+              <option key={item.id} value={item.name}>
+                {item.name}
+              </option>
+            ))}
+          </Select>
         </div>
       </div>
     </form>

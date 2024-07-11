@@ -37,8 +37,9 @@ const CbtTryout = () => {
         setIsWorking(id);
       } catch (error) {
         console.error('Failed to fetch soals:', error);
+        const message = encodeURIComponent(error.response.data.message);
         setIsWorking(null);
-        navigate('/app/dashboard');
+        navigate(`/error/${message}`);
         setAlert({
           title: 'Error!',
           message: error.response.data.message,
@@ -89,6 +90,7 @@ const CbtTryout = () => {
         setIsWorking(null);
         setInitialTime(null);
         setAnswers([]);
+        navigate('/app/dashboard');
       } catch (error) {
         setAlert({
           title: 'Gagal!',
@@ -100,7 +102,6 @@ const CbtTryout = () => {
 
     if (timeLeft === '00:00:00') {
       postAnswers();
-      navigate('/app/dashboard');
       return;
     }
 
