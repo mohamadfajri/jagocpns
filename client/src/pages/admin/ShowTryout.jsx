@@ -25,7 +25,7 @@ const ShowTryout = () => {
   return (
     <>
       <nav className='fixed top-0 left-64 right-0 z-20 border-b p-4 bg-white'>
-        SKD-1
+        Preview Soal
       </nav>
       {loading ? (
         <LoadingTable />
