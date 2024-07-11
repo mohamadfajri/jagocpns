@@ -193,7 +193,7 @@ const TryoutReview = () => {
             <div className='flex flex-col md:w-1/5 border-r border-black'>
               <div className='border-b border-black mt-20'>
                 <div className='flex justify-between mx-12 my-4'>
-                  <div className='text-start'>
+                  <div className='text-start overflow-x-auto'>
                     <TableScore data={score} />
                   </div>
                 </div>

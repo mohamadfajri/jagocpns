@@ -82,7 +82,13 @@ const HiUser = () => {
             imageUrl={
               'https://ghcdsezrgytedkcpribk.supabase.co/storage/v1/object/public/information/Selamat_Datang_di_JagoCpns.id_(2).png'
             }
-          />{' '}
+          />
+          <SlideContent
+            url={'/app/dashboard'}
+            imageUrl={
+              'https://ghcdsezrgytedkcpribk.supabase.co/storage/v1/object/public/information/Selamat_Datang_di_JagoCpns.id_(3).png'
+            }
+          />
         </Slider>
       </div>
       <div className='flex flex-col sm:hidden p-6'>

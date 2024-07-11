@@ -1,15 +1,12 @@
 import { Link } from 'react-router-dom';
+import logo from '../../assets/images/logo-extend.png';
 
 // eslint-disable-next-line react/prop-types
 const TryoutCards = ({ title }) => {
   return (
     <div className='max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700'>
       <Link to='/auth/signup'>
-        <img
-          className='rounded-t-lg'
-          src='https://placehold.co/400x200'
-          alt=''
-        />
+        <img className='rounded-t-lg' src={logo} alt='' />
       </Link>
       <div className='flex justify-center'>
         <div className='flex flex-col items-center p-5'>
