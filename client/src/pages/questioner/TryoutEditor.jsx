@@ -19,7 +19,7 @@ const TryoutEditor = () => {
     imageC: null,
     imageD: null,
     imageE: null,
-    imageExlanation: null,
+    imageExplanation: null,
     number: '',
     type: '',
     question: '',
@@ -176,7 +176,7 @@ const TryoutEditor = () => {
       imageC: null,
       imageD: null,
       imageE: null,
-      imageExlanation: null,
+      imageExplanation: null,
     });
   };
 
@@ -206,7 +206,7 @@ const TryoutEditor = () => {
           imageC: tryout.imageC,
           imageD: tryout.imageD,
           imageE: tryout.imageE,
-          imageExlanation: tryout.imageExlanation,
+          imageExplanation: tryout.imageExplanation,
         },
         {
           headers: {
@@ -446,7 +446,7 @@ const TryoutEditor = () => {
             />
             <FileInput
               ref={fileInputRef}
-              id='imageExlanation'
+              id='imageExplanation'
               onChange={handleFile}
             />
           </div>
