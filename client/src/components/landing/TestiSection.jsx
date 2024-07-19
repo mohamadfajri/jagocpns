@@ -77,6 +77,7 @@ const TestiSection = () => {
         <Slider {...settingsPhone}>
           {datas.map((data) => (
             <TestiCard
+              imageUrl={data.imageUrl}
               key={data.id}
               heading={data.name}
               subheading={data.sub}

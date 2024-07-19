@@ -5,6 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import TableScore from '../components/app/MyTryout/TableScore';
 import { Table } from 'flowbite-react';
 import LoadingTable from '../components/LoadingTable';
+import SplitText from '../components/SplitText';
 
 const TryoutReview = () => {
   const navigate = useNavigate();
@@ -247,7 +248,7 @@ const TryoutReview = () => {
                     Soal {currentQuestion + 1}
                   </h1>
                   {questions[currentQuestion].question && (
-                    <p className=''>{questions[currentQuestion].question}</p>
+                    <SplitText text={questions[currentQuestion].question} />
                   )}
                   {questions[currentQuestion].imageUrl && (
                     <img
@@ -277,7 +278,7 @@ const TryoutReview = () => {
                               </div>
                               <div className='flex flex-col'>
                                 {choice.text && (
-                                  <p className='text-start'>{choice.text}</p>
+                                  <SplitText text={choice.text} />
                                 )}
                                 {choice.image && (
                                   <img
@@ -396,7 +397,7 @@ const TryoutReview = () => {
                       </div>
                     )}
                     <h1 className='font-semibold my-2'>Pembahasan:</h1>
-                    <p>{questions[currentQuestion].explain}</p>
+                    <SplitText text={questions[currentQuestion].explain} />
                     <div>
                       {questions[currentQuestion].imageExplanation && (
                         <img

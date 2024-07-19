@@ -4,6 +4,7 @@ import NewsSection from '../components/app/Dashboard/NewsSection';
 import { fetcher } from '../utils/fetcher';
 import LoadingTable from '../components/LoadingTable';
 import FreeBanner from '../components/app/Dashboard/FreeBanner';
+import ContactBanner from '../components/app/Dashboard/ContactBanner';
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
@@ -36,6 +37,7 @@ const Dashboard = () => {
                 <FreeBanner key={index} url={`/free/${tryout.id}`} />
               ))
             )}
+            <ContactBanner />
           </div>
         )}
         <NewsSection />

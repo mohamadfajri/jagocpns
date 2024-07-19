@@ -42,6 +42,31 @@ const createFreeForm = async (req, res) => {
   }
 };
 
+const getFormByUserId = async (req, res) => {
+  const userId = req.user.id;
+
+  if (!userId) {
+    return res.status(400).json({ error: 'userId is required' });
+  }
+
+  try {
+    const freeForm = await prisma.freeForm.findFirst({
+      where: {
+        userId: userId,
+      },
+    });
+
+    if (freeForm) {
+      return res.json(true);
+    } else {
+      return res.json(false);
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 const getAllFreeForm = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
@@ -167,4 +192,5 @@ module.exports = {
   deleteRequest,
   confirmAll,
   handleDeleteAll,
+  getFormByUserId,
 };

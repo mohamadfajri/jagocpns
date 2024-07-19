@@ -264,7 +264,9 @@ const checkout = async (req, res) => {
     }
 
     const tryoutPrice = Number(tryout.price);
-    const totalPrice = BigInt(tryoutPrice * target.length);
+    const totalPrice = BigInt(
+      target.length > 1 ? (tryoutPrice * target.length) / 2 : tryoutPrice
+    );
 
     const userBalance = await prisma.balance.findUnique({
       where: { userId },

@@ -30,7 +30,10 @@ const {
 } = require('../controllers/user/cbt');
 const { getTryout } = require('../controllers/admin/tryoutList');
 const ownerOnly = require('../middlewares/ownerOnly');
-const { createFreeForm } = require('../controllers/admin/freeform');
+const {
+  createFreeForm,
+  getFormByUserId,
+} = require('../controllers/admin/freeform');
 const { getReview, getUserAnswer } = require('../controllers/user/review');
 const upload = require('../utils/multer');
 const { searchEmail } = require('../controllers/public/email');
@@ -60,6 +63,7 @@ router.get('/user/getallsoal/:id', ownerOnly, userOnly, getAllSoalById);
 router.post('/user/finish/:toId', userOnly, createScore);
 router.get('/user/getTryoutList', userOnly, getTryout);
 router.post('/user/free/:tryoutListId', userOnly, createFreeForm);
+router.get('/user/free', userOnly, getFormByUserId);
 router.get('/user/review/:tryoutListId', userOnly, getReview);
 router.get('/user/search', userOnly, searchEmail);
 router.post('/user/checkout', userOnly, checkout);

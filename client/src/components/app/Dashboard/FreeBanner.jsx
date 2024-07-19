@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const FreeBanner = ({ url }) => {
   return (
     <Banner>
-      <div className='flex w-full justify-between border-b border-gray-200 bg-gray-50 p-4 dark:border-gray-600 dark:bg-gray-700 my-5'>
+      <div className='flex w-full justify-between border-b border-gray-200 bg-gray-50 p-4 dark:border-gray-600 dark:bg-gray-700 mt-5'>
         <div className='mx-auto flex items-center'>
           <p className='flex items-center text-sm font-normal space-x-2 text-gray-500 dark:text-gray-400'>
             <strong className='font-semibold text-red-700'>Free!</strong>

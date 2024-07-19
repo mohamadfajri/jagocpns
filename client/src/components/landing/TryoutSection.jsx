@@ -12,12 +12,42 @@ const TryoutSection = () => {
       </div>
       <div className='p-4 max-w-screen-xl '>
         <div className='grid grid-cols-2 sm:grid-cols-3 sm:gap-12 gap-4'>
-          <TryoutCards title={'Tryout Gratis'} />
-          <TryoutCards title={'Tryout Gratis'} />
-          <TryoutCards title={'Tryout Gratis'} />
-          <TryoutCards title={'Tryout Premium'} />
-          <TryoutCards title={'Tryout Premium'} />
-          <TryoutCards title={'Tryout Premium'} />
+          <TryoutCards
+            title={'Tryout Gratis'}
+            imageUrl={
+              'https://ghcdsezrgytedkcpribk.supabase.co/storage/v1/object/public/information/2.png'
+            }
+          />
+          <TryoutCards
+            title={'Tryout Gratis'}
+            imageUrl={
+              'https://ghcdsezrgytedkcpribk.supabase.co/storage/v1/object/public/information/2.png'
+            }
+          />
+          <TryoutCards
+            title={'Tryout Gratis'}
+            imageUrl={
+              'https://ghcdsezrgytedkcpribk.supabase.co/storage/v1/object/public/information/2.png'
+            }
+          />
+          <TryoutCards
+            title={'Tryout Premium'}
+            imageUrl={
+              'https://ghcdsezrgytedkcpribk.supabase.co/storage/v1/object/public/information/1.png'
+            }
+          />
+          <TryoutCards
+            title={'Tryout Premium'}
+            imageUrl={
+              'https://ghcdsezrgytedkcpribk.supabase.co/storage/v1/object/public/information/1.png'
+            }
+          />
+          <TryoutCards
+            title={'Tryout Premium'}
+            imageUrl={
+              'https://ghcdsezrgytedkcpribk.supabase.co/storage/v1/object/public/information/1.png'
+            }
+          />
         </div>
       </div>
     </section>

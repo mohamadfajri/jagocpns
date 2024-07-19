@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, FileInput } from 'flowbite-react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import logo from '../assets/images/logo-extend.png';
@@ -10,6 +10,19 @@ const FreeForm = () => {
   const { id } = useParams();
   const { setAlert } = useAlert();
   const [files, setFiles] = useState({});
+  const [isSubmitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    const checkSubmission = async () => {
+      try {
+        const { data } = await fetcher.get('/user/free');
+        setSubmitted(data);
+      } catch (error) {
+        console.error('Error checking submission:', error);
+      }
+    };
+    checkSubmission();
+  }, []);
 
   const handleSubmit = async () => {
     try {
@@ -39,6 +52,34 @@ const FreeForm = () => {
   const allFilesSelected = Object.keys(files).length === 3;
 
   const year = new Date().getFullYear();
+
+  if (isSubmitted) {
+    return (
+      <div className='flex flex-col h-screen justify-between pt-8'>
+        <div className='w-full'>
+          <img src={logo} alt='jagocpns' className='mx-auto h-24' />
+          <div className='flex flex-col sm:flex-row justify-center p-8 mx-auto shadow-md rounded-lg max-w-screen-lg'>
+            <p className='text-lg text-center font-medium my-8'>
+              Anda sudah mengajukan permintaan tryout ini.
+            </p>
+          </div>
+        </div>
+        <footer className='bg-white dark:bg-gray-900'>
+          <div className='w-full max-w-screen-xl mx-auto p-4 md:py-8'>
+            <hr className='my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8' />
+            <span className='block text-sm text-gray-500 sm:text-center dark:text-gray-400'>
+              © {year}{' '}
+              <a href='https://jagocpns.id/' className='hover:underline'>
+                JagoCPNS
+              </a>
+              . All Rights Reserved.
+            </span>
+          </div>
+        </footer>
+      </div>
+    );
+  }
+
   return (
     <div className='flex flex-col h-screen justify-between pt-8'>
       <div className='flex items-center'>

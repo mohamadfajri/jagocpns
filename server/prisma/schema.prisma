@@ -66,7 +66,7 @@ model PaidList {
   userId       Int
   tryoutListId Int
   user         User       @relation(fields: [userId], references: [id])
-  tryoutList   TryoutList @relation(fields: [tryoutListId], references: [id])
+  tryoutList   TryoutList @relation(fields: [tryoutListId], references: [id],onDelete: Cascade)
 
   @@unique([userId, tryoutListId])
 }
@@ -113,7 +113,7 @@ model Tryout {
   imageE           String?
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt
-  tryoutList       TryoutList @relation(fields: [tryoutListId], references: [id])
+  tryoutList       TryoutList @relation(fields: [tryoutListId], references: [id], onDelete: Cascade)
 }
 
 model Score {
@@ -127,7 +127,7 @@ model Score {
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   user         User       @relation(fields: [userId], references: [id])
-  tryoutList   TryoutList @relation(fields: [tryoutListId], references: [id])
+  tryoutList   TryoutList @relation(fields: [tryoutListId], references: [id],onDelete: Cascade)
 
   @@unique([userId, tryoutListId])
 }
@@ -160,7 +160,7 @@ model Payment {
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   user         User       @relation(fields: [userId], references: [id])
-  tryoutList   TryoutList @relation(fields: [tryoutListId], references: [id])
+  tryoutList   TryoutList @relation(fields: [tryoutListId], references: [id],onDelete: Cascade)
 }
 
 model Information {
@@ -189,7 +189,7 @@ model Ownership {
   tryoutListId Int
   isDone       Boolean    @default(false)
   user         User       @relation(fields: [userId], references: [id])
-  tryoutList   TryoutList @relation(fields: [tryoutListId], references: [id])
+  tryoutList   TryoutList @relation(fields: [tryoutListId], references: [id], onDelete: Cascade)
 }
 
 model FreeForm {

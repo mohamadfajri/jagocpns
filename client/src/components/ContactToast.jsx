@@ -66,11 +66,7 @@ const ContactToast = () => {
         <div>
           <ul className='space-x-2 flex'>
             <li>
-              <Link
-                to={
-                  'https://wa.me/6285171547130?text=Halo%20Min%20Jago%21%20Saya%20butuh%20bantuan%20nih%21%21'
-                }
-              >
+              <Link to={'https://t.me/jagocpnsindonesia'}>
                 <button className='bg-orange-700 text-white p-4 rounded-full shadow-lg focus:outline-none'>
                   <SiTelegram size={36} />
                 </button>

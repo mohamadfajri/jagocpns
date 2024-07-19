@@ -207,7 +207,7 @@ const Sidebar = () => {
                       clipRule='evenodd'
                     />
                   </svg>
-                  <span className='ms-3'>F.A.Q</span>
+                  <span className='ms-3'>Kelas Bimbel (COMING SOON!)</span>
                 </Link>
               </li>
             </ul>
@@ -442,7 +442,7 @@ const Sidebar = () => {
                           clipRule='evenodd'
                         />
                       </svg>
-                      <span className='ms-3'>F.A.Q</span>
+                      <span className='ms-3'>Kelas Bimbel (COMING SOON!)</span>
                     </Link>
                   </li>
                 </ul>
