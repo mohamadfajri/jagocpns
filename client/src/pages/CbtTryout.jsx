@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Button, Modal } from 'flowbite-react';
 import { useCbt } from '../stores/useCbt';
 import { useAlert } from '../stores/useAlert';
+import SplitText from '../components/SplitText';
 
 const CbtTryout = () => {
   const [soal, setSoal] = useState([]);
@@ -13,7 +14,7 @@ const CbtTryout = () => {
   const [showModal, setShowModal] = useState(false);
   const { answers, setAnswers, setIsWorking, initialTime, setInitialTime } =
     useCbt();
-  const [timeLeft, setTimeLeft] = useState('02:00:00');
+  const [timeLeft, setTimeLeft] = useState('01:50:00');
   const { id } = useParams();
   const { setAlert } = useAlert();
   const navigate = useNavigate();
@@ -57,10 +58,10 @@ const CbtTryout = () => {
       const initial = new Date(initialTime).getTime();
       const diff = now - initial;
 
-      if (diff >= 2 * 60 * 60 * 1000) {
+      if (diff >= 110 * 60 * 1000) {
         setTimeLeft('00:00:00');
       } else {
-        const remainingTime = 2 * 60 * 60 * 1000 - diff;
+        const remainingTime = 110 * 60 * 1000 - diff;
         const hours = Math.floor(remainingTime / (1000 * 60 * 60));
         const minutes = Math.floor(
           (remainingTime % (1000 * 60 * 60)) / (1000 * 60)
@@ -76,7 +77,7 @@ const CbtTryout = () => {
     } else {
       const now = new Date();
       setInitialTime(now);
-      setTimeLeft('02:00:00');
+      setTimeLeft('01:50:00');
     }
   }, [initialTime, setInitialTime]);
 
@@ -215,7 +216,7 @@ const CbtTryout = () => {
           {key}
         </div>
         <div className='text-start'>
-          {text && <p>{text}</p>}
+          {text && <SplitText text={text} />}
           {image && (
             <img src={image} alt={`Option ${key}`} className='w-32 h-auto' />
           )}
@@ -291,7 +292,9 @@ const CbtTryout = () => {
                   Soal {activeNumber}
                 </h1>
                 <div className='mb-8'>
-                  {activeSoal.question && <p>{activeSoal.question}</p>}
+                  {activeSoal.question && (
+                    <SplitText text={activeSoal.question} />
+                  )}
                   {activeSoal.imageUrl && (
                     <img
                       src={activeSoal.imageUrl}
