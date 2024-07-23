@@ -4,7 +4,7 @@ const counterUser = async (req, res) => {
   try {
     const userCount = await prisma.user.count();
 
-    return res.status(200).json({ count: userCount });
+    return res.status(200).json({ count: userCount + 5000 });
   } catch (error) {
     console.error('Error:', error);
     return res.status(500).json({

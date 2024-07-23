@@ -16,6 +16,7 @@ const CheckoutBar = () => {
   const [data, setData] = useState({});
   const { setAlert } = useAlert();
   const [loading, setLoading] = useState(false);
+  const [qty, setQty] = useState(5);
 
   useEffect(() => {
     const getMine = async () => {
@@ -95,7 +96,23 @@ const CheckoutBar = () => {
     setNewEmail(e.target.value);
   };
 
+  const handleQty = (e) => {
+    const value = e.target.value;
+    if (value >= 1) {
+      setQty(value);
+    }
+  };
+
   const handleCheckout = async () => {
+    if (isJoin && qty < 5) {
+      setAlert({
+        title: 'Error',
+        message: 'Jumlah minimal beli banyak adalah 5',
+        color: 'failure',
+      });
+      return;
+    }
+
     try {
       setLoading(true);
       const { data } = await fetcher.post('/user/checkout', {
@@ -113,6 +130,10 @@ const CheckoutBar = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    console.log({ qty });
+  }, [qty]);
 
   return (
     <>
@@ -141,9 +162,11 @@ const CheckoutBar = () => {
                 Total Harga
               </Label>
               <div className='border rounded-lg p-2 font-medium'>
-                <p>
-                  {isJoin
-                    ? formatIDR((data.price * 5) / 2)
+                <p className={isJoin && qty < 5 ? 'text-red-500' : ''}>
+                  {isJoin && qty < 5
+                    ? 'Minimal beli banyak adalah 5 user'
+                    : isJoin
+                    ? formatIDR((data.price * qty) / 2)
                     : formatIDR(data.price)}
                 </p>
               </div>
@@ -157,18 +180,31 @@ const CheckoutBar = () => {
               />
               <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" />
               <span className='ms-3 text-sm font-medium text-gray-900 dark:text-gray-300'>
-                Beli 5
+                Beli Banyak
               </span>
             </label>
 
             {isJoin && (
               <div className='mb-6'>
+                <div className='my-2'>
+                  <p>Jumlah</p>
+                  <TextInput
+                    type='number'
+                    value={qty}
+                    placeholder='Jumlah'
+                    name='qty'
+                    id='qty'
+                    onChange={handleQty}
+                  />
+                </div>
                 <div className='mb-2'>
                   <TextInput
                     disabled={lists?.length >= 5}
                     id='guests'
                     name='guests'
-                    placeholder='Masukan 4 email peserta lain'
+                    placeholder={`Masukan ${
+                      !qty ? '' : `${qty - 1} `
+                    }email peserta lain`}
                     value={newEmail}
                     onChange={handleChange}
                     type='search'
@@ -229,11 +265,10 @@ const CheckoutBar = () => {
               </div>
             )}
             <button
-              disabled={(!(lists?.length === 5) && isJoin) || loading}
+              disabled={(!(lists?.length === qty) && isJoin) || loading}
               type='button'
               onClick={() => {
                 setOpenModal(true);
-                console.log(lists);
               }}
               className='font-medium bg-jago-4 hover:bg-orange-600 rounded-lg disabled:cursor-not-allowed disabled:hover:bg-gray-300 disabled:bg-gray-300 text-white flex py-2 px-4'
             >

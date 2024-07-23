@@ -268,7 +268,7 @@ const getSummary = async (req, res) => {
     res.status(200).json({
       balance: balance ? balance.amount.toString() : 0,
       myOwnTryouts: myOwnTryoutsCount ? myOwnTryoutsCount : 0,
-      totalUser: totalUserCount,
+      totalUser: totalUserCount + 5000,
     });
   } catch (error) {
     console.error('Error fetching summary:', error);
