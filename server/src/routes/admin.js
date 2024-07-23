@@ -4,7 +4,13 @@ const {
   getAdmin,
   adminSignin,
 } = require('../controllers/admin/admin');
-const { getAllUser, searchUser } = require('../controllers/admin/crudUser');
+const {
+  getAllUser,
+  searchUser,
+  resetPassword,
+  createOwnership,
+  deleteOwnership,
+} = require('../controllers/admin/crudUser');
 const adminOnly = require('../middlewares/adminOnly');
 const { createInformation } = require('../controllers/admin/information');
 const {
@@ -50,5 +56,8 @@ router.get('/admin/transaction', adminOnly, getAllTransactions);
 router.get('/admin/showtryouts/:tryoutListId', adminOnly, getTryouts);
 router.post('/admin/transaction', adminOnly, acceptTransaction);
 router.delete('/admin/transaction/:id', adminOnly, rejectTransaction);
+router.post('/admin/resetpassword', adminOnly, resetPassword);
+router.post('/admin/createownership', adminOnly, createOwnership);
+router.post('/admin/deleteownership', adminOnly, deleteOwnership);
 
 module.exports = router;

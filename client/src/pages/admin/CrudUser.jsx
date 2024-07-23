@@ -9,6 +9,7 @@ import {
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { useEffect, useState } from 'react';
 import { fetchAdmin } from '../../utils/fetchAdmin';
+import { useAlert } from '../../stores/useAlert';
 
 const CrudUser = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +21,16 @@ const CrudUser = () => {
   ]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [active, setActive] = useState('');
+  const { setAlert } = useAlert();
 
+  const formatIDR = (number) => {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0,
+    }).format(number);
+  };
   const handleSearch = async (e) => {
     const { value } = e.target;
     setSearchTerm(value);
@@ -75,6 +85,22 @@ const CrudUser = () => {
 
   const handleClose = () => setIsOpen(false);
 
+  const handleResetPassword = async () => {
+    try {
+      const { data } = await fetchAdmin.post('/resetpassword', {
+        id: active,
+      });
+
+      setAlert({ title: 'Success', message: data.message, color: 'success' });
+    } catch (error) {
+      setAlert({
+        title: 'Error',
+        message: error.response.data.message,
+        color: 'failure',
+      });
+    }
+  };
+
   return (
     <div className='py-4 ml-64 dark:bg-black min-h-screen'>
       <div className='mb-8 mx-4'>
@@ -117,12 +143,15 @@ const CrudUser = () => {
                   </Table.Cell>
                   <Table.Cell>{user.email}</Table.Cell>
                   <Table.Cell>{user.id}</Table.Cell>
-                  <Table.Cell>{user.saldo}</Table.Cell>
+                  <Table.Cell>{formatIDR(user.saldo)}</Table.Cell>
                   <Table.Cell>
                     <ul className='flex space-x-2'>
                       <li>
                         <Button
-                          onClick={() => setIsOpen(true)}
+                          onClick={() => {
+                            setIsOpen(true);
+                            setActive(user.id);
+                          }}
                           color={'blue'}
                           size={'xs'}
                         >
@@ -179,8 +208,20 @@ const CrudUser = () => {
         />
       </div>
       <Drawer open={isOpen} onClose={handleClose} position='right'>
-        <Drawer.Header title='Drawer' />
-        <Drawer.Items></Drawer.Items>
+        <Drawer.Header title='User  Edit' />
+        <Drawer.Items>
+          <Button onClick={handleResetPassword} color={'success'}>
+            Reset Password
+          </Button>
+          <div className='my-8 space-y-4 p-4 rounded-md border'>
+            <Button size={'sm'} color={'success'}>
+              Add Tryout to User
+            </Button>
+            <ul>
+              <li></li>
+            </ul>
+          </div>
+        </Drawer.Items>
       </Drawer>
       <Modal
         show={openModal}
