@@ -7,7 +7,7 @@ const FeatureSection = () => {
         <div className='max-w-screen-md mb-8 lg:mb-16'>
           <h2 className='mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white'>
             Kenapa Ikut Try Out CPNS di{' '}
-            <span className='text-orange-500'>JagoCPNS</span> ?
+            <span className='text-[#FF2927]'>JagoCPNS</span> ?
           </h2>
           <p className='text-gray-500 sm:text-xl dark:text-gray-400'>
             Platform Try Out CPNS terbaik di Indonesia

@@ -1,7 +1,7 @@
 // eslint-disable-next-line react/prop-types
 const TestiCard = ({ heading, subheading, desc, imageUrl }) => {
   return (
-    <div className='sm:w-full w-[90%] sm:max-w-sm h-[32rem] bg-white shadow-md m-4 border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700'>
+    <div className='sm:w-full w-[90%] sm:max-w-sm h-[32rem] bg-white shadow-md m-4 border border-gray-200 rounded-xl dark:bg-gray-800 dark:border-gray-700'>
       <div className='flex flex-col items-center pb-10'>
         <img
           className='w-24 h-24 mb-3 rounded-full shadow-sm m-6'

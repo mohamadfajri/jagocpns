@@ -62,7 +62,7 @@ const Navbar = () => {
   };
   return (
     <>
-      <nav className='bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600'>
+      <nav className='bg-[#FFCB01] dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600'>
         <div className='max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4'>
           <Link
             to='https://jagocpns.id/'
@@ -74,13 +74,13 @@ const Navbar = () => {
             <div className='flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse'>
               <Link
                 to={'/auth/signup'}
-                className='hidden sm:block text-white mr-4 bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
+                className='hidden sm:block text-white mr-4 bg-[#FF2927] hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
               >
                 Daftar
               </Link>
               <Link
                 to={'/auth/signin'}
-                className='text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800'
+                className='text-white bg-[#6B46D5] hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800'
               >
                 Masuk
               </Link>
@@ -113,7 +113,7 @@ const Navbar = () => {
             <div className='flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse'>
               <Link
                 to={'app/dashboard'}
-                className='text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800'
+                className='text-white bg-[#FF2927] hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800'
               >
                 Dashboard
               </Link>
@@ -123,12 +123,12 @@ const Navbar = () => {
             className='items-center justify-between hidden w-full md:flex md:w-auto md:order-1'
             id='navbar-sticky'
           >
-            <ul className='flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700'>
+            <ul className='flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 bg-[#FFCB01] dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700'>
               <li>
                 <button
                   onClick={scrollToFirst}
                   className={`block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-yellow-700 md:p-0 md:dark:hover:text-yellow-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 
-                  ${active === 'home' ? 'text-orange-600' : 'text-gray-900'}`}
+                  ${active === 'home' ? 'text-[#FF2927]' : 'text-gray-900'}`}
                   aria-current='page'
                 >
                   Home
@@ -138,7 +138,7 @@ const Navbar = () => {
                 <button
                   onClick={scrollToSecond}
                   className={`block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-yellow-700 md:p-0 md:dark:hover:text-yellow-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 
-                  ${active === 'tryout' ? 'text-orange-600' : 'text-gray-900'}`}
+                  ${active === 'tryout' ? 'text-[#FF2927]' : 'text-gray-900'}`}
                 >
                   Tryout
                 </button>
@@ -148,7 +148,7 @@ const Navbar = () => {
                   onClick={scrollToThird}
                   className={`block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-yellow-700 md:p-0 md:dark:hover:text-yellow-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 
                   ${
-                    active === 'testimoni' ? 'text-orange-600' : 'text-gray-900'
+                    active === 'testimoni' ? 'text-[#FF2927]' : 'text-gray-900'
                   }`}
                 >
                   Testimoni
@@ -159,7 +159,7 @@ const Navbar = () => {
                   onClick={scrollToForth}
                   className={`block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-yellow-700 md:p-0 md:dark:hover:text-yellow-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 
                   ${
-                    active === 'features' ? 'text-orange-600' : 'text-gray-900'
+                    active === 'features' ? 'text-[#FF2927]' : 'text-gray-900'
                   }`}
                 >
                   Features
@@ -169,9 +169,7 @@ const Navbar = () => {
                 <button
                   onClick={scrollToFifth}
                   className={`block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-yellow-700 md:p-0 md:dark:hover:text-yellow-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 
-                  ${
-                    active === 'panduan' ? 'text-orange-600' : 'text-gray-900'
-                  }`}
+                  ${active === 'panduan' ? 'text-[#FF2927]' : 'text-gray-900'}`}
                 >
                   Blog
                 </button>

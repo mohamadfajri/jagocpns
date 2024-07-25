@@ -55,7 +55,7 @@ const TestiSection = () => {
     },
   ];
   return (
-    <section className='sm:h-screen my-12 sm:my-0 flex flex-col justify-center items-center bg-white dark:bg-gray-900'>
+    <section className='sm:h-screen my-12 sm:my-0 flex flex-col justify-center items-center bg-[#FFCB01] dark:bg-gray-900'>
       <div className='hidden sm:block text-center dark:text-white'>
         <h1 className='text-4xl font-semibold'>Testimoni</h1>
         <h2 className='text-2xl mt-4'>Kata Mereka Tentang JAGOCPNS.ID</h2>

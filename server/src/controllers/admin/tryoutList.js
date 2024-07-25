@@ -87,7 +87,7 @@ const updateTryout = async (req, res) => {
   const { title, price, description, status } = req.body;
   const stringToBool = (str) => str === 'true';
   const statusFormatted = stringToBool(status);
-  const image = req.file;
+  const image = req.image;
 
   try {
     let updatedData = {
@@ -98,7 +98,7 @@ const updateTryout = async (req, res) => {
     };
 
     if (image) {
-      updatedData.imageUrl = req.fileURL;
+      updatedData.imageUrl = req.image;
     }
 
     const updatedTryout = await prisma.tryoutList.update({

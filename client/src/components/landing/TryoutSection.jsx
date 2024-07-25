@@ -1,4 +1,10 @@
 import TryoutCards from './TryoutCards';
+import to1 from '../../assets/images/TO Gratis 1.png';
+import to2 from '../../assets/images/TO Gratis 2.png';
+import to3 from '../../assets/images/TO Gratis 3.png';
+import to4 from '../../assets/images/TO Premium 1.png';
+import to5 from '../../assets/images/TO Premium 2.png';
+import to6 from '../../assets/images/TO Premium 3.png';
 
 const TryoutSection = () => {
   return (
@@ -12,42 +18,12 @@ const TryoutSection = () => {
       </div>
       <div className='p-4 max-w-screen-xl '>
         <div className='grid grid-cols-2 sm:grid-cols-3 sm:gap-12 gap-4'>
-          <TryoutCards
-            title={'Tryout Gratis'}
-            imageUrl={
-              'https://ghcdsezrgytedkcpribk.supabase.co/storage/v1/object/public/information/2.png'
-            }
-          />
-          <TryoutCards
-            title={'Tryout Gratis'}
-            imageUrl={
-              'https://ghcdsezrgytedkcpribk.supabase.co/storage/v1/object/public/information/2.png'
-            }
-          />
-          <TryoutCards
-            title={'Tryout Gratis'}
-            imageUrl={
-              'https://ghcdsezrgytedkcpribk.supabase.co/storage/v1/object/public/information/2.png'
-            }
-          />
-          <TryoutCards
-            title={'Tryout Premium'}
-            imageUrl={
-              'https://ghcdsezrgytedkcpribk.supabase.co/storage/v1/object/public/information/1.png'
-            }
-          />
-          <TryoutCards
-            title={'Tryout Premium'}
-            imageUrl={
-              'https://ghcdsezrgytedkcpribk.supabase.co/storage/v1/object/public/information/1.png'
-            }
-          />
-          <TryoutCards
-            title={'Tryout Premium'}
-            imageUrl={
-              'https://ghcdsezrgytedkcpribk.supabase.co/storage/v1/object/public/information/1.png'
-            }
-          />
+          <TryoutCards title={'Tryout Gratis'} imageUrl={to1} />
+          <TryoutCards title={'Tryout Gratis'} imageUrl={to2} />
+          <TryoutCards title={'Tryout Gratis'} imageUrl={to3} />
+          <TryoutCards title={'Tryout Premium'} imageUrl={to4} />
+          <TryoutCards title={'Tryout Premium'} imageUrl={to5} />
+          <TryoutCards title={'Tryout Premium'} imageUrl={to6} />
         </div>
       </div>
     </section>

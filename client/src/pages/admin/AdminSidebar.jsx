@@ -1,5 +1,5 @@
 import { Link, Outlet } from 'react-router-dom';
-import logo from '../../assets/images/logo-extend.png';
+import logo from '../../assets/images/logo-extend-black.png';
 
 const AdminSidebar = () => {
   return (

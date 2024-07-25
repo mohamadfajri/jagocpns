@@ -19,7 +19,7 @@ const ContactToast = () => {
     <div className='fixed bottom-4 right-4 z-20 text-xs'>
       <button
         onClick={clickButton}
-        className='bg-jago-4 text-white p-4 rounded-full shadow-lg focus:outline-none'
+        className='bg-[#6B46D5] text-white p-4 rounded-xl shadow-lg focus:outline-none'
       >
         {!showBox ? (
           <div className='flex flex-col items-center'>
