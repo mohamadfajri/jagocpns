@@ -75,7 +75,7 @@ const ContactToast = () => {
             <li>
               <Link
                 to={
-                  'https://wa.me/6285171547130?text=Halo%20min%20Jago!.%0ASaya%20butuh%20bantuan%20nih!!'
+                  'https://api.whatsapp.com/send/?phone=+62895624999799&text=Halo%20min%20Jago!%0ASaya%20butuh%20bantuan%20nih'
                 }
               >
                 <button className='bg-orange-700 text-white p-4 rounded-full shadow-lg focus:outline-none'>

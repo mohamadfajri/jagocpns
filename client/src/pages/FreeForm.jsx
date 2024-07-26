@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button, FileInput } from 'flowbite-react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import logo from '../assets/images/logo-extend.png';
+import logo from '../assets/images/logo-extend-black.png';
 import { fetcher } from '../utils/fetcher';
 import { useAlert } from '../stores/useAlert';
 
@@ -109,13 +109,28 @@ const FreeForm = () => {
                 <li>
                   Comment dan Tag 5 Teman Kamu di :
                   <span className='text-jago-4 hover:underline'>
-                    <Link to={'#'}> Postingan ini</Link>
+                    <Link
+                      to={
+                        'https://www.instagram.com/p/C91pTOKPovF/?igsh=MW41YTk0c3Iycjlmbw=='
+                      }
+                    >
+                      {' '}
+                      Postingan ini
+                    </Link>
                   </span>
                 </li>
                 <li>
-                  Upload/Repost ke Story Instagram Kamu :
+                  Share Gambar berikut Ke Group Cpns manapun Wa/telegram milikmu
+                  :
                   <span className='text-jago-4 hover:underline'>
-                    <Link to={'#'}> Postingan ini</Link>
+                    <Link
+                      to={
+                        'https://www.instagram.com/p/C91pTOKPovF/?igsh=MW41YTk0c3Iycjlmbw=='
+                      }
+                    >
+                      {' '}
+                      Screnshot dipostingan ini{' '}
+                    </Link>
                   </span>
                 </li>
               </ul>

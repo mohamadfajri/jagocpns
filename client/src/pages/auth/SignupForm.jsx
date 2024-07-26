@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import logo from '../../assets/images/logo-extend.png';
+import logo from '../../assets/images/logo-extend-black.png';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import useAuth from '../../stores/useAuth';

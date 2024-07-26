@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import logo from '../../assets/images/logo-extend.png';
+import logo from '../../assets/images/logo-extend-black.png';
 import { Link } from 'react-router-dom';
 import useAuth from '../../stores/useAuth';
 import { useNavigate } from 'react-router-dom';
@@ -151,12 +151,12 @@ const LoginForm = () => {
                 Sign in
               </button>
               <p className='text-sm font-light text-gray-500 dark:text-gray-400'>
-                Don’t have an account yet?{' '}
+                tidak punya account?
                 <Link
                   to={'/auth/signup'}
                   className='font-medium text-primary-600 hover:underline dark:text-primary-500'
                 >
-                  Sign up
+                  daftar sekarang
                 </Link>
               </p>
             </form>
