@@ -54,12 +54,12 @@ const TableRank = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-
     const response = await axios.get(
       `${
         import.meta.env.VITE_API_URL
-      }/api/public/rank?page=${page}&tryoutListId=${active}&name=${searchTerm}`
+      }/api/public/rank?tryoutListId=${active}&name=${searchTerm}`
     );
+    setTotalPage(response.data.totalPages);
 
     const fResponse = response.data.data.map((item) => ({
       name: item.name,

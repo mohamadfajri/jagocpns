@@ -153,6 +153,21 @@ const TryoutEditor = () => {
       [id]: value,
     }));
   };
+  const clearImages = async () => {
+    try {
+      const { data } = await fetchQuestioner.patch('/tryoutimage', {
+        number: 0,
+        tryoutListId: 11,
+      });
+      setAlert({ title: 'success', message: data.message, color: 'success' });
+    } catch (error) {
+      setAlert({
+        title: 'Failed',
+        message: error.response.data.message,
+        color: 'failure',
+      });
+    }
+  };
 
   const handleClear = () => {
     setTryout({
@@ -178,6 +193,7 @@ const TryoutEditor = () => {
       imageE: null,
       imageExplanation: null,
     });
+    clearImages();
   };
 
   const createSoal = async () => {

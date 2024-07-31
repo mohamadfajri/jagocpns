@@ -199,7 +199,7 @@ const CheckoutBar = () => {
                 </div>
                 <div className='mb-2'>
                   <TextInput
-                    disabled={lists?.length >= 5}
+                    disabled={lists?.length >= qty}
                     id='guests'
                     name='guests'
                     placeholder={`Masukan ${
@@ -210,7 +210,7 @@ const CheckoutBar = () => {
                     type='search'
                     rightIcon={() => (
                       <button
-                        disabled={lists?.length >= 5}
+                        disabled={lists?.length >= qty}
                         onClick={handleAdd}
                         size='sm'
                         className='[&>span]:items-center [&>span]:px-2 [&>span]:py-0 flex font-medium text-sm border py-1 px-2 rounded-lg bg-[#155E75] text-white'
@@ -265,7 +265,7 @@ const CheckoutBar = () => {
               </div>
             )}
             <button
-              disabled={(!(lists?.length === qty) && isJoin) || loading}
+              disabled={(lists?.length < 2 && isJoin) || loading}
               type='button'
               onClick={() => {
                 setOpenModal(true);

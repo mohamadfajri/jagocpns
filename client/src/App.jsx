@@ -41,6 +41,7 @@ import FreeFormApproval from './pages/admin/FreeFormApproval';
 import CbtTryout from './pages/CbtTryout';
 import LinkList from './pages/LinkList';
 import ErrorCbt from './pages/ErrorCbt';
+import LinkManager from './pages/admin/LinkManager';
 
 const App = () => {
   return (
@@ -97,6 +98,7 @@ const App = () => {
           <Route path='crud/tryout/' element={<CrudTryoutList />} />
           <Route path='topup-manager/' element={<TopupManager />} />
           <Route path='freeform/' element={<FreeFormApproval />} />
+          <Route path='links/' element={<LinkManager />} />
           <Route path='crud/tryout/:id' element={<ShowTryout />} />
         </Route>
         <Route path='start-tryout/:id' element={<CbtTryout />} />

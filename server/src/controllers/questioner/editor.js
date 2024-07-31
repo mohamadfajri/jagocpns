@@ -111,4 +111,40 @@ const getSoalByNumber = async (req, res) => {
   }
 };
 
-module.exports = { createSoal, getSoalByNumber };
+const handleClearImage = async (req, res) => {
+  const { number, tryoutListId } = req.body;
+
+  try {
+    const tryout = await prisma.tryout.findFirst({
+      where: {
+        number: number,
+        tryoutListId: tryoutListId,
+      },
+    });
+
+    if (!tryout) {
+      return res.status(404).json({ message: 'Tryout not found' });
+    }
+
+    const updatedTryout = await prisma.tryout.update({
+      where: {
+        id: tryout.id,
+      },
+      data: {
+        imageUrl: null,
+        imageA: null,
+        imageB: null,
+        imageC: null,
+        imageD: null,
+        imageE: null,
+      },
+    });
+
+    res.status(200).json({ message: 'Images cleared successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+module.exports = { createSoal, handleClearImage, getSoalByNumber };

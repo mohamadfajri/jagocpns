@@ -34,6 +34,11 @@ const {
   acceptTransaction,
   rejectTransaction,
 } = require('../controllers/admin/transaction');
+const {
+  createLink,
+  deleteLink,
+  getLinks,
+} = require('../controllers/public/information');
 const router = express.Router();
 
 router.post('/admin/signup', createAdmin);
@@ -59,5 +64,8 @@ router.delete('/admin/transaction/:id', adminOnly, rejectTransaction);
 router.post('/admin/resetpassword', adminOnly, resetPassword);
 router.post('/admin/createownership', adminOnly, createOwnership);
 router.post('/admin/deleteownership', adminOnly, deleteOwnership);
+router.post('/admin/link', adminOnly, upload, createLink);
+router.delete('/admin/link/:id', adminOnly, deleteLink);
+router.get('/admin/links', adminOnly, getLinks);
 
 module.exports = router;

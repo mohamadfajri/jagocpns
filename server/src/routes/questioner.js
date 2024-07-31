@@ -9,6 +9,7 @@ const { getTryout } = require('../controllers/admin/tryoutList');
 const {
   createSoal,
   getSoalByNumber,
+  handleClearImage,
 } = require('../controllers/questioner/editor');
 const upload = require('../utils/multer');
 const router = express.Router();
@@ -19,5 +20,6 @@ router.get('/questioner/:id', questionerOnly, getQuestioner);
 router.get('/tryoutlist', questionerOnly, getTryout);
 router.post('/tryout-editor/:id', questionerOnly, upload, createSoal);
 router.get('/tryout/:id/:number', questionerOnly, getSoalByNumber);
+router.patch('/tryoutimage', questionerOnly, handleClearImage);
 
 module.exports = router;

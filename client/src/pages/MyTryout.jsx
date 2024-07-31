@@ -27,7 +27,7 @@ const Mytryout = () => {
 
   return (
     <>
-      <div className='mt-12 sm:mt-0 sm:p-10 sm:ml-64 dark:bg-black min-h-screen'>
+      <div className='sm:mt-0 sm:p-10 sm:ml-64 dark:bg-black min-h-screen'>
         <main className='flex flex-col'>
           <section className='sm:h-1/2'>
             <div className='m-4 p-4 border rounded-lg'>

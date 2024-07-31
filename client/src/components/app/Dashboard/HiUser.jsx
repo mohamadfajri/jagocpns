@@ -69,7 +69,7 @@ const HiUser = () => {
           </Link>
         </div>
       </div>
-      <div className='border-l slider-container sm:w-4/5 mt-14 sm:mt-0 w-full'>
+      <div className='border-l slider-container sm:w-4/5 sm:mt-0 w-full'>
         <Slider {...settings}>
           <SlideContent
             imageUrl={

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetcher } from '../utils/fetcher';
-import logo from '../assets/images/logo-extend.png';
+import logo from '../assets/images/logo-extend-black.png';
 
 const LinkList = () => {
   const [links, setlinks] = useState([{}]);
