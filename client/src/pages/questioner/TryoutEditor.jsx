@@ -170,7 +170,29 @@ const TryoutEditor = () => {
   };
 
   const handleClear = () => {
-    clearImages();
+    setTryout({
+      number: '',
+      type: '',
+      question: '',
+      explanation: '',
+      optionA: '',
+      optionB: '',
+      optionC: '',
+      optionD: '',
+      optionE: '',
+      scoreA: 0,
+      scoreB: 0,
+      scoreC: 0,
+      scoreD: 0,
+      scoreE: 0,
+      image: null,
+      imageA: null,
+      imageB: null,
+      imageC: null,
+      imageD: null,
+      imageE: null,
+      imageExplanation: null,
+    });
   };
 
   const createSoal = async () => {
@@ -448,7 +470,7 @@ const TryoutEditor = () => {
               disabled={loading}
               color={'failure'}
               size='sm'
-              onClick={handleClear}
+              onClick={clearImages}
             >
               Clear Image
             </Button>
