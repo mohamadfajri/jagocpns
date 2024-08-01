@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Link } from 'react-router-dom';
+import SplitText from '../../SplitText';
 
 const TryoutCard = ({ title, desc, action, url, imageUrl, price }) => {
   const formatIDR = (number) => {
@@ -18,10 +19,7 @@ const TryoutCard = ({ title, desc, action, url, imageUrl, price }) => {
         <h5 className='mb-2 sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
           {title}
         </h5>
-
-        <p className='mb-3 font-normal text-gray-700 dark:text-gray-400'>
-          {desc}
-        </p>
+        <div className='mb-3'>{desc && <SplitText text={desc} />}</div>
         {price && (
           <p className='mb-3 font-normal text-gray-700 dark:text-gray-400'>
             {formatIDR(price)}
