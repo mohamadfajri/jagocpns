@@ -16,7 +16,7 @@ const CheckoutBar = () => {
   const [data, setData] = useState({});
   const { setAlert } = useAlert();
   const [loading, setLoading] = useState(false);
-  const [qty, setQty] = useState(5);
+  const [qty, setQty] = useState('');
 
   useEffect(() => {
     const getMine = async () => {
@@ -98,7 +98,7 @@ const CheckoutBar = () => {
 
   const handleQty = (e) => {
     const value = e.target.value;
-    if (value >= 1) {
+    if (value >= 0) {
       setQty(value);
     }
   };

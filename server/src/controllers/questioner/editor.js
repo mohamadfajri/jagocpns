@@ -137,6 +137,7 @@ const handleClearImage = async (req, res) => {
         imageC: null,
         imageD: null,
         imageE: null,
+        imageExplanation: null,
       },
     });
 

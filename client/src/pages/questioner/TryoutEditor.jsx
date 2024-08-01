@@ -156,8 +156,8 @@ const TryoutEditor = () => {
   const clearImages = async () => {
     try {
       const { data } = await fetchQuestioner.patch('/tryoutimage', {
-        number: 0,
-        tryoutListId: 11,
+        number: activeNumber,
+        tryoutListId: Number(id),
       });
       setAlert({ title: 'success', message: data.message, color: 'success' });
     } catch (error) {
@@ -170,29 +170,6 @@ const TryoutEditor = () => {
   };
 
   const handleClear = () => {
-    setTryout({
-      number: '',
-      type: '',
-      question: '',
-      explanation: '',
-      optionA: '',
-      optionB: '',
-      optionC: '',
-      optionD: '',
-      optionE: '',
-      scoreA: 0,
-      scoreB: 0,
-      scoreC: 0,
-      scoreD: 0,
-      scoreE: 0,
-      image: null,
-      imageA: null,
-      imageB: null,
-      imageC: null,
-      imageD: null,
-      imageE: null,
-      imageExplanation: null,
-    });
     clearImages();
   };
 
@@ -473,10 +450,10 @@ const TryoutEditor = () => {
               size='sm'
               onClick={handleClear}
             >
-              Clear
+              Clear Image
             </Button>
             <Button
-              disabled={!isSave | loading}
+              disabled={loading}
               color={'success'}
               size='sm'
               onClick={handleSave}

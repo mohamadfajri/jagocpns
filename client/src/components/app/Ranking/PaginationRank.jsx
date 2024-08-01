@@ -11,7 +11,7 @@ const PaginationRank = () => {
   };
 
   return (
-    <div className='flex overflow-x-auto sm:justify-center'>
+    <div className='flex sm:justify-center'>
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
