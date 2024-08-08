@@ -67,6 +67,37 @@ const getFormByUserId = async (req, res) => {
   }
 };
 
+const checkOwnership = async (req, res) => {
+  const userId = req.user.id;
+  const { tryoutListId } = req.params;
+
+  if (!userId || !tryoutListId) {
+    return res
+      .status(400)
+      .json({ error: 'userId and tryoutListId are required' });
+  }
+
+  try {
+    const ownership = await prisma.ownership.findFirst({
+      where: {
+        userId: Number(userId),
+        tryoutListId: Number(tryoutListId),
+      },
+    });
+
+    if (ownership) {
+      return res.status(200).json({ status: true });
+    }
+
+    return res.status(200).json({
+      status: false,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 const getAllFreeForm = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
@@ -193,4 +224,5 @@ module.exports = {
   confirmAll,
   handleDeleteAll,
   getFormByUserId,
+  checkOwnership,
 };

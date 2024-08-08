@@ -10,6 +10,7 @@ import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { useEffect, useState } from 'react';
 import { fetchAdmin } from '../../utils/fetchAdmin';
 import { useAlert } from '../../stores/useAlert';
+import AddTryoutModal from './AddTryoutModal';
 
 const CrudUser = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,6 +24,16 @@ const CrudUser = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [active, setActive] = useState('');
   const { setAlert } = useAlert();
+  const [listTO, setListTO] = useState([]);
+  const [newTOModal, setnewTOModal] = useState(false);
+
+  useEffect(() => {
+    const getOwnership = async () => {
+      const { data } = await fetchAdmin.get(`/addTryout/${active}`);
+      setListTO(data.list);
+    };
+    getOwnership();
+  }, [active]);
 
   const formatIDR = (number) => {
     return new Intl.NumberFormat('id-ID', {
@@ -85,6 +96,34 @@ const CrudUser = () => {
 
   const handleClose = () => setIsOpen(false);
 
+  const handleRemoveOwnership = async (id) => {
+    const getOwnership = async () => {
+      const { data } = await fetchAdmin.get(`/addTryout/${active}`);
+      setListTO(data.list);
+    };
+    try {
+      const { data } = await fetchAdmin.delete(`/addTryout/${active}/${id}`);
+      setAlert({ title: 'Sukses!', message: data.message, color: 'success' });
+      getOwnership();
+    } catch (error) {
+      setAlert({
+        title: 'Gagal!',
+        message: error.response.data.message,
+        color: 'failure',
+      });
+    }
+  };
+  const handleStatus = (status) => {
+    const getOwnership = async () => {
+      const { data } = await fetchAdmin.get(`/addTryout/${active}`);
+      setListTO(data.list);
+      setnewTOModal(false);
+    };
+    if (status === true) {
+      getOwnership();
+    }
+  };
+
   const handleResetPassword = async () => {
     try {
       const { data } = await fetchAdmin.post('/resetpassword', {
@@ -103,6 +142,11 @@ const CrudUser = () => {
 
   return (
     <div className='py-4 ml-64 dark:bg-black min-h-screen'>
+      <AddTryoutModal
+        isOpen={newTOModal}
+        userId={active}
+        setStatus={handleStatus}
+      />
       <div className='mb-8 mx-4'>
         <h1 className='text-2xl font-semibold'>All Users</h1>
       </div>
@@ -214,12 +258,42 @@ const CrudUser = () => {
             Reset Password
           </Button>
           <div className='my-8 space-y-4 p-4 rounded-md border'>
-            <Button size={'sm'} color={'success'}>
+            <Button
+              onClick={() => setnewTOModal(true)}
+              size={'sm'}
+              color={'success'}
+            >
               Add Tryout to User
             </Button>
-            <ul>
-              <li></li>
-            </ul>
+            <div className='overflow-x-auto'>
+              <Table>
+                <Table.Head>
+                  <Table.HeadCell>Tryout</Table.HeadCell>
+                  <Table.HeadCell>Action</Table.HeadCell>
+                </Table.Head>
+                <Table.Body className='divide-y'>
+                  {listTO.map((item, index) => (
+                    <Table.Row
+                      key={index}
+                      className='bg-white dark:border-gray-700 dark:bg-gray-800'
+                    >
+                      <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
+                        {item.title}
+                      </Table.Cell>
+
+                      <Table.Cell>
+                        <button
+                          onClick={() => handleRemoveOwnership(item.id)}
+                          className='font-medium text-red-500 hover:underline dark:text-cyan-500'
+                        >
+                          Delete
+                        </button>
+                      </Table.Cell>
+                    </Table.Row>
+                  ))}
+                </Table.Body>
+              </Table>
+            </div>
           </div>
         </Drawer.Items>
       </Drawer>

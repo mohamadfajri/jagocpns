@@ -146,6 +146,113 @@ const getTryouts = async (req, res) => {
   }
 };
 
+const addTryoutToOwnership = async (req, res) => {
+  const { userId, tryoutListId } = req.body;
+
+  if (!userId || !tryoutListId) {
+    return res
+      .status(400)
+      .json({ error: 'userId and tryoutListId are required' });
+  }
+
+  try {
+    const existingOwnership = await prisma.ownership.findFirst({
+      where: {
+        userId: Number(userId),
+        tryoutListId: Number(tryoutListId),
+      },
+    });
+
+    if (existingOwnership) {
+      return res.status(400).json({
+        message: 'Anda sudah memiliki tryout ini, silahkan cek di Dashboard',
+      });
+    }
+
+    const newOwnership = await prisma.ownership.create({
+      data: {
+        userId: Number(userId),
+        tryoutListId: Number(tryoutListId),
+        isDone: false,
+      },
+    });
+
+    res.status(201).json({
+      message: 'Tryout berhasil ditambahkan ke Ownership',
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+const getUserOwnershipList = async (req, res) => {
+  const { userId } = req.params;
+
+  if (!userId) {
+    return res.status(400).json({ error: 'userId is required' });
+  }
+
+  try {
+    const ownerships = await prisma.ownership.findMany({
+      where: {
+        userId: Number(userId),
+      },
+      include: {
+        tryoutList: true,
+      },
+    });
+
+    const format = ownerships.map((item) => ({
+      id: item.tryoutList.id,
+      title: item.tryoutList.title,
+    }));
+
+    res.status(200).json({
+      message: 'Daftar tryout yang dimiliki user berhasil diambil',
+      list: format,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+const deleteTryoutFromOwnership = async (req, res) => {
+  const { userId, tryoutListId } = req.params;
+
+  if (!userId || !tryoutListId) {
+    return res
+      .status(400)
+      .json({ error: 'userId and tryoutListId are required' });
+  }
+
+  try {
+    const existingOwnership = await prisma.ownership.findFirst({
+      where: {
+        userId: Number(userId),
+        tryoutListId: Number(tryoutListId),
+      },
+    });
+
+    if (!existingOwnership) {
+      return res.status(404).json({
+        message: 'Ownership tidak ditemukan',
+      });
+    }
+    await prisma.ownership.delete({
+      where: {
+        id: existingOwnership.id,
+      },
+    });
+
+    res.status(200).json({
+      message: 'Tryout berhasil dihapus dari Ownership',
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 module.exports = {
   createTryout,
   getTryoutById,
@@ -153,4 +260,7 @@ module.exports = {
   deleteTryout,
   updateTryout,
   getTryouts,
+  addTryoutToOwnership,
+  getUserOwnershipList,
+  deleteTryoutFromOwnership,
 };

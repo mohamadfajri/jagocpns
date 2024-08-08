@@ -21,8 +21,14 @@ const FreeForm = () => {
         console.error('Error checking submission:', error);
       }
     };
+
+    const checkOwnership = async () => {
+      const { data } = await fetcher.get(`/user/freeOwnership/${id}`);
+      setSubmitted(data.status);
+    };
     checkSubmission();
-  }, []);
+    checkOwnership();
+  }, [id]);
 
   const handleSubmit = async () => {
     try {
@@ -58,10 +64,19 @@ const FreeForm = () => {
       <div className='flex flex-col h-screen justify-between pt-8'>
         <div className='w-full'>
           <img src={logo} alt='jagocpns' className='mx-auto h-24' />
+
           <div className='flex flex-col sm:flex-row justify-center p-8 mx-auto shadow-md rounded-lg max-w-screen-lg'>
-            <p className='text-lg text-center font-medium my-8'>
-              Anda sudah mengajukan permintaan tryout ini.
-            </p>
+            <div className='text-center'>
+              <p className='text-lg text-center font-medium my-8'>
+                Anda sudah mengajukan permintaan tryout ini.
+              </p>
+              <Link
+                className='text-blue-500 hover:underline'
+                to={'/app/mytryouts'}
+              >
+                Silahkan cek secara berkala di sini
+              </Link>
+            </div>
           </div>
         </div>
         <footer className='bg-white dark:bg-gray-900'>

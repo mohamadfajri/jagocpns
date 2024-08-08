@@ -33,6 +33,7 @@ const ownerOnly = require('../middlewares/ownerOnly');
 const {
   createFreeForm,
   getFormByUserId,
+  checkOwnership,
 } = require('../controllers/admin/freeform');
 const { getReview, getUserAnswer } = require('../controllers/user/review');
 const upload = require('../utils/multer');
@@ -64,6 +65,7 @@ router.post('/user/finish/:toId', userOnly, createScore);
 router.get('/user/getTryoutList', userOnly, getTryout);
 router.post('/user/free/:tryoutListId', userOnly, createFreeForm);
 router.get('/user/free', userOnly, getFormByUserId);
+router.get('/user/freeOwnership/:tryoutListId', userOnly, checkOwnership);
 router.get('/user/review/:tryoutListId', userOnly, getReview);
 router.get('/user/search', userOnly, searchEmail);
 router.post('/user/checkout', userOnly, checkout);

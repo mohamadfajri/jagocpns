@@ -20,6 +20,9 @@ const {
   updateTryout,
   deleteTryout,
   getTryouts,
+  addTryoutToOwnership,
+  getUserOwnershipList,
+  deleteTryoutFromOwnership,
 } = require('../controllers/admin/tryoutList');
 const upload = require('../utils/multer');
 const {
@@ -67,5 +70,11 @@ router.post('/admin/deleteownership', adminOnly, deleteOwnership);
 router.post('/admin/link', adminOnly, upload, createLink);
 router.delete('/admin/link/:id', adminOnly, deleteLink);
 router.get('/admin/links', adminOnly, getLinks);
-
+router.post('/admin/addTryout', adminOnly, addTryoutToOwnership);
+router.get('/admin/addTryout/:userId', adminOnly, getUserOwnershipList);
+router.delete(
+  '/admin/addTryout/:userId/:tryoutListId',
+  adminOnly,
+  deleteTryoutFromOwnership
+);
 module.exports = router;
