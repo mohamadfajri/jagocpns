@@ -1,28 +1,36 @@
-import { Button, TextInput } from 'flowbite-react';
 import TopupInfo from '../components/app/Topup/TopupInfo';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTopup } from '../stores/useTopup';
 import { fetcher } from '../utils/fetcher';
 import { useAlert } from '../stores/useAlert';
 
 const TopUpPage = () => {
-  const [inputValue, setInputValue] = useState('');
   const [total, setTotal] = useState(0);
-  const { set } = useTopup();
+  const [balance, setBalance] = useState(0);
+  const { set, setMethodState } = useTopup();
   const { setAlert } = useAlert();
+  const [next, setNext] = useState(false);
+  const [method, setMethod] = useState('');
 
-  const updateTotal = (event) => {
-    const value = event.target.value;
-    const parsedValue = parseInt(value, 10);
-
-    if (value === '' || (parsedValue >= 1 && parsedValue <= 10)) {
-      setInputValue(value);
-      if (!isNaN(parsedValue)) {
-        setTotal(parsedValue * 20000);
-      } else {
-        setTotal(0);
+  useEffect(() => {
+    const getBalance = async () => {
+      try {
+        const { data } = await fetcher.get('/user/summary');
+        setBalance(data.balance);
+      } catch (error) {
+        console.error(error);
       }
-    }
+    };
+    getBalance();
+  }, []);
+
+  const handleChoose = (val) => {
+    setTotal(val);
+  };
+
+  const handleMethod = (val) => {
+    setMethod(val);
+    setMethodState(val);
   };
 
   const formatIDR = (number) => {
@@ -31,6 +39,10 @@ const TopUpPage = () => {
       currency: 'IDR',
       minimumFractionDigits: 0,
     }).format(number);
+  };
+
+  const handleNext = () => {
+    setNext(true);
   };
 
   const createTransaction = async () => {
@@ -50,45 +62,133 @@ const TopUpPage = () => {
   };
 
   return (
-    <div className='p-4 border rounded-lg'>
-      <TopupInfo />
-      <div className='p-2 border rounded-lg'>
-        <div className='space-y-4'>
-          <h1 className='font-medium'>Jumlah Topup</h1>
-          <TextInput
-            placeholder='Masukan jumlah'
-            addon='x20000'
-            id='large'
-            type='number'
-            sizing='lg'
-            value={inputValue}
-            onChange={updateTotal}
-            min={1}
-            max={10}
-          />
-          <h1 className='font-medium'>Topup detail</h1>
-          <TextInput
-            addon='Admin'
-            value={formatIDR(0)}
-            type='text'
-            id='disabledInput2'
-            placeholder='Disabled readonly input'
-            readOnly
-          />
-          <TextInput
-            addon='Total'
-            value={formatIDR(total)}
-            type='text'
-            id='disabledInput2'
-            placeholder='Disabled readonly input'
-            readOnly
-          />
-          <Button as={'button'} onClick={createTransaction} color='blue'>
-            Buat Pesanan
-          </Button>
-        </div>
+    <>
+      <div className='p-4 border rounded-lg'>
+        <TopupInfo />
       </div>
-    </div>
+      <div className='flex justify-between my-6 w-1/2 border-b border-black py-4'>
+        <h1 className='text-sm'>Saldo saat ini</h1>
+        <h1 className='text-3xl font-bold'>{formatIDR(balance)}</h1>
+      </div>
+      <div>
+        <h1 className='text-sm'>Jumlah Top Up</h1>
+      </div>
+      <div className='w-1/2 flex flex-col items-center border-b border-black py-4'>
+        <ul className='grid grid-cols-3 gap-4 text-2xl font-semibold'>
+          <li>
+            <button
+              onClick={() => handleChoose(20000)}
+              className={`w-64 py-6 rounded-xl ${
+                total === 20000 ? 'bg-[#FFCB01]' : 'bg-[#EDEDED]'
+              } hover:bg-[#FFCB01]`}
+            >
+              20.000
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => handleChoose(40000)}
+              className={`w-64 py-6 rounded-xl ${
+                total === 40000 ? 'bg-[#FFCB01]' : 'bg-[#EDEDED]'
+              } hover:bg-[#FFCB01]`}
+            >
+              40.000
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => handleChoose(60000)}
+              className={`w-64 py-6 rounded-xl ${
+                total === 60000 ? 'bg-[#FFCB01]' : 'bg-[#EDEDED]'
+              } hover:bg-[#FFCB01]`}
+            >
+              60.000
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => handleChoose(80000)}
+              className={`w-64 py-6 rounded-xl ${
+                total === 80000 ? 'bg-[#FFCB01]' : 'bg-[#EDEDED]'
+              } hover:bg-[#FFCB01]`}
+            >
+              80.000
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => handleChoose(100000)}
+              className={`w-64 py-6 rounded-xl ${
+                total === 100000 ? 'bg-[#FFCB01]' : 'bg-[#EDEDED]'
+              } hover:bg-[#FFCB01]`}
+            >
+              100.000
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => handleChoose(120000)}
+              className={`w-64 py-6 rounded-xl ${
+                total === 120000 ? 'bg-[#FFCB01]' : 'bg-[#EDEDED]'
+              } hover:bg-[#FFCB01]`}
+            >
+              120.000
+            </button>
+          </li>
+        </ul>
+      </div>
+      {!next && (
+        <div className='w-full my-4'>
+          <button
+            disabled={total === 0}
+            onClick={handleNext}
+            className='bg-[#00A337] hover:bg-[#047a2b] disabled:bg-[#cac8c8] rounded-xl text-white w-1/2 py-2 text-2xl font-bold'
+          >
+            Lanjut
+          </button>
+        </div>
+      )}
+      {next && (
+        <div>
+          <div className='py-4'>
+            <h1 className='text-sm'>Metode Pembayaran</h1>
+          </div>
+          <div className='w-1/2 flex flex-col items-center'>
+            <ul className='grid grid-cols-2 gap-4 text-xl font-semibold'>
+              <li>
+                <button
+                  onClick={() => handleMethod('qris')}
+                  className={`w-96 py-4 rounded-xl ${
+                    method === 'qris' ? 'bg-[#FFCB01]' : 'bg-[#EDEDED]'
+                  } hover:bg-[#FFCB01]`}
+                >
+                  QRIS
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => handleMethod('tf')}
+                  className={`w-96 py-4 rounded-xl ${
+                    method === 'tf' ? 'bg-[#FFCB01]' : 'bg-[#EDEDED]'
+                  } hover:bg-[#FFCB01]`}
+                >
+                  Transfer Bank
+                </button>
+              </li>
+            </ul>
+          </div>
+          <div className='w-full my-4'>
+            <button
+              disabled={method === ''}
+              onClick={createTransaction}
+              className='bg-[#00A337] hover:bg-[#047a2b] disabled:bg-[#cac8c8] rounded-xl text-white w-1/2 py-2 text-2xl font-bold'
+            >
+              Top Up
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

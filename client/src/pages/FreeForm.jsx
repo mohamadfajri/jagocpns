@@ -10,21 +10,26 @@ const FreeForm = () => {
   const { id } = useParams();
   const { setAlert } = useAlert();
   const [files, setFiles] = useState({});
-  const [isSubmitted, setSubmitted] = useState(false);
+  const [isSubmitted, setSubmitted] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const checkSubmission = async () => {
       try {
+        setLoading(true);
         const { data } = await fetcher.get('/user/free');
         setSubmitted(data);
+        setLoading(false);
       } catch (error) {
         console.error('Error checking submission:', error);
       }
     };
 
     const checkOwnership = async () => {
+      setLoading(true);
       const { data } = await fetcher.get(`/user/freeOwnership/${id}`);
       setSubmitted(data.status);
+      setLoading(false);
     };
     checkSubmission();
     checkOwnership();
@@ -193,7 +198,7 @@ const FreeForm = () => {
                 onClick={handleSubmit}
                 color={'success'}
                 className='w-full'
-                disabled={!allFilesSelected}
+                disabled={!allFilesSelected || loading}
               >
                 Kirim
               </Button>

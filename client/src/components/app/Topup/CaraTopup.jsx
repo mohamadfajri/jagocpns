@@ -1,5 +1,5 @@
 import { Tabs } from 'flowbite-react';
-import qris from '../../../assets/images/qris.jpeg';
+import qris from '../../../assets/images/qris.png';
 
 const CaraTopup = () => {
   return (
@@ -7,11 +7,9 @@ const CaraTopup = () => {
       <div className='overflow-x-auto p-2'>
         <Tabs aria-label='Tabs with underline' variant='underline'>
           <Tabs.Item active title='QRIS'>
-            <h1 className='text-lg text-center mt-4'>QRIS</h1>
-            <div className='flex justify-center'>
-              <img className='w-64' src={qris} alt='qris' />
-            </div>
-            <div className='my-6 text-sm'>
+            <img className='w-96' src={qris} alt='qris' />
+
+            {/* <div className='my-6 text-sm'>
               <h1 className='font-medium'>Cara Pembayaran :</h1>
               <ul>
                 <li>
@@ -52,7 +50,7 @@ const CaraTopup = () => {
                   </p>
                 </li>
               </ul>
-            </div>
+            </div> */}
           </Tabs.Item>
           <Tabs.Item active title='Transfer Bank'>
             <h1 className='text-lg text-center mt-4'>Transfer Bank</h1>
