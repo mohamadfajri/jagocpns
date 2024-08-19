@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Button, FileInput } from 'flowbite-react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import logo from '../assets/images/logo-extend-black.png';
 import { fetcher } from '../utils/fetcher';
 import { useAlert } from '../stores/useAlert';
 
 const FreeForm = () => {
-  const navigate = useNavigate();
   const { id } = useParams();
   const { setAlert } = useAlert();
   const [files, setFiles] = useState({});
@@ -43,7 +42,7 @@ const FreeForm = () => {
         title: 'Sukses!',
         message: 'Sedang diverifikasi',
       });
-      navigate('/app/mytryouts');
+      setSubmitted(true);
     } catch (error) {
       setAlert({
         color: 'failure',
