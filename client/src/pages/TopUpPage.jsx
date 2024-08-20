@@ -66,19 +66,19 @@ const TopUpPage = () => {
       <div className='p-4 border rounded-lg'>
         <TopupInfo />
       </div>
-      <div className='flex justify-between my-6 w-1/2 border-b border-black py-4'>
+      <div className='flex justify-between my-6 w-full sm:w-1/2 border-b border-black py-4'>
         <h1 className='text-sm'>Saldo saat ini</h1>
         <h1 className='text-3xl font-bold'>{formatIDR(balance)}</h1>
       </div>
       <div>
         <h1 className='text-sm'>Jumlah Top Up</h1>
       </div>
-      <div className='w-1/2 flex flex-col items-center border-b border-black py-4'>
-        <ul className='grid grid-cols-3 gap-4 text-2xl font-semibold'>
+      <div className='sm:w-1/2 w-full flex flex-col items-center border-b border-black py-4'>
+        <ul className='grid grid-cols-3 gap-4 sm:text-2xl font-semibold'>
           <li>
             <button
               onClick={() => handleChoose(20000)}
-              className={`w-64 py-6 rounded-xl ${
+              className={`sm:w-64 w-24 py-6 rounded-xl ${
                 total === 20000 ? 'bg-[#FFCB01]' : 'bg-[#EDEDED]'
               } hover:bg-[#FFCB01]`}
             >
@@ -88,7 +88,7 @@ const TopUpPage = () => {
           <li>
             <button
               onClick={() => handleChoose(40000)}
-              className={`w-64 py-6 rounded-xl ${
+              className={`sm:w-64 w-24 py-6 rounded-xl ${
                 total === 40000 ? 'bg-[#FFCB01]' : 'bg-[#EDEDED]'
               } hover:bg-[#FFCB01]`}
             >
@@ -98,7 +98,7 @@ const TopUpPage = () => {
           <li>
             <button
               onClick={() => handleChoose(60000)}
-              className={`w-64 py-6 rounded-xl ${
+              className={`sm:w-64 w-24 py-6 rounded-xl ${
                 total === 60000 ? 'bg-[#FFCB01]' : 'bg-[#EDEDED]'
               } hover:bg-[#FFCB01]`}
             >
@@ -108,7 +108,7 @@ const TopUpPage = () => {
           <li>
             <button
               onClick={() => handleChoose(80000)}
-              className={`w-64 py-6 rounded-xl ${
+              className={`sm:w-64 w-24 py-6 rounded-xl ${
                 total === 80000 ? 'bg-[#FFCB01]' : 'bg-[#EDEDED]'
               } hover:bg-[#FFCB01]`}
             >
@@ -118,7 +118,7 @@ const TopUpPage = () => {
           <li>
             <button
               onClick={() => handleChoose(100000)}
-              className={`w-64 py-6 rounded-xl ${
+              className={`sm:w-64 w-24 py-6 rounded-xl ${
                 total === 100000 ? 'bg-[#FFCB01]' : 'bg-[#EDEDED]'
               } hover:bg-[#FFCB01]`}
             >
@@ -128,7 +128,7 @@ const TopUpPage = () => {
           <li>
             <button
               onClick={() => handleChoose(120000)}
-              className={`w-64 py-6 rounded-xl ${
+              className={`sm:w-64 w-24 py-6 rounded-xl ${
                 total === 120000 ? 'bg-[#FFCB01]' : 'bg-[#EDEDED]'
               } hover:bg-[#FFCB01]`}
             >
@@ -142,7 +142,7 @@ const TopUpPage = () => {
           <button
             disabled={total === 0}
             onClick={handleNext}
-            className='bg-[#00A337] hover:bg-[#047a2b] disabled:bg-[#cac8c8] rounded-xl text-white w-1/2 py-2 text-2xl font-bold'
+            className='bg-[#00A337] hover:bg-[#047a2b] disabled:bg-[#cac8c8] rounded-xl text-white sm:w-1/2 w-full py-2 text-2xl font-bold'
           >
             Lanjut
           </button>
@@ -153,12 +153,12 @@ const TopUpPage = () => {
           <div className='py-4'>
             <h1 className='text-sm'>Metode Pembayaran</h1>
           </div>
-          <div className='w-1/2 flex flex-col items-center'>
-            <ul className='grid grid-cols-2 gap-4 text-xl font-semibold'>
+          <div className='sm:w-1/2 w-full flex flex-col items-center'>
+            <ul className='grid grid-cols-2 gap-4 sm:text-xl font-semibold'>
               <li>
                 <button
                   onClick={() => handleMethod('qris')}
-                  className={`w-96 py-4 rounded-xl ${
+                  className={`sm:w-96 w-40 py-4 rounded-xl ${
                     method === 'qris' ? 'bg-[#FFCB01]' : 'bg-[#EDEDED]'
                   } hover:bg-[#FFCB01]`}
                 >
@@ -168,7 +168,7 @@ const TopUpPage = () => {
               <li>
                 <button
                   onClick={() => handleMethod('tf')}
-                  className={`w-96 py-4 rounded-xl ${
+                  className={`sm:w-96 w-40 py-4 rounded-xl ${
                     method === 'tf' ? 'bg-[#FFCB01]' : 'bg-[#EDEDED]'
                   } hover:bg-[#FFCB01]`}
                 >
@@ -181,7 +181,7 @@ const TopUpPage = () => {
             <button
               disabled={method === ''}
               onClick={createTransaction}
-              className='bg-[#00A337] hover:bg-[#047a2b] disabled:bg-[#cac8c8] rounded-xl text-white w-1/2 py-2 text-2xl font-bold'
+              className='bg-[#00A337] hover:bg-[#047a2b] disabled:bg-[#cac8c8] rounded-xl text-white sm:w-1/2 w-full py-2 text-2xl font-bold'
             >
               Top Up
             </button>
