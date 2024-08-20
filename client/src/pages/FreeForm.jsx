@@ -13,25 +13,22 @@ const FreeForm = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const checkSubmission = async () => {
+    const checkStatus = async () => {
       try {
         setLoading(true);
-        const { data } = await fetcher.get('/user/free');
-        setSubmitted(data);
+        const [submissionRes, ownershipRes] = await Promise.all([
+          fetcher.get('/user/free'),
+          fetcher.get(`/user/freeOwnership/${id}`),
+        ]);
+        setSubmitted(submissionRes.data || ownershipRes.data.status);
         setLoading(false);
       } catch (error) {
-        console.error('Error checking submission:', error);
+        console.error('Error checking status:', error);
+        setLoading(false);
       }
     };
 
-    const checkOwnership = async () => {
-      setLoading(true);
-      const { data } = await fetcher.get(`/user/freeOwnership/${id}`);
-      setSubmitted(data.status);
-      setLoading(false);
-    };
-    checkSubmission();
-    checkOwnership();
+    checkStatus();
   }, [id]);
 
   const handleSubmit = async () => {
