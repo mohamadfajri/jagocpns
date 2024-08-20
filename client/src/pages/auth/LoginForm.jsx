@@ -151,6 +151,16 @@ const LoginForm = () => {
                 Sign in
               </button>
               <p className='text-sm font-light text-gray-500 dark:text-gray-400'>
+                <Link
+                  to={
+                    'https://wa.me/62895624999799?text=Halo%20Admin%20Saya%20Lupa%20Password'
+                  }
+                  className='font-medium text-primary-600 hover:underline dark:text-primary-500'
+                >
+                  lupa password?
+                </Link>
+              </p>
+              <p className='text-sm font-light text-gray-500 dark:text-gray-400'>
                 tidak punya account?
                 <Link
                   to={'/auth/signup'}
