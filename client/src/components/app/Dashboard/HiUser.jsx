@@ -3,6 +3,9 @@ import Slider from 'react-slick';
 import SlideContent from './SlideContent';
 import { Link } from 'react-router-dom';
 import useAuth from '../../../stores/useAuth';
+import bannerFirst from '../../../assets/images/dashboardBanner/1.jpg';
+import bannerSecond from '../../../assets/images/dashboardBanner/2.jpg';
+import bannerThird from '../../../assets/images/dashboardBanner/3.jpg';
 
 const HiUser = () => {
   const [great, setGreat] = useState('Datang');
@@ -71,24 +74,9 @@ const HiUser = () => {
       </div>
       <div className='border-l slider-container sm:w-4/5 sm:mt-0 w-full'>
         <Slider {...settings}>
-          <SlideContent
-            imageUrl={
-              'https://ghcdsezrgytedkcpribk.supabase.co/storage/v1/object/public/information/Selamat_Datang_di_JagoCpns.id_(1).png'
-            }
-            url={'/free/10'}
-          />
-          <SlideContent
-            url={'/app/dashboard'}
-            imageUrl={
-              'https://ghcdsezrgytedkcpribk.supabase.co/storage/v1/object/public/information/Selamat_Datang_di_JagoCpns.id_(2).png'
-            }
-          />
-          <SlideContent
-            url={'/app/dashboard'}
-            imageUrl={
-              'https://ghcdsezrgytedkcpribk.supabase.co/storage/v1/object/public/information/Selamat_Datang_di_JagoCpns.id_(3).png'
-            }
-          />
+          <SlideContent imageUrl={bannerFirst} url={'/app/dashboard'} />
+          <SlideContent url={'/free/13'} imageUrl={bannerSecond} />
+          <SlideContent url={'/app/dashboard'} imageUrl={bannerThird} />
         </Slider>
       </div>
       <div className='flex flex-col sm:hidden p-6'>

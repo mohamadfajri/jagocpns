@@ -42,7 +42,7 @@ const TryoutModal = () => {
           <div>
             <ul className='my-6'>
               <li>Waktu : 100 Menit</li>
-              <li>Jumlah Soal : 40</li>
+              <li>Jumlah Soal : 110</li>
             </ul>
             <p>
               Tryout hanya dapat dikerjakan sekali pastikan anda benar-benar

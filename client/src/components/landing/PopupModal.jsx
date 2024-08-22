@@ -1,6 +1,6 @@
 import { Button, Modal } from 'flowbite-react';
 import { useEffect, useState } from 'react';
-import popup from '../../assets/images/popup.png';
+import popup from '../../assets/images/popup.jpg';
 import useAuth from '../../stores/useAuth';
 import { useNavigate } from 'react-router-dom';
 

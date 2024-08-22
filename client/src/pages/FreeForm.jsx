@@ -64,13 +64,19 @@ const FreeForm = () => {
     return (
       <div className='flex flex-col h-screen justify-between pt-8'>
         <div className='w-full'>
-          <img src={logo} alt='jagocpns' className='mx-auto h-24' />
+          <img src={logo} alt='jagocpns' className='mx-auto h-16' />
 
           <div className='flex flex-col sm:flex-row justify-center p-8 mx-auto shadow-md rounded-lg max-w-screen-lg'>
             <div className='text-center'>
-              <p className='text-lg text-center font-medium my-8'>
-                Anda sudah mengajukan permintaan tryout ini.
-              </p>
+              <div className='my-8'>
+                <p className='text-lg text-center font-medium'>
+                  Anda sudah mengajukan permintaan tryout ini,
+                </p>
+                <p>atau</p>
+                <p className='text-lg text-center font-medium'>
+                  tunggu admin verifikasi maksimal 1x6 Jam.
+                </p>
+              </div>
               <Link
                 className='text-blue-500 hover:underline'
                 to={'/app/mytryouts'}
@@ -100,7 +106,7 @@ const FreeForm = () => {
     <div className='flex flex-col h-screen justify-between pt-8'>
       <div className='flex items-center'>
         <div className='w-full'>
-          <img src={logo} alt='jagocpns' className='mx-auto h-24' />
+          <img src={logo} alt='jagocpns' className='mx-auto h-16' />
           <div className='flex flex-col sm:flex-row justify-between p-8 mx-auto shadow-md rounded-lg max-w-screen-lg'>
             <div className='space-y-2'>
               <h1 className='text-lg font-semibold my-4'>
@@ -108,9 +114,9 @@ const FreeForm = () => {
               </h1>
               <div className='border-b'></div>
               <p className='font-medium my-2'>Persyaratan</p>
-              <ul className='space-y-1'>
+              <ul className='space-y-1 mx-6'>
                 <li>
-                  Follow Account Instagram Berikut :
+                  1. Follow Account Instagram Berikut
                   <span className='text-jago-4 hover:underline'>
                     <Link
                       to={
@@ -123,29 +129,40 @@ const FreeForm = () => {
                   </span>
                 </li>
                 <li>
-                  Comment dan Tag 5 Teman Kamu di :
+                  2. Like dan tag 5 orang di postingan Instagram @jagocpns.id
+                  Tryout Gratis 2
                   <span className='text-jago-4 hover:underline'>
                     <Link
                       to={
-                        'https://www.instagram.com/p/C91pTOKPovF/?igsh=MW41YTk0c3Iycjlmbw=='
+                        'https://www.instagram.com/p/C-7_eLCyEm-/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='
                       }
                     >
                       {' '}
-                      Postingan ini
+                      Disini
                     </Link>
                   </span>
                 </li>
                 <li>
-                  Share Gambar berikut Ke Group Cpns manapun Wa/telegram milikmu
-                  :
+                  3. Share Gambar berikut Ke Group Cpns manapun Wa/telegram
+                  milikmu
                   <span className='text-jago-4 hover:underline'>
                     <Link
                       to={
-                        'https://www.instagram.com/p/C91pTOKPovF/?igsh=MW41YTk0c3Iycjlmbw=='
+                        'https://www.instagram.com/p/C-7_eLCyEm-/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='
                       }
                     >
                       {' '}
-                      Screnshot dipostingan ini{' '}
+                      Disini
+                    </Link>
+                  </span>
+                  <span>
+                    {' '}
+                    atau download di{' '}
+                    <Link
+                      className='text-jago-4 hover:underline'
+                      to={'http://bit.ly/tryoutjagocpns'}
+                    >
+                      bit.ly/tryoutjagocpns
                     </Link>
                   </span>
                 </li>
@@ -159,7 +176,14 @@ const FreeForm = () => {
                 <li>
                   Follow Account Instagram Berikut :
                   <span className='text-jago-4 hover:underline my-2'>
-                    <Link to={'#'}> jagocpnsid</Link>
+                    <Link
+                      to={
+                        'https://www.instagram.com/jagocpns.id?igsh=MW9jYmsxa2YwcGZ0Mg=='
+                      }
+                    >
+                      {' '}
+                      jagocpnsid
+                    </Link>
                   </span>
                   <FileInput
                     size={'sm'}
@@ -170,7 +194,14 @@ const FreeForm = () => {
                 <li>
                   Comment dan Tag 5 Teman Kamu di :
                   <span className='text-jago-4 hover:underline my-2'>
-                    <Link to={'#'}> postingan ini</Link>
+                    <Link
+                      to={
+                        'https://www.instagram.com/p/C-7_eLCyEm-/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='
+                      }
+                    >
+                      {' '}
+                      postingan ini
+                    </Link>
                   </span>
                   <FileInput
                     size={'sm'}
@@ -181,7 +212,14 @@ const FreeForm = () => {
                 <li>
                   Upload/Repost ke Story Instagram Kamu :
                   <span className='text-jago-4 hover:underline my-2'>
-                    <Link to={'#'}> postingan ini</Link>
+                    <Link
+                      to={
+                        'https://www.instagram.com/p/C-7_eLCyEm-/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='
+                      }
+                    >
+                      {' '}
+                      postingan ini
+                    </Link>
                   </span>
                   <FileInput
                     size={'sm'}

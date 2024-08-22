@@ -17,7 +17,7 @@ const NewsSection = () => {
 
   const countdownTo = () => {
     const now = new Date();
-    const targetDate = new Date('2024-07-31T00:00:00');
+    const targetDate = new Date('2024-10-16T00:00:00');
 
     const diff = targetDate - now;
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -81,9 +81,9 @@ const NewsSection = () => {
           <ul className='overflow-y-auto max-h-72'>
             <li className='my-2 mx-4 p-2 rounded-lg border'>
               <NewsList
-                title={`Pendaftaran Tryout Gratis `}
+                title={`Pendaftaran Tryout Gratis 02`}
                 desc={
-                  'Silahkan Mengisi Form Persyaratan yang ada didashboard dan sudah bisa langsung mengerjakan.'
+                  'Silahkan Mengisi Form Persyaratan yang ada di dashboard dan Tunggu Admin verifikasi ,Check berkala Di Menu Tryout Saya Maksimal 1x6 Jam'
                 }
               />
             </li>
@@ -91,7 +91,7 @@ const NewsSection = () => {
               <NewsList
                 title={`Sisa ${day} Hari Lagi Menuju Tes CPNS`}
                 desc={
-                  'Tes Seleksi Kemampuan Dasar CPNS akan segera Diumumkan Oleh Menteri Pendayagunaan Aparatur Negara dan Reformasi Birokrasi (PANRB), Abdullah Azwar Anas mengumumkan, tanggal pelaksanaan seleksi nasional CPNS dan PPPK diundur. Seleksi CPNS dan PPPK akan diundur hingga bulan ini, yaitu Juli atau Agustus 2024. "Juli-Agustus, ya," ujar Azwar di Istana Kepresidenan Jakarta, Senin (1/7/2024). Terdapat Kuota CPNS sebanyak 200.000'
+                  'Test SKD CPNS DILAKSANAKAN Serentak pada tanggal 16 Oktober - 14 November, Latih Terus Kemampuanmu Di TryOut Jagocpns.id John F. Kennedy "Usaha dan keberanian tidak akan pernah cukup tanpa arah dan tujuan perencanaan". "Tidak ada kesuksesan tanpa kerja keras"'
                 }
               />
             </li>

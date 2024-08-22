@@ -171,6 +171,37 @@ const CheckoutBar = () => {
                 </p>
               </div>
             </div>
+            <div className='max-w-md mx-auto text-sm'>
+              <table className='table-auto w-full border border-gray-300'>
+                <thead>
+                  <tr>
+                    <th
+                      colSpan='2'
+                      className='px-4 py-2 text-center bg-gray-100 font-semibold border-b border-gray-300'
+                    >
+                      Harga Tryout
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className='px-4 py-2 border-b border-gray-300'>
+                      1-4 Orang
+                    </td>
+                    <td className='px-4 py-2 border-b border-gray-300 border-l'>
+                      Rp 20.000/orang
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className='px-4 py-2 border-b border-gray-300'>
+                      5-100 Orang
+                    </td>
+                    <td className='px-4 py-2 border-l'>Rp 10.000/orang</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
             <label className='inline-flex items-center cursor-pointer my-4'>
               <input
                 type='checkbox'
