@@ -210,7 +210,7 @@ const FreeForm = () => {
                   />
                 </li>
                 <li>
-                  Upload/Repost ke Story Instagram Kamu :
+                  Share Gambar berikut Ke Group Cpns manapun Wa/telegram milikmu
                   <span className='text-jago-4 hover:underline my-2'>
                     <Link
                       to={
