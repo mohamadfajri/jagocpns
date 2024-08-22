@@ -109,16 +109,6 @@ const TopUpPage = () => {
             <button
               onClick={() => handleChoose(80000)}
               className={`sm:w-64 w-24 py-6 rounded-xl ${
-                total === 80000 ? 'bg-[#FFCB01]' : 'bg-[#EDEDED]'
-              } hover:bg-[#FFCB01]`}
-            >
-              80.000
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => handleChoose(100000)}
-              className={`sm:w-64 w-24 py-6 rounded-xl ${
                 total === 100000 ? 'bg-[#FFCB01]' : 'bg-[#EDEDED]'
               } hover:bg-[#FFCB01]`}
             >
@@ -127,12 +117,22 @@ const TopUpPage = () => {
           </li>
           <li>
             <button
-              onClick={() => handleChoose(120000)}
+              onClick={() => handleChoose(100000)}
               className={`sm:w-64 w-24 py-6 rounded-xl ${
-                total === 120000 ? 'bg-[#FFCB01]' : 'bg-[#EDEDED]'
+                total === 200000 ? 'bg-[#FFCB01]' : 'bg-[#EDEDED]'
               } hover:bg-[#FFCB01]`}
             >
-              120.000
+              200.000
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => handleChoose(120000)}
+              className={`sm:w-64 w-24 py-6 rounded-xl ${
+                total === 300000 ? 'bg-[#FFCB01]' : 'bg-[#EDEDED]'
+              } hover:bg-[#FFCB01]`}
+            >
+              300.000
             </button>
           </li>
         </ul>
