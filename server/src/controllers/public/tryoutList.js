@@ -95,9 +95,31 @@ const getFreeTryouts = async (req, res) => {
   }
 };
 
+const getIsOnlineStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const tryoutList = await prisma.tryoutList.findUnique({
+      where: { id: parseInt(id, 10) },
+      select: { isOnline: true },
+    });
+
+    if (!tryoutList) {
+      return res.status(404).json({ message: 'TryoutList not found' });
+    }
+
+    return res.status(200).json({ isOnline: tryoutList.isOnline });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: 'An error occurred', error: error.message });
+  }
+};
+
 module.exports = {
   getAllTryout,
   getTryoutById,
   getTryoutByName,
   getFreeTryouts,
+  getIsOnlineStatus,
 };

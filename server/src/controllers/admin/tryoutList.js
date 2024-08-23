@@ -37,6 +37,7 @@ const getTryout = async (req, res) => {
       imageUrl: tryout.imageUrl,
       description: tryout.description,
       status: tryout.status,
+      statusKerjakan: tryout.isOnline,
     }));
 
     const totalTryouts = await prisma.tryoutList.count();
@@ -71,6 +72,7 @@ const getTryoutById = async (req, res) => {
       imageUrl: tryout.imageUrl,
       description: tryout.description,
       status: tryout.status,
+      statusKerjakan: tryout.isOnline,
     };
     if (!tryout) {
       return res.status(404).json({ message: 'Tryout not found' });
@@ -84,9 +86,10 @@ const getTryoutById = async (req, res) => {
 
 const updateTryout = async (req, res) => {
   const { id } = req.params;
-  const { title, price, description, status } = req.body;
+  const { title, price, description, status, statusKerjakan } = req.body;
   const stringToBool = (str) => str === 'true';
   const statusFormatted = stringToBool(status);
+  const statusKerjakanFormatted = stringToBool(statusKerjakan);
   const image = req.image;
 
   try {
@@ -95,6 +98,7 @@ const updateTryout = async (req, res) => {
       price: BigInt(price),
       description,
       status: statusFormatted,
+      isOnline: statusKerjakanFormatted,
     };
 
     if (image) {

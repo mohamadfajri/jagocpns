@@ -22,6 +22,7 @@ const CrudTryoutList = () => {
     price: '',
     description: '',
     status: false,
+    statusKerjakan: false,
     image: null,
   });
   const [isOpen, setIsOpen] = useState(false);
@@ -49,6 +50,7 @@ const CrudTryoutList = () => {
       price: parseInt(response.data.price),
       description: response.data.description,
       status: response.data.status,
+      statusKerjakan: response.data.statusKerjakan,
       image: null,
     });
   };
@@ -59,6 +61,7 @@ const CrudTryoutList = () => {
       price: '',
       description: '',
       status: false,
+      statusKerjakan: false,
       image: null,
     });
     setIsOpen(true);
@@ -76,6 +79,7 @@ const CrudTryoutList = () => {
           description: form.description,
           image: form.image,
           status: form.status,
+          statusKerjakan: form.statusKerjakan,
         },
         {
           headers: {
@@ -83,6 +87,7 @@ const CrudTryoutList = () => {
           },
         }
       );
+      console.log(form);
       await fetchData();
       setIsOpenEdit(false);
     } catch (error) {
@@ -122,6 +127,7 @@ const CrudTryoutList = () => {
           description: form.description,
           image: form.image,
           status: form.status,
+          statusKerjakan: form.statusKerjakan,
         },
         {
           headers: {
@@ -135,6 +141,7 @@ const CrudTryoutList = () => {
         price: '',
         description: '',
         status: false,
+        statusKerjakan: false,
         image: null,
       });
       await fetchData();
@@ -190,7 +197,8 @@ const CrudTryoutList = () => {
             <Table.HeadCell>Title</Table.HeadCell>
             <Table.HeadCell>Price</Table.HeadCell>
             <Table.HeadCell>Desc</Table.HeadCell>
-            <Table.HeadCell>Status</Table.HeadCell>
+            <Table.HeadCell>Beli</Table.HeadCell>
+            <Table.HeadCell>Kerjakan</Table.HeadCell>
             <Table.HeadCell>Action</Table.HeadCell>
           </Table.Head>
           <Table.Body className='divide-y'>
@@ -205,6 +213,11 @@ const CrudTryoutList = () => {
                 <Table.Cell>{item.price}</Table.Cell>
                 <Table.Cell>{item.description}</Table.Cell>
                 {item.status === true ? (
+                  <Table.Cell className='text-green-500'>Online</Table.Cell>
+                ) : (
+                  <Table.Cell className='text-red-500'>Not Online</Table.Cell>
+                )}
+                {item.statusKerjakan === true ? (
                   <Table.Cell className='text-green-500'>Online</Table.Cell>
                 ) : (
                   <Table.Cell className='text-red-500'>Not Online</Table.Cell>
@@ -371,10 +384,21 @@ const CrudTryoutList = () => {
         <Drawer.Items>
           <form onSubmit={updateData}>
             <div className='flex max-w-md flex-col gap-4'>
+              <h1>Status Beli</h1>
               <Select
                 onChange={handleChange}
                 value={form.status}
                 id='status'
+                required
+              >
+                <option value='true'>Online</option>
+                <option value='false'>Not Online</option>
+              </Select>
+              <h1>Status Kerjakan</h1>
+              <Select
+                onChange={handleChange}
+                value={form.statusKerjakan}
+                id='statusKerjakan'
                 required
               >
                 <option value='true'>Online</option>

@@ -55,6 +55,7 @@ const CrudUser = () => {
           id: user.id,
           name: user.profile?.name || 'No Name',
           email: user.email,
+          phone: user.profile?.phone,
           saldo: user.balance?.amount || 0,
         }));
 
@@ -71,6 +72,7 @@ const CrudUser = () => {
       id: user.id,
       name: user.profile?.name || 'No Name',
       email: user.email,
+      phone: user.profile.phone,
       saldo: user.balance?.amount || 0,
     }));
     setUsers(formattedUsers);
@@ -85,6 +87,7 @@ const CrudUser = () => {
         id: user.id,
         name: user.profile?.name || 'No Name',
         email: user.email,
+        phone: user.profile?.phone,
         saldo: user.balance?.amount || 0,
       }));
       setUsers(formattedUsers);
@@ -172,6 +175,7 @@ const CrudUser = () => {
             <Table.Head>
               <Table.HeadCell>Name</Table.HeadCell>
               <Table.HeadCell>Email</Table.HeadCell>
+              <Table.HeadCell>Phone</Table.HeadCell>
               <Table.HeadCell>Id</Table.HeadCell>
               <Table.HeadCell>Saldo</Table.HeadCell>
               <Table.HeadCell>Action</Table.HeadCell>
@@ -186,6 +190,7 @@ const CrudUser = () => {
                     {user.name}
                   </Table.Cell>
                   <Table.Cell>{user.email}</Table.Cell>
+                  <Table.Cell>{user.phone}</Table.Cell>
                   <Table.Cell>{user.id}</Table.Cell>
                   <Table.Cell>{formatIDR(user.saldo)}</Table.Cell>
                   <Table.Cell>

@@ -9,6 +9,7 @@ const {
   getAllTryout,
   getTryoutById,
   getFreeTryouts,
+  getIsOnlineStatus,
 } = require('../controllers/public/tryoutList');
 
 const router = express.Router();
@@ -19,5 +20,6 @@ router.get('/public/tryouts', getAllTryout);
 router.get('/public/tryout/:id', getTryoutById);
 router.get('/public/freetryouts', getFreeTryouts);
 router.get('/public/links', getLinks);
+router.get('/public/isOnlineTryout/:id', getIsOnlineStatus);
 
 module.exports = router;
