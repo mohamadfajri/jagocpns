@@ -42,6 +42,19 @@ const {
   deleteLink,
   getLinks,
 } = require('../controllers/public/information');
+const {
+  getUserCount,
+  getActiveUsers,
+  getUserRegistrations,
+  getUserSegment,
+  getTransactionSummary,
+  getTransactionVolume,
+  getBalanceSummary,
+  getTryoutParticipation,
+  getAverageScores,
+  getDashboardSummary,
+  getMonthlyData,
+} = require('../controllers/admin/analytic');
 const router = express.Router();
 
 router.post('/admin/signup', createAdmin);
@@ -77,4 +90,23 @@ router.delete(
   adminOnly,
   deleteTryoutFromOwnership
 );
+
+//analytic
+
+router.get('/admin/users/count', adminOnly, getUserCount);
+router.get('/admin/users/active', adminOnly, getActiveUsers);
+router.get('/admin/users/registrations', adminOnly, getUserRegistrations);
+router.get('/admin/users/segment', adminOnly, getUserSegment);
+
+router.get('/admin/transactions/summary', adminOnly, getTransactionSummary);
+router.get('/admin/transactions/volume', adminOnly, getTransactionVolume);
+
+router.get('/admin/balance/summary', adminOnly, getBalanceSummary);
+
+router.get('/admin/tryouts/participation', adminOnly, getTryoutParticipation);
+router.get('/admin/tryouts/scores/average', adminOnly, getAverageScores);
+
+router.get('/admin/dashboard/summary', adminOnly, getDashboardSummary);
+router.get('/admin/charts/monthly-data', adminOnly, getMonthlyData);
+
 module.exports = router;
