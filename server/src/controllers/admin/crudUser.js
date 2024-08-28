@@ -59,12 +59,21 @@ const searchUser = async (req, res) => {
         balance: true,
       },
     });
+    const usersWithConvertedBigInt = users.map((user) => ({
+      ...user,
+      balance: user.balance
+        ? {
+            ...user.balance,
+            amount: user.balance.amount.toString(),
+          }
+        : null,
+    }));
 
     if (users.length === 0) {
       return res.status(404).json({ message: 'Pengguna tidak ditemukan' });
     }
 
-    res.json(users);
+    res.json(usersWithConvertedBigInt);
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({
