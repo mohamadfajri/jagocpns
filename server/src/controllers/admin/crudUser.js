@@ -56,6 +56,7 @@ const searchUser = async (req, res) => {
       },
       include: {
         profile: true,
+        balance: true,
       },
     });
 
