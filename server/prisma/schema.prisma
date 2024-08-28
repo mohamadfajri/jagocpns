@@ -195,7 +195,7 @@ model Ownership {
 
 model FreeForm {
   id           Int  @id @default(autoincrement())
-  userId       Int
+  userId       Int  @unique
   tryoutListId Int
   user         User @relation(fields: [userId], references: [id])
 }

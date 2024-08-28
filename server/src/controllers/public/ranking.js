@@ -42,8 +42,8 @@ const getUserRankingsByTryout = async (req, res) => {
     const scoresWithDetails = allScores.map((score, index) => ({
       ...score,
       rank: index + 1,
-      name: score.user.profile.name,
-      province: score.user.profile.province,
+      name: score?.user?.profile?.name ?? 'User',
+      province: score?.user?.profile?.province ?? 'Province',
       status: isLulus(score.twk, score.tiu, score.tkp),
     }));
 
@@ -97,6 +97,7 @@ const getUserRankingsByTryout = async (req, res) => {
       data: paginatedScores,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: 'An error occurred while fetching scores.' });
   }
 };
