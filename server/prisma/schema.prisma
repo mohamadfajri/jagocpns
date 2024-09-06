@@ -15,20 +15,23 @@ datasource db {
 }
 
 model User {
-  id           Int           @id @default(autoincrement())
-  email        String        @unique
-  password     String
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  profile      Profile?
-  scores       Score[]
-  balance      Balance?
-  transactions Transaction[]
-  payments     Payment[]
-  paidLists    PaidList[]
-  ownerships   Ownership[]
-  freeForms    FreeForm[]
+  id                Int           @id @default(autoincrement())
+  email             String        @unique
+  password          String
+  resetToken        String?    
+  resetTokenExpires DateTime?  
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  profile           Profile?
+  scores            Score[]
+  balance           Balance?
+  transactions      Transaction[]
+  payments          Payment[]
+  paidLists         PaidList[]
+  ownerships        Ownership[]
+  freeForms         FreeForm[]
 }
+
 
 model Admin {
   id        Int      @id @default(autoincrement())

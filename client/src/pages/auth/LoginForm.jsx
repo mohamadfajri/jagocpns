@@ -152,9 +152,7 @@ const LoginForm = () => {
               </button>
               <p className='text-sm font-light text-gray-500 dark:text-gray-400'>
                 <Link
-                  to={
-                    'https://wa.me/62895624999799?text=Halo%20Admin%20Saya%20Lupa%20Password'
-                  }
+                  to={'/auth/forgot-password'}
                   className='font-medium text-primary-600 hover:underline dark:text-primary-500'
                 >
                   lupa password?

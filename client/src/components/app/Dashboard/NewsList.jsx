@@ -1,3 +1,5 @@
+import SplitText from '../../SplitText';
+
 // eslint-disable-next-line react/prop-types
 const NewsList = ({ title, desc }) => {
   return (
@@ -11,7 +13,7 @@ const NewsList = ({ title, desc }) => {
         <h2 className='mb-3 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white'>
           {title}
         </h2>
-        <p className='mb-3 text-gray-500 dark:text-gray-400'>{desc}</p>
+        <SplitText text={desc} />
       </div>
     </div>
   );

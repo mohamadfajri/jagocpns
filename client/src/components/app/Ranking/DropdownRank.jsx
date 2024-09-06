@@ -12,10 +12,27 @@ const DropdownRank = () => {
     const getList = async () => {
       try {
         const response = await fetcher.get('/user/getTryoutList');
-        const list = response.data.data.map((item) => ({
-          id: item.id.toString(),
-          title: item.title,
-        }));
+        const list = response.data.data
+          .sort((a, b) => {
+            if (
+              a.title.toLowerCase().includes('gratis') &&
+              !b.title.toLowerCase().includes('gratis')
+            ) {
+              return -1;
+            }
+            if (
+              !a.title.toLowerCase().includes('gratis') &&
+              b.title.toLowerCase().includes('gratis')
+            ) {
+              return 1;
+            }
+            return 0;
+          })
+          .map((item) => ({
+            id: item.id.toString(),
+            title: item.title,
+          }));
+
         setDropdowns(list);
       } catch (error) {
         console.error('Error fetching tryout list:', error);

@@ -252,7 +252,6 @@ const TryoutReview = () => {
                   )}
                   {questions[currentQuestion].imageUrl && (
                     <img
-                      className='max-h-40 w-auto'
                       src={questions[currentQuestion].imageUrl}
                       alt='image'
                     />
@@ -280,12 +279,7 @@ const TryoutReview = () => {
                                 {choice.text && (
                                   <SplitText text={choice.text} />
                                 )}
-                                {choice.image && (
-                                  <img
-                                    className='max-h-40'
-                                    src={choice.image}
-                                  />
-                                )}
+                                {choice.image && <img src={choice.image} />}
                               </div>
 
                               {getScore(choice.key, currentQuestion) === 5 && (
@@ -401,7 +395,6 @@ const TryoutReview = () => {
                     <div>
                       {questions[currentQuestion].imageExplanation && (
                         <img
-                          className='h-40 w-auto'
                           src={questions[currentQuestion].imageExplanation}
                           alt='image'
                         />

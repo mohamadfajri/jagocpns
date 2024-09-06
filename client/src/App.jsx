@@ -42,6 +42,8 @@ import CbtTryout from './pages/CbtTryout';
 import LinkList from './pages/LinkList';
 import ErrorCbt from './pages/ErrorCbt';
 import LinkManager from './pages/admin/LinkManager';
+import ForgotPassword from './pages/auth/ForgotPassword';
+import ResetPassword from './pages/auth/ResetPassword';
 
 const App = () => {
   return (
@@ -107,6 +109,8 @@ const App = () => {
         <Route path='auth/signup' element={<SignupForm />} />
         <Route path='auth/profile' element={<FillProfile />} />
         <Route path='auth/signout' element={<SignOut />} />
+        <Route path='auth/forgot-password' element={<ForgotPassword />} />
+        <Route path='auth/reset-password' element={<ResetPassword />} />
         <Route path='links' element={<LinkList />} />
         <Route
           path='free/:id'

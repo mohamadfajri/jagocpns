@@ -11,6 +11,10 @@ const {
   getFreeTryouts,
   getIsOnlineStatus,
 } = require('../controllers/public/tryoutList');
+const {
+  forgotPasswordHandler,
+  resetPasswordHandler,
+} = require('../controllers/public/forgotpassword');
 
 const router = express.Router();
 
@@ -21,5 +25,7 @@ router.get('/public/tryout/:id', getTryoutById);
 router.get('/public/freetryouts', getFreeTryouts);
 router.get('/public/links', getLinks);
 router.get('/public/isOnlineTryout/:id', getIsOnlineStatus);
+router.post('/public/forgot-password', forgotPasswordHandler);
+router.post('/public/reset-password', resetPasswordHandler);
 
 module.exports = router;

@@ -6,6 +6,7 @@ import useAuth from '../../../stores/useAuth';
 import bannerFirst from '../../../assets/images/dashboardBanner/1.jpg';
 import bannerSecond from '../../../assets/images/dashboardBanner/2.jpg';
 import bannerThird from '../../../assets/images/dashboardBanner/3.jpg';
+import bannerForth from '../../../assets/images/dashboardBanner/4.jpg';
 
 const HiUser = () => {
   const [great, setGreat] = useState('Datang');
@@ -75,8 +76,9 @@ const HiUser = () => {
       <div className='border-l slider-container sm:w-4/5 sm:mt-0 w-full'>
         <Slider {...settings}>
           <SlideContent imageUrl={bannerFirst} url={'/app/dashboard'} />
-          <SlideContent url={'/free/13'} imageUrl={bannerSecond} />
-          <SlideContent url={'/app/dashboard'} imageUrl={bannerThird} />
+          <SlideContent url={'/app/tryoutstore'} imageUrl={bannerSecond} />
+          <SlideContent url={'/free/13'} imageUrl={bannerThird} />
+          <SlideContent url={'/app/dashboard'} imageUrl={bannerForth} />
         </Slider>
       </div>
       <div className='flex flex-col sm:hidden p-6'>
