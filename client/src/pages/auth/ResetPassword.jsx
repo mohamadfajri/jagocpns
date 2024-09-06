@@ -36,10 +36,13 @@ const ResetPassword = () => {
 
     try {
       setLoading(true);
-      const response = await axios.post('/api/public/reset-password', {
-        token,
-        newPassword: userData.newPassword,
-      });
+      const response = await axios.post(
+        'https://server.jagocpns.id/api/public/reset-password',
+        {
+          token,
+          newPassword: userData.newPassword,
+        }
+      );
       setMessage(response.data.message);
       setTimeout(() => navigate('/auth/signin'), 3000);
     } catch (error) {

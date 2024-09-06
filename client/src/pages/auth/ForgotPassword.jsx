@@ -13,9 +13,12 @@ const ForgotPassword = () => {
 
     try {
       setLoading(true);
-      const response = await axios.post('/api/public/forgot-password', {
-        email,
-      });
+      const response = await axios.post(
+        'https://server.jagocpns.id/api/public/forgot-password',
+        {
+          email,
+        }
+      );
       setMessage(response.data.message);
       setEmail('');
       setSuccess(true);
