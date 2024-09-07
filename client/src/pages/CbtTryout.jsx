@@ -217,9 +217,7 @@ const CbtTryout = () => {
         </div>
         <div className='text-start'>
           {text && <SplitText text={text} />}
-          {image && (
-            <img src={image} alt={`Option ${key}`} className='w-32 h-auto' />
-          )}
+          {image && <img src={image} alt={`Option ${key}`} />}
         </div>
       </button>
     </li>
@@ -296,11 +294,7 @@ const CbtTryout = () => {
                     <SplitText text={activeSoal.question} />
                   )}
                   {activeSoal.imageUrl && (
-                    <img
-                      src={activeSoal.imageUrl}
-                      alt='Question'
-                      className='w-64 h-auto'
-                    />
+                    <img src={activeSoal.imageUrl} alt='Question' />
                   )}
                 </div>
                 <div className='flex flex-col'>
