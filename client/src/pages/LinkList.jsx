@@ -27,7 +27,7 @@ const LinkList = () => {
                 to={item.url}
                 target='_blank'
                 rel='noopener noreferrer'
-                className='flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100'
+                className='flex items-center text-lg justify-center px-2 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100'
               >
                 <img
                   src={item.imageUrl}
