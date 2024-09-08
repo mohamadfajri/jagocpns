@@ -220,6 +220,7 @@ const getUserOwnershipList = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
 const deleteTryoutFromOwnership = async (req, res) => {
   const { userId, tryoutListId } = req.params;
 
@@ -230,6 +231,7 @@ const deleteTryoutFromOwnership = async (req, res) => {
   }
 
   try {
+    // Mencari apakah ownership ada
     const existingOwnership = await prisma.ownership.findFirst({
       where: {
         userId: Number(userId),
@@ -242,6 +244,24 @@ const deleteTryoutFromOwnership = async (req, res) => {
         message: 'Ownership tidak ditemukan',
       });
     }
+
+    // Menghapus data score yang berhubungan
+    await prisma.score.deleteMany({
+      where: {
+        userId: Number(userId),
+        tryoutListId: Number(tryoutListId),
+      },
+    });
+
+    // Menghapus data answer yang berhubungan
+    await prisma.answer.deleteMany({
+      where: {
+        userId: Number(userId),
+        tryoutListId: Number(tryoutListId),
+      },
+    });
+
+    // Menghapus ownership
     await prisma.ownership.delete({
       where: {
         id: existingOwnership.id,
@@ -249,7 +269,7 @@ const deleteTryoutFromOwnership = async (req, res) => {
     });
 
     res.status(200).json({
-      message: 'Tryout berhasil dihapus dari Ownership',
+      message: 'Tryout berhasil dihapus dari Ownership, Score, dan Answer',
     });
   } catch (error) {
     console.error(error);
