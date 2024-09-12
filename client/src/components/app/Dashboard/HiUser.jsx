@@ -77,7 +77,7 @@ const HiUser = () => {
         <Slider {...settings}>
           <SlideContent imageUrl={bannerFirst} url={'/app/dashboard'} />
           <SlideContent url={'/app/tryoutstore'} imageUrl={bannerSecond} />
-          <SlideContent url={'/free/13'} imageUrl={bannerThird} />
+          <SlideContent url={'/app/tryoutstore'} imageUrl={bannerThird} />
           <SlideContent url={'/app/dashboard'} imageUrl={bannerForth} />
         </Slider>
       </div>

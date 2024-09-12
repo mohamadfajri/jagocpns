@@ -1,6 +1,6 @@
 import { Button, Modal } from 'flowbite-react';
 import { useEffect, useState } from 'react';
-import popup from '../../assets/images/popup.png';
+import popup from '../../assets/images/popup.jpg';
 import useAuth from '../../stores/useAuth';
 import { useNavigate } from 'react-router-dom';
 
@@ -18,7 +18,7 @@ const PopupModal = () => {
   return (
     <>
       <Modal size={'xl'} show={openModal} onClose={() => setOpenModal(false)}>
-        <Modal.Header>Tryout Premium 01</Modal.Header>
+        <Modal.Header>Tryout Premium 02</Modal.Header>
         <Modal.Body>
           <div className='space-y-6 flex justify-center'>
             <img src={popup} alt='' />
