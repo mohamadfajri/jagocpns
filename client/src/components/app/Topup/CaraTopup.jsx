@@ -1,5 +1,5 @@
 import { Tabs } from 'flowbite-react';
-import qris from '../../../assets/images/qris.png';
+import qris from '../../../assets/images/qris.jpg';
 import tf from '../../../assets/images/tf.png';
 import { useTopup } from '../../../stores/useTopup';
 import { useAlert } from '../../../stores/useAlert';

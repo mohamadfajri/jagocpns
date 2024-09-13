@@ -1,6 +1,9 @@
 import { Accordion } from 'flowbite-react';
 import { Link } from 'react-router-dom';
 
+import buyto1 from '../../../assets/images/buyto1.jpg';
+import buyto2 from '../../../assets/images/buyto2.jpg';
+
 const InformationAccordion = () => {
   return (
     <Accordion>
@@ -93,49 +96,8 @@ const InformationAccordion = () => {
       <Accordion.Panel>
         <Accordion.Title>Panduan Beli Tryout</Accordion.Title>
         <Accordion.Content>
-          <h1>Panduan membeli tryout di JagoCpns</h1>
-          <ul className='ml-4'>
-            <li>
-              <p>
-                - Masuk Ke Menu{' '}
-                <Link
-                  to={'/app/tryoutstore'}
-                  className='text-blue-500 hover:underline'
-                >
-                  Beli Tryout
-                </Link>
-              </p>
-            </li>
-            <li>
-              <p>- Pilih Tryout Yang ingin anda beli dan klik Tombol Beli </p>
-              <img
-                src='https://ghcdsezrgytedkcpribk.supabase.co/storage/v1/object/public/information/catalogue.jpeg'
-                alt=''
-              />
-            </li>
-            <li>- Klik Buat pesanan</li>
-          </ul>
-          <h1 className='text-red-500'>Notes: </h1>
-          <ul className='ml-4'>
-            <li>
-              1. Jika Anda Ingin membeli bersama teman teman anda masukan Email
-              teman anda Yang terdaftar Di Website JAGOCPNS.id
-            </li>
-            <li>
-              <p>
-                2. Jika anda membeli untuk diri sendiri silahkan langsung Klik
-                Buat pesanan.
-              </p>
-              <p>
-                Setelah itu Chek DiMenu Tryout Saya, Tryout Siap Untuk Anda
-                kerjakan.
-              </p>
-              <img
-                src='https://ghcdsezrgytedkcpribk.supabase.co/storage/v1/object/public/information/co.jpeg'
-                alt=''
-              />
-            </li>
-          </ul>
+          <img src={buyto2} alt='1' />
+          <img src={buyto1} alt='2' />
         </Accordion.Content>
       </Accordion.Panel>
     </Accordion>
