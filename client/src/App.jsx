@@ -45,6 +45,7 @@ import LinkManager from './pages/admin/LinkManager';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import ResetPassword from './pages/auth/ResetPassword';
 import InformationManager from './pages/admin/InformationManager';
+import BroadcastEmail from './pages/admin/BroadcastEmail';
 
 const App = () => {
   return (
@@ -104,6 +105,7 @@ const App = () => {
           <Route path='links/' element={<LinkManager />} />
           <Route path='crud/tryout/:id' element={<ShowTryout />} />
           <Route path='information' element={<InformationManager />} />
+          <Route path='email' element={<BroadcastEmail />} />
         </Route>
         <Route path='start-tryout/:id' element={<CbtTryout />} />
         <Route path='review/:id' element={<TryoutReview />} />
