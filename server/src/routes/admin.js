@@ -55,6 +55,10 @@ const {
   getDashboardSummary,
   getMonthlyData,
 } = require('../controllers/admin/analytic');
+const {
+  emailTestHandler,
+  broadcastHandler,
+} = require('../controllers/admin/mailer');
 const router = express.Router();
 
 router.post('/admin/signup', createAdmin);
@@ -90,6 +94,8 @@ router.delete(
   adminOnly,
   deleteTryoutFromOwnership
 );
+router.post('/admin/test-mail', adminOnly, emailTestHandler);
+router.post('/admin/broadcast', adminOnly, broadcastHandler);
 
 //analytic
 
