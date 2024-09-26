@@ -275,7 +275,7 @@ const TryoutReview = () => {
                               >
                                 {choice.key}
                               </div>
-                              <div className='flex flex-col'>
+                              <div className='flex flex-col text-start'>
                                 {choice.text && (
                                   <SplitText text={choice.text} />
                                 )}

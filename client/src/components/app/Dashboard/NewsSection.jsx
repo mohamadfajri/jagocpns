@@ -81,8 +81,8 @@ const NewsSection = () => {
           <ul className='overflow-y-auto max-h-72'>
             <li className='my-2 mx-4 p-2 rounded-lg border'>
               <NewsList
-                title={`Tryout Premium 03`}
-                desc={`Tryout Premium 03 Dilaksanakan Pada Tanggal 20-22 September 2024 /enter
+                title={`Tryout Premium 04`}
+                desc={`Tryout Premium 04 Dilaksanakan Pada Tanggal 27-29 September 2024 /enter
 Tata Cara: /enter
 1. Isi Saldo Terlebih Dahulu Di Menu Topup Saldo /enter
 2. Beli Tryout Di Menu Beli Tryout /enter
