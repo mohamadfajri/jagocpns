@@ -10,7 +10,7 @@ const PopupModal = () => {
   return (
     <>
       <Modal size={'xl'} show={openModal} onClose={() => setOpenModal(false)}>
-        <Modal.Header>Tryout Premium 04</Modal.Header>
+        <Modal.Header>Tryout Gratis 03</Modal.Header>
         <Modal.Body>
           <div className='space-y-6 flex justify-center'>
             <img src={popup} alt='' />

@@ -134,7 +134,7 @@ const FreeForm = () => {
                   <span className='text-jago-4 hover:underline'>
                     <Link
                       to={
-                        'https://www.instagram.com/p/C-7_eLCyEm-/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='
+                        'https://www.instagram.com/p/DAjKwm3ym1V/?igsh=MWsxNHo3aWg2bTRjdQ=='
                       }
                     >
                       {' '}
@@ -148,7 +148,7 @@ const FreeForm = () => {
                   <span className='text-jago-4 hover:underline'>
                     <Link
                       to={
-                        'https://www.instagram.com/p/C-7_eLCyEm-/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='
+                        'https://www.instagram.com/p/DAjKwm3ym1V/?igsh=MWsxNHo3aWg2bTRjdQ=='
                       }
                     >
                       {' '}
@@ -196,7 +196,7 @@ const FreeForm = () => {
                   <span className='text-jago-4 hover:underline my-2'>
                     <Link
                       to={
-                        'https://www.instagram.com/p/C-7_eLCyEm-/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='
+                        'https://www.instagram.com/p/DAjKwm3ym1V/?igsh=MWsxNHo3aWg2bTRjdQ=='
                       }
                     >
                       {' '}
@@ -214,7 +214,7 @@ const FreeForm = () => {
                   <span className='text-jago-4 hover:underline my-2'>
                     <Link
                       to={
-                        'https://www.instagram.com/p/C-7_eLCyEm-/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='
+                        'https://www.instagram.com/p/DAjKwm3ym1V/?igsh=MWsxNHo3aWg2bTRjdQ=='
                       }
                     >
                       {' '}
