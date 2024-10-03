@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { fetchAdmin } from '../../utils/fetchAdmin';
 import { useParams } from 'react-router-dom';
 import LoadingTable from '../../components/LoadingTable';
+import SplitText from '../../components/SplitText';
 
 const ShowTryout = () => {
   const { id } = useParams();
@@ -38,9 +39,9 @@ const ShowTryout = () => {
                 className='mb-10 p-4 border rounded-lg shadow-md'
               >
                 <div className='mb-4 font-medium'>{item.type}</div>
-                <div className='mb-4'>
+                <div className='flex mb-4'>
                   <span className='font-bold'>{item.number}. </span>
-                  {item.question && <span>{item.question}</span>}
+                  {item.question && <SplitText text={item.question} />}
                   {item.imageUrl && (
                     <div className='mt-2'>
                       <img
@@ -53,23 +54,43 @@ const ShowTryout = () => {
                 </div>
 
                 <div className='mb-4'>
-                  {item.optionA && <div>a. {item.optionA}</div>}
+                  {item.optionA && (
+                    <div className='flex'>
+                      a. <SplitText text={item.optionA} />
+                    </div>
+                  )}
                   {item.imageA && (
                     <img className='h-44 w-auto' src={item.imageA} />
                   )}
-                  {item.optionB && <div>b. {item.optionB}</div>}
+                  {item.optionB && (
+                    <div className='flex'>
+                      b. <SplitText text={item.optionB} />
+                    </div>
+                  )}
                   {item.imageB && (
                     <img className='h-44 w-auto' src={item.imageB} />
                   )}
-                  {item.optionC && <div>c. {item.optionC}</div>}
+                  {item.optionC && (
+                    <div className='flex'>
+                      c. <SplitText text={item.optionC} />
+                    </div>
+                  )}
                   {item.imageC && (
                     <img className='h-44 w-auto' src={item.imageC} />
                   )}
-                  {item.optionD && <div>d. {item.optionD}</div>}
+                  {item.optionD && (
+                    <div className='flex'>
+                      d. <SplitText text={item.optionD} />
+                    </div>
+                  )}
                   {item.imageD && (
                     <img className='h-44 w-auto' src={item.imageD} />
                   )}
-                  {item.optionE && <div>e. {item.optionE}</div>}
+                  {item.optionE && (
+                    <div className='flex'>
+                      e. <SplitText text={item.optionE} />
+                    </div>
+                  )}
                   {item.imageE && (
                     <img className='h-44 w-auto' src={item.imageE} />
                   )}
@@ -95,7 +116,7 @@ const ShowTryout = () => {
                       className='w-44 h-auto'
                     />
                   )}
-                  <p>{item.explanation}</p>
+                  <SplitText text={item.explanation} />
                 </div>
               </div>
             ))}

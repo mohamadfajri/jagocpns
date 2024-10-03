@@ -14,18 +14,30 @@ const DropdownRank = () => {
         const response = await fetcher.get('/user/getTryoutList');
         const list = response.data.data
           .sort((a, b) => {
-            if (
-              a.title.toLowerCase().includes('gratis') &&
-              !b.title.toLowerCase().includes('gratis')
-            ) {
+            const aTitle = a.title.toLowerCase();
+            const bTitle = b.title.toLowerCase();
+
+            if (aTitle.includes('gratis') && !bTitle.includes('gratis')) {
               return -1;
             }
-            if (
-              !a.title.toLowerCase().includes('gratis') &&
-              b.title.toLowerCase().includes('gratis')
-            ) {
+            if (!aTitle.includes('gratis') && bTitle.includes('gratis')) {
               return 1;
             }
+
+            if (aTitle.includes('premium') && !bTitle.includes('premium')) {
+              return -1;
+            }
+            if (!aTitle.includes('premium') && bTitle.includes('premium')) {
+              return 1;
+            }
+
+            if (aTitle.includes('bimbel') && !bTitle.includes('bimbel')) {
+              return 1;
+            }
+            if (!aTitle.includes('bimbel') && bTitle.includes('bimbel')) {
+              return -1;
+            }
+
             return 0;
           })
           .map((item) => ({
