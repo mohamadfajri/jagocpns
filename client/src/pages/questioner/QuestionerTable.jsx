@@ -4,16 +4,29 @@ import { fetchQuestioner } from '../../utils/fetchQuestioner';
 import { useEffect, useState } from 'react';
 
 const QuestionerTable = () => {
-  const [data, setData] = useState([{}]);
+  const [data, setData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const limit = 10;
 
-  const fetchData = async () => {
-    const response = await fetchQuestioner.get('/tryoutlist');
+  const fetchData = async (page) => {
+    const response = await fetchQuestioner.get(
+      `/tryoutlist?page=${page}&limit=${limit}`
+    );
     setData(response.data.data);
+    setTotalPages(response.data.meta.totalPages);
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData(currentPage);
+  }, [currentPage]);
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
+
   return (
     <div className='overflow-x-auto'>
       <Table striped>
@@ -46,6 +59,31 @@ const QuestionerTable = () => {
           ))}
         </Table.Body>
       </Table>
+
+      {/* Pagination Controls */}
+      <div className='flex justify-between mt-4'>
+        <button
+          className={`px-4 py-2 ${
+            currentPage === 1 ? 'cursor-not-allowed opacity-50' : ''
+          }`}
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        <span>
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          className={`px-4 py-2 ${
+            currentPage === totalPages ? 'cursor-not-allowed opacity-50' : ''
+          }`}
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };
