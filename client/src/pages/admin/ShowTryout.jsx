@@ -116,7 +116,7 @@ const ShowTryout = () => {
                       className='w-44 h-auto'
                     />
                   )}
-                  {/* <SplitText text={item.explanation} /> */}
+                  {item.explanation && <SplitText text={item.explanation} />}
                 </div>
               </div>
             ))}
