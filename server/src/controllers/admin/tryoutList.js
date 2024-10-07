@@ -19,6 +19,29 @@ const createTryout = async (req, res) => {
   }
 };
 
+const getAllTryouts = async (req, res) => {
+  try {
+    const tryouts = await prisma.tryoutList.findMany();
+
+    const data = tryouts.map((tryout) => ({
+      id: tryout.id,
+      title: tryout.title,
+      price: tryout.price.toString(),
+      imageUrl: tryout.imageUrl,
+      description: tryout.description,
+      status: tryout.status,
+      statusKerjakan: tryout.isOnline,
+    }));
+
+    res.status(200).json({
+      data,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to fetch tryouts', error });
+  }
+};
+
 const getTryout = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
@@ -287,4 +310,5 @@ module.exports = {
   addTryoutToOwnership,
   getUserOwnershipList,
   deleteTryoutFromOwnership,
+  getAllTryouts,
 };

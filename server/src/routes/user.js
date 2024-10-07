@@ -28,7 +28,7 @@ const {
   createScore,
   getAllSoalById,
 } = require('../controllers/user/cbt');
-const { getTryout } = require('../controllers/admin/tryoutList');
+const { getTryout, getAllTryouts } = require('../controllers/admin/tryoutList');
 const ownerOnly = require('../middlewares/ownerOnly');
 const {
   createFreeForm,
@@ -62,7 +62,7 @@ router.get('/user/get-answer', userOnly, getAnswer);
 router.get('/user/get-answered', userOnly, getIsAnswer);
 router.get('/user/getallsoal/:id', ownerOnly, userOnly, getAllSoalById);
 router.post('/user/finish/:toId', userOnly, createScore);
-router.get('/user/getTryoutList', userOnly, getTryout);
+router.get('/user/getTryoutList', userOnly, getAllTryouts);
 router.post('/user/free/:tryoutListId', userOnly, createFreeForm);
 router.get('/user/free', userOnly, getFormByUserId);
 router.get('/user/freeOwnership/:tryoutListId', userOnly, checkOwnership);
