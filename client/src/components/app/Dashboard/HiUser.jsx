@@ -7,6 +7,7 @@ import bannerFirst from '../../../assets/images/dashboardBanner/1.jpg';
 import bannerSecond from '../../../assets/images/dashboardBanner/2.jpg';
 import bannerThird from '../../../assets/images/dashboardBanner/3.jpg';
 import bannerForth from '../../../assets/images/dashboardBanner/4.jpg';
+import bannerFifth from '../../../assets/images/dashboardBanner/5.jpg';
 
 const HiUser = () => {
   const [great, setGreat] = useState('Datang');
@@ -79,6 +80,7 @@ const HiUser = () => {
           <SlideContent url={'/free/20'} imageUrl={bannerSecond} />
           <SlideContent url={'/app/tryoutstore'} imageUrl={bannerThird} />
           <SlideContent url={'/app/dashboard'} imageUrl={bannerForth} />
+          <SlideContent url={'/app/dashboard'} imageUrl={bannerFifth} />
         </Slider>
       </div>
       <div className='flex flex-col sm:hidden p-6'>
