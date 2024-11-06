@@ -1,17 +1,12 @@
-import { useEffect, useState } from 'react';
-import Slider from 'react-slick';
-import SlideContent from './SlideContent';
-import { Link } from 'react-router-dom';
-import useAuth from '../../../stores/useAuth';
-import bannerFirst from '../../../assets/images/dashboardBanner/1.jpg';
-import bannerSecond from '../../../assets/images/dashboardBanner/2.jpg';
-import bannerThird from '../../../assets/images/dashboardBanner/3.jpg';
-import bannerForth from '../../../assets/images/dashboardBanner/4.jpg';
-import bannerFifth from '../../../assets/images/dashboardBanner/5.jpg';
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import useAuth from "../../../stores/useAuth";
+import { Avatar } from "flowbite-react";
+import avatar from "../../../assets/images/avatar.png";
 
 const HiUser = () => {
-  const [great, setGreat] = useState('Datang');
-  const [nameRes, setNameRes] = useState('User');
+  const [great, setGreat] = useState("Datang");
+  const [nameRes, setNameRes] = useState("User");
   const { profile } = useAuth();
 
   const times = () => {
@@ -19,18 +14,18 @@ const HiUser = () => {
     const jam = sekarang.getHours();
 
     if (jam < 12) {
-      setGreat('Pagi');
+      setGreat("Pagi");
     } else if (jam < 15) {
-      setGreat('Siang');
+      setGreat("Siang");
     } else if (jam < 18) {
-      setGreat('Sore');
+      setGreat("Sore");
     } else {
-      setGreat('Malam');
+      setGreat("Malam");
     }
   };
 
   const getName = (sentence) => {
-    const words = sentence.split(' ');
+    const words = sentence.split(" ");
     let shortestWord = words[0];
 
     for (let i = 1; i < words.length; i++) {
@@ -46,52 +41,27 @@ const HiUser = () => {
     getName(profile.name);
   }, [profile]);
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: false,
-    autoplay: true,
-  };
-
   return (
-    <div className='flex flex-col sm:flex-row border rounded-lg'>
-      <div className='flex-col m-4 w-1/5 hidden sm:flex'>
-        <div className='my-4'>
-          <h1 className='text-2xl font-medium'>
-            Selamat {great}, {nameRes}.
-          </h1>
-          <p className='my-2'>Selamat datang di Website JagoCPNS.</p>
+    <div className="sm:flex-row rounded-xl bg-white">
+      <div className="flex justify-between items-center px-16 py-16">
+        <div>
+          <p className="font-bold text-5xl">Hai, {nameRes}!</p>
+          <p className="text-lg">Siap Belajar CPNS hari ini?</p>
         </div>
-        <div className='my-8 flex flex-col justify-start'>
-          <Link
-            to={'/app/mytryouts'}
-            className='bg-jago-4 p-2 w-fit mt-1 hover:bg-jago-2 text-sm font-medium text-white rounded-md'
-          >
-            lihat daftar tryout
-          </Link>
+        <div>
+          <Avatar img={avatar} alt={`avatar of ${nameRes}`} rounded size="xl" />
         </div>
       </div>
-      <div className='border-l slider-container sm:w-4/5 sm:mt-0 w-full'>
-        <Slider {...settings}>
-          <SlideContent imageUrl={bannerFirst} url={'/app/dashboard'} />
-          <SlideContent url={'/free/20'} imageUrl={bannerSecond} />
-          <SlideContent url={'/app/tryoutstore'} imageUrl={bannerThird} />
-          <SlideContent url={'/app/dashboard'} imageUrl={bannerForth} />
-          <SlideContent url={'/app/dashboard'} imageUrl={bannerFifth} />
-        </Slider>
-      </div>
-      <div className='flex flex-col sm:hidden p-6'>
-        <h1 className='text-2xl'>
+
+      <div className="flex flex-col sm:hidden p-6">
+        <h1 className="text-2xl">
           Selamat {great}, {nameRes}.
         </h1>
-        <p className='text-sm'>Selamat datang di dashboard JagoCPNS</p>
-        <div className='mt-4'>
+        <p className="text-sm">Selamat datang di dashboard JagoCPNS</p>
+        <div className="mt-4">
           <Link
-            to={'/app/mytryouts'}
-            className='bg-jago-4 p-2 hover:bg-jago-2 text-sm font-medium text-white rounded-md'
+            to={"/app/mytryouts"}
+            className="bg-jago-4 p-2 hover:bg-jago-2 text-sm font-medium text-white rounded-md"
           >
             lihat daftar tryout
           </Link>

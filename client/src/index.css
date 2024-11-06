@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  background-color: #d1d5db;
+}
+
+.react-calendar{
+  border: none !important;
+  background-color: #f2f2f5 !important;
+  border-radius: 15px !important;
+}
+
+.react-calendar__tile--active{
+  border-radius: 20px !important;
+}
+
+.react-calendar__tile--now{
+  border: 1px solid blue !important;
+  border-radius: 20px !important;
+}
+
