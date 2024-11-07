@@ -187,7 +187,7 @@ export const DashBoardCalendar = () => {
         </ul>
       </div>
 
-      <div className="mt-16">
+      <div className="mt-16 flex justify-center">
         <Calendar showNavigation={false} className={"p-3"}/>
       </div>
     </div>

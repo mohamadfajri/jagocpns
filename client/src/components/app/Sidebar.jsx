@@ -290,7 +290,7 @@ const Sidebar = () => {
             }}
             className="fixed left-0 right-0 top-0 bottom-0 z-30 bg-black opacity-35"
           ></div>
-          <aside className="fixed sm:hidden bg-white top-0 left-0 z-40 w-64 h-screen border-r border-gray-300 dark:border-gray-700 dark:bg-black">
+          <aside className="fixed sm:hidde bg-white top-0 left-0 z-40 w-64 h-screen border-r border-gray-300 dark:border-gray-700 dark:bg-black">
             <div className="h-full flex flex-col">
               <div className="p-4">
                 <img src={logo} alt="logo" className="rounded-lg" />
