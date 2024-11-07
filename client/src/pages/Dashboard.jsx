@@ -7,8 +7,8 @@ const Dashboard = () => {
   return (
     <>
       <div>
-        <div className="xl:px-5 xl:py-5 sm:ml-64 dark:bg-black min-h-screen">
-          <div className="grid grid-cols-5 gap-5">
+        <div className="px-5 py-5 xl:px-5 xl:py-5 xl:ml-64 dark:bg-black min-h-screen">
+          <div className="xl:grid xl:grid-cols-5 xl:gap-5">
             <div className="col-span-4">
               <HiUser />
               <div className="mt-5">
@@ -71,7 +71,7 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="w-full sticky top-0">
+            <div className="w-full sticky top-0 mt-5 xl:mt-0">
               <DashBoardCalendar />
             </div>
           </div>
