@@ -23,7 +23,7 @@ const InvoiceTopup = () => {
   ) : (
     <>
       <div
-        className="border rounded-lg p-6 min-h-screen bg-white shadow-sm"
+        className="border rounded-lg p-5 min-h-screen bg-white shadow-sm"
         id="invoice"
       >
         <div className="flex items-center gap-3">

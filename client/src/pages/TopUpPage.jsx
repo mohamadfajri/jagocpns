@@ -27,6 +27,7 @@ const TopUpPage = () => {
 
   const handleChoose = (val) => {
     setTotal(val);
+    console.log(total)
   };
 
   const handleMethod = (val) => {
@@ -86,7 +87,7 @@ const TopUpPage = () => {
           <p className="text-2xl font-medium">Pilih Nominal</p>
         </div>
 
-        <ul className="grid grid-cols-3 gap-4 sm:text-2xl font-semibold mt-5">
+        <ul className="grid grid-cols-3 gap-3 sm:gap-3 md:gap-3 xl:gap-5 sm:text-2xl font-semibold mt-5">
           <li>
             <button
               onClick={() => handleChoose(20000)}
@@ -149,7 +150,7 @@ const TopUpPage = () => {
           </li>
         </ul>
         <div>
-          <button className="btn w-full mt-5 rounded-xl p-3 text-xl text-white font-medium bg-[#00A337] hover:bg-[#047a2b]">
+          <button className="btn w-full mt-5 rounded-xl p-3 text-xl text-white font-medium bg-[#00A337] hover:bg-[#047a2b]" onClick={createTransaction}>
             Top Up
           </button>
         </div>
