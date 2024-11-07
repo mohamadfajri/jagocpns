@@ -7,17 +7,17 @@ const Dashboard = () => {
   return (
     <>
       <div>
-        <div className="sm:py-10 pl-10 pe-5 pb-14 sm:ml-64 dark:bg-black min-h-screen">
+        <div className="xl:px-5 xl:py-5 sm:ml-64 dark:bg-black min-h-screen">
           <div className="grid grid-cols-5 gap-5">
             <div className="col-span-4">
               <HiUser />
-              <div className="mt-8">
+              <div className="mt-5">
                 <DashboardCard />
               </div>
               <div className="mt-5">
                 <img src={dashboardBanner} alt="" />
               </div>
-              <div className="bg-white rounded-xl mt-5 p-4">
+              <div className="bg-white rounded-2xl mt-5 p-4">
                 <div className="flex items-center gap-3">
                   <svg
                     width="36"
@@ -36,7 +36,7 @@ const Dashboard = () => {
                   <p className="text-2xl font-semibold">Berita</p>
                 </div>
 
-                <div className="mt-3 text-justify">
+                <div className="mt-7 text-justify">
                   <p>
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                     Quod expedita, iste minus pariatur non tempora sed nobis

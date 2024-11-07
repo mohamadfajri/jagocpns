@@ -32,10 +32,10 @@ const Sidebar = () => {
         aria-label="Sidebar"
       >
         <div className="h-full flex flex-col justify-between">
-          <div className="p-4">
+          <div className="px-5 pt-5 pb-7">
             <img src={logo} alt="logo" className="rounded-lg" />
           </div>
-          <div className="h-fit px-3 mb-28 overflow-y-auto bg-white dark:bg-black">
+          <div className="h-fit px-5 mb-28 overflow-y-auto bg-white dark:bg-black">
             <ul className="space-y-4 font-semibold">
               <li>
                 <Link

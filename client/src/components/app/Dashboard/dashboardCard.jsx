@@ -17,8 +17,8 @@ export const DashboardCard = () => {
     getUserSummary();
   }, []);
   return (
-      <div className="flex gap-2">
-        <div className=" bg-gradient-to-r from-[#00E109] to-[#00B97B] rounded-xl w-1/3 p-4">
+      <div className="flex gap-5">
+        <div className=" bg-gradient-to-r from-[#00E109] to-[#00B97B] rounded-2xl w-1/3 xl:p-5">
           <div className="flex flex-col gap-20">
             <div className="flex items-center gap-3">
               {" "}
@@ -47,7 +47,7 @@ export const DashboardCard = () => {
           </div>
         </div>
 
-        <div className=" bg-gradient-to-r from-[#8D65FF] to-[#6B46D5] rounded-xl w-1/3 p-4">
+        <div className=" bg-gradient-to-r from-[#8D65FF] to-[#6B46D5] rounded-2xl w-1/3 xl:p-5">
           <div className="flex flex-col gap-20">
             <div className="flex items-center gap-3">
               <svg
@@ -91,7 +91,7 @@ export const DashboardCard = () => {
           </div>
         </div>
 
-        <div className=" bg-gradient-to-r from-[#FF2927] to-[#C80057] rounded-xl w-1/3 p-4">
+        <div className=" bg-gradient-to-r from-[#FF2927] to-[#C80057] rounded-2xl w-1/3 xl:p-5">
           <div className="flex flex-col gap-20">
             <div className="flex items-center gap-3">
               {" "}

@@ -2,7 +2,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 export const DashBoardCalendar = () => {
   return (
-    <div className="bg-white rounded-xl p-4 ">
+    <div className="bg-white rounded-2xl p-4 ">
       <div className="flex gap-3">
         <svg
           width="36"
@@ -188,7 +188,7 @@ export const DashBoardCalendar = () => {
       </div>
 
       <div className="mt-16">
-        <Calendar />
+        <Calendar className={"p-3"} />
       </div>
     </div>
   );

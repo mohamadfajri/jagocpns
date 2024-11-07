@@ -42,8 +42,8 @@ const HiUser = () => {
   }, [profile]);
 
   return (
-    <div className="sm:flex-row rounded-xl bg-white">
-      <div className="flex justify-between items-center px-16 py-16">
+    <div className="sm:flex-row rounded-2xl bg-white xl:px-12 xl:py-14">
+      <div className="flex justify-between items-center">
         <div>
           <p className="font-bold text-5xl">Hai, {nameRes}!</p>
           <p className="text-lg">Siap Belajar CPNS hari ini?</p>
