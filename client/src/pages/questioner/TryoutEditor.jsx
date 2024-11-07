@@ -311,6 +311,7 @@ const TryoutEditor = () => {
               rows={4}
               value={tryout.question}
               onChange={handleInputChange}
+              wrap='soft'
             />
           </div>
           <div>
