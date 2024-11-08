@@ -300,6 +300,25 @@ const deleteTryoutFromOwnership = async (req, res) => {
   }
 };
 
+const getTryOutOwnershipCount = async (req, res) => {
+  const {tryoutListId} = req.params
+  try {
+    const ownershipCount = await prisma.ownership.count({
+      where: {
+        tryoutListId: parseInt(tryoutListId, 10)
+      }
+    })
+    res.status(200).json({
+      message: "Tryout ownership count retrieved successfully",
+      tryoutListId: tryoutListId,
+      ownershipCount: ownershipCount,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "Failed to retrieve tryout ownership count" });
+  }
+}
+
 module.exports = {
   createTryout,
   getTryoutById,
@@ -311,4 +330,5 @@ module.exports = {
   getUserOwnershipList,
   deleteTryoutFromOwnership,
   getAllTryouts,
+  getTryOutOwnershipCount
 };
