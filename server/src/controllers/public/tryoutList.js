@@ -6,6 +6,9 @@ const getAllTryout = async (req, res) => {
       where: {
         status: true,
       },
+      orderBy:{
+        title: "asc"
+      }
     });
     const format = tryouts.map((t) => ({
       ...t,
