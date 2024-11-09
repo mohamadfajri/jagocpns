@@ -55,6 +55,9 @@ const getTryout = async (req, res) => {
     const tryouts = await prisma.tryoutList.findMany({
       skip,
       take: limit,
+      orderBy: {
+        title: "asc"
+      }
     });
 
     const data = tryouts.map((tryout) => ({
