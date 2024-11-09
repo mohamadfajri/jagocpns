@@ -28,11 +28,13 @@ const CrudTryoutList = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const [data, setData] = useState([{}]);
+  const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPage] = useState(1);
   const [id, setId] = useState();
   const [purchaseCounts, setPurchaseCounts] = useState({});
+  const [filteredData, setFilteredData] = useState([])
+  const [search, setSearch] = useState('');
 
   const navigate = useNavigate();
 
@@ -40,6 +42,9 @@ const CrudTryoutList = () => {
     const page = p ? p : 1;
     const response = await fetchAdmin(`/tryout?page=${page}`);
     setData(response.data.data);
+    console.log(data)
+    setFilteredData(response.data.data)
+    console.log("filtered:" , filteredData)
     setTotalPage(response.data.meta.totalPages);
   };
 
@@ -54,6 +59,12 @@ const CrudTryoutList = () => {
       console.error(`Failed to fetch purchase count for id ${id}:`, error);
     }
   };
+
+  useEffect(() => {
+    setFilteredData(
+      data.filter((item) => item.title.toLowerCase().includes(search.toLowerCase()))
+    );
+  }, [search, data]);
 
   const fetchSingle = async (id) => {
     const response = await fetchAdmin(`tryout/${id}`);
@@ -186,10 +197,11 @@ const CrudTryoutList = () => {
       <div className="flex mx-4 pb-8">
         <div className="max-w-md">
           <TextInput
-            placeholder="Search for user"
+            placeholder="Search Tryout"
             id="base"
             type="text"
             sizing="md"
+            onChange={(e) => setSearch(e.target.value)}
           />
         </div>
         <div className="max-w-md ml-8">
@@ -222,7 +234,7 @@ const CrudTryoutList = () => {
             <Table.HeadCell>Action</Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y">
-            {data.map((item, index) => (
+            {filteredData.map((item, index) => (
               <Table.Row
                 key={index}
                 className="bg-white dark:border-gray-700 dark:bg-gray-800"
