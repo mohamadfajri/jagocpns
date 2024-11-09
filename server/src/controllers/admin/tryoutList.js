@@ -21,7 +21,11 @@ const createTryout = async (req, res) => {
 
 const getAllTryouts = async (req, res) => {
   try {
-    const tryouts = await prisma.tryoutList.findMany();
+    const tryouts = await prisma.tryoutList.findMany({
+      orderBy: {
+        title: "asc"
+      }
+    });
 
     const data = tryouts.map((tryout) => ({
       id: tryout.id,
