@@ -1,4 +1,4 @@
-const prisma = require('../../utils/prismaClient');
+const prisma = require("../../utils/prismaClient");
 
 const createTryout = async (req, res) => {
   const { title, price, description } = req.body;
@@ -12,10 +12,10 @@ const createTryout = async (req, res) => {
         description,
       },
     });
-    res.status(201).json({ message: 'created' });
+    res.status(201).json({ message: "created" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Failed to create tryout list', error });
+    res.status(500).json({ message: "Failed to create tryout list", error });
   }
 };
 
@@ -38,7 +38,7 @@ const getAllTryouts = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Failed to fetch tryouts', error });
+    res.status(500).json({ message: "Failed to fetch tryouts", error });
   }
 };
 
@@ -78,7 +78,7 @@ const getTryout = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Failed to fetch tryouts', error });
+    res.status(500).json({ message: "Failed to fetch tryouts", error });
   }
 };
 
@@ -98,19 +98,19 @@ const getTryoutById = async (req, res) => {
       statusKerjakan: tryout.isOnline,
     };
     if (!tryout) {
-      return res.status(404).json({ message: 'Tryout not found' });
+      return res.status(404).json({ message: "Tryout not found" });
     }
     res.status(200).json(data);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Failed to fetch tryout', error });
+    res.status(500).json({ message: "Failed to fetch tryout", error });
   }
 };
 
 const updateTryout = async (req, res) => {
   const { id } = req.params;
   const { title, price, description, status, statusKerjakan } = req.body;
-  const stringToBool = (str) => str === 'true';
+  const stringToBool = (str) => str === "true";
   const statusFormatted = stringToBool(status);
   const statusKerjakanFormatted = stringToBool(statusKerjakan);
   const image = req.image;
@@ -133,10 +133,10 @@ const updateTryout = async (req, res) => {
       data: updatedData,
     });
 
-    res.status(200).json({ message: 'Tryout updated successfully' });
+    res.status(200).json({ message: "Tryout updated successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Failed to update tryout', error });
+    res.status(500).json({ message: "Failed to update tryout", error });
   }
 };
 
@@ -146,10 +146,10 @@ const deleteTryout = async (req, res) => {
     await prisma.tryoutList.delete({
       where: { id: parseInt(id) },
     });
-    res.status(200).json({ message: 'Tryout deleted successfully' });
+    res.status(200).json({ message: "Tryout deleted successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Failed to delete tryout', error });
+    res.status(500).json({ message: "Failed to delete tryout", error });
   }
 };
 
@@ -162,14 +162,14 @@ const getTryouts = async (req, res) => {
         tryoutListId: parseInt(tryoutListId),
       },
       orderBy: {
-        number: 'asc',
+        number: "asc",
       },
     });
 
     res.status(200).json(tryouts);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -179,7 +179,7 @@ const addTryoutToOwnership = async (req, res) => {
   if (!userId || !tryoutListId) {
     return res
       .status(400)
-      .json({ error: 'userId and tryoutListId are required' });
+      .json({ error: "userId and tryoutListId are required" });
   }
 
   try {
@@ -192,7 +192,7 @@ const addTryoutToOwnership = async (req, res) => {
 
     if (existingOwnership) {
       return res.status(400).json({
-        message: 'Anda sudah memiliki tryout ini, silahkan cek di Dashboard',
+        message: "Anda sudah memiliki tryout ini, silahkan cek di Dashboard",
       });
     }
 
@@ -205,18 +205,18 @@ const addTryoutToOwnership = async (req, res) => {
     });
 
     res.status(201).json({
-      message: 'Tryout berhasil ditambahkan ke Ownership',
+      message: "Tryout berhasil ditambahkan ke Ownership",
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 const getUserOwnershipList = async (req, res) => {
   const { userId } = req.params;
 
   if (!userId) {
-    return res.status(400).json({ error: 'userId is required' });
+    return res.status(400).json({ error: "userId is required" });
   }
 
   try {
@@ -235,12 +235,12 @@ const getUserOwnershipList = async (req, res) => {
     }));
 
     res.status(200).json({
-      message: 'Daftar tryout yang dimiliki user berhasil diambil',
+      message: "Daftar tryout yang dimiliki user berhasil diambil",
       list: format,
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -250,7 +250,7 @@ const deleteTryoutFromOwnership = async (req, res) => {
   if (!userId || !tryoutListId) {
     return res
       .status(400)
-      .json({ error: 'userId and tryoutListId are required' });
+      .json({ error: "userId and tryoutListId are required" });
   }
 
   try {
@@ -264,7 +264,7 @@ const deleteTryoutFromOwnership = async (req, res) => {
 
     if (!existingOwnership) {
       return res.status(404).json({
-        message: 'Ownership tidak ditemukan',
+        message: "Ownership tidak ditemukan",
       });
     }
 
@@ -292,22 +292,23 @@ const deleteTryoutFromOwnership = async (req, res) => {
     });
 
     res.status(200).json({
-      message: 'Tryout berhasil dihapus dari Ownership, Score, dan Answer',
+      message: "Tryout berhasil dihapus dari Ownership, Score, dan Answer",
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
 const getTryOutOwnershipCount = async (req, res) => {
-  const {tryoutListId} = req.params
+  const { tryoutListId } = req.params;
+  const id = parseInt(tryoutListId);
   try {
     const ownershipCount = await prisma.ownership.count({
       where: {
-        tryoutListId: parseInt(tryoutListId, 10)
-      }
-    })
+        tryoutListId: id,
+      },
+    });
     res.status(200).json({
       message: "Tryout ownership count retrieved successfully",
       tryoutListId: tryoutListId,
@@ -315,9 +316,11 @@ const getTryOutOwnershipCount = async (req, res) => {
     });
   } catch (error) {
     console.error("Error:", error);
-    res.status(500).json({ message: "Failed to retrieve tryout ownership count" });
+    res
+      .status(500)
+      .json({ message: "Failed to retrieve tryout ownership count" });
   }
-}
+};
 
 module.exports = {
   createTryout,
@@ -330,5 +333,5 @@ module.exports = {
   getUserOwnershipList,
   deleteTryoutFromOwnership,
   getAllTryouts,
-  getTryOutOwnershipCount
+  getTryOutOwnershipCount,
 };
