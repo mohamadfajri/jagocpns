@@ -18,21 +18,4 @@ fetchAdmin.interceptors.request.use(
   }
 );
 
-const fetchAdminDev = axios.create({
-  baseURL: `${import.meta.env.VITE_API_URL_DEV}/api/admin`,
-});
-
-fetchAdminDev.interceptors.request.use(
-  (config) => {
-    const { token } = useAdmin.getState();
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-
-export { fetchAdmin, fetchAdminDev };
+export { fetchAdmin };
