@@ -31,11 +31,11 @@ const Sidebar = () => {
         className="fixed bg-white top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 border-r border-gray-300 dark:border-gray-700 dark:bg-black"
         aria-label="Sidebar"
       >
-        <div className="h-full flex flex-col justify-between">
-          <div className="px-5 pt-5 pb-7">
-            <img src={logo} alt="logo" className="rounded-lg" />
-          </div>
-          <div className="h-fit px-5 mb-28 overflow-y-auto bg-white dark:bg-black">
+        <div className="px-5 pt-5 pb-7">
+          <img src={logo} alt="logo" className="rounded-lg" />
+        </div>
+        <div className="h-screen flex flex-col">
+          <div className="px-5 md:mb-72 xl:mb-24 overflow-y-auto bg-white dark:bg-black">
             <ul className="space-y-4 font-semibold">
               <li>
                 <Link
@@ -86,7 +86,7 @@ const Sidebar = () => {
                     />
                   </svg>
 
-                  <span className="ms-3">Tryout</span>
+                  <span className="ms-3">Tryout Saya</span>
                 </Link>
               </li>
               <li>
@@ -110,7 +110,7 @@ const Sidebar = () => {
                       fill="black"
                     />
                   </svg>
-                  <span className="ms-3">Bimbel</span>
+                  <span className="ms-3">Bimbel Saya</span>
                 </Link>
               </li>
               <li>
@@ -168,7 +168,41 @@ const Sidebar = () => {
                     />
                   </svg>
 
-                  <span className="ms-3">Beli</span>
+                  <span className="ms-3">Beli Trout</span>
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  to={"/app/tryoutstore"}
+                  className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white group ${
+                    location.pathname === "/app/tryoutstore"
+                      ? "bg-[#FFCB01]"
+                      : "hover:bg-gray-200 dark:hover:bg-gray-700"
+                  }`}
+                >
+                  <svg
+                    width="25"
+                    height="25"
+                    viewBox="0 0 25 25"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8.33333 8.33333V7.29167C8.33333 6.1866 8.77232 5.12679 9.55372 4.34539C10.3351 3.56399 11.3949 3.125 12.5 3.125C13.6051 3.125 14.6649 3.56399 15.4463 4.34539C16.2277 5.12679 16.6667 6.1866 16.6667 7.29167V8.33333"
+                      stroke="black"
+                      strokeWidth="2.46889"
+                      strokeLinecap="round"
+                    />
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M3.73541 7.90216C3.125 8.51258 3.125 9.49383 3.125 11.4584V14.5834C3.125 18.5115 3.125 20.4761 4.34583 21.6959C5.56666 22.9157 7.5302 22.9167 11.4583 22.9167H13.5417C17.4698 22.9167 19.4344 22.9167 20.6542 21.6959C21.874 20.4751 21.875 18.5115 21.875 14.5834V11.4584C21.875 9.49383 21.875 8.51258 21.2646 7.90216C20.6542 7.29175 19.6729 7.29175 17.7083 7.29175H7.29166C5.32708 7.29175 4.34583 7.29175 3.73541 7.90216ZM10.4167 12.5001C10.4167 12.2238 10.3069 11.9589 10.1116 11.7635C9.91621 11.5682 9.65126 11.4584 9.375 11.4584C9.09873 11.4584 8.83378 11.5682 8.63843 11.7635C8.44308 11.9589 8.33333 12.2238 8.33333 12.5001V14.5834C8.33333 14.8597 8.44308 15.1246 8.63843 15.32C8.83378 15.5153 9.09873 15.6251 9.375 15.6251C9.65126 15.6251 9.91621 15.5153 10.1116 15.32C10.3069 15.1246 10.4167 14.8597 10.4167 14.5834V12.5001ZM16.6667 12.5001C16.6667 12.2238 16.5569 11.9589 16.3616 11.7635C16.1662 11.5682 15.9013 11.4584 15.625 11.4584C15.3487 11.4584 15.0838 11.5682 14.8884 11.7635C14.6931 11.9589 14.5833 12.2238 14.5833 12.5001V14.5834C14.5833 14.8597 14.6931 15.1246 14.8884 15.32C15.0838 15.5153 15.3487 15.6251 15.625 15.6251C15.9013 15.6251 16.1662 15.5153 16.3616 15.32C16.5569 15.1246 16.6667 14.8597 16.6667 14.5834V12.5001Z"
+                      fill="black"
+                    />
+                  </svg>
+
+                  <span className="ms-3">Beli Bimbel</span>
                 </Link>
               </li>
 
@@ -227,7 +261,7 @@ const Sidebar = () => {
           <div className="p-4">
             <ul>
               <li>
-                <div className="bg-gradient-to-r from-[#FFD000] to-[#FFAF00] rounded-xl h-52">
+                <div className="bg-gradient-to-r from-[#8d65ff] to-[#6846d5] rounded-xl h-52">
                   <div className="flex justify-center items-center">
                     <div className="relative -top-11">
                       <div className="">
@@ -244,39 +278,21 @@ const Sidebar = () => {
                         </p>
                         <p className="text-xl text-white">{userData.email}</p>
                       </div>
-                      <div>
+                      <div className="grid grid-cols-2 gap-3">
                         <Link to={"/app/profile"}>
-                          <button className="btn bg-white w-full rounded-lg bg-opacity-25 text-white font-semibold">
+                          <button className="btn bg-white w-full rounded-lg bg-opacity-25 text-white font-bold">
                             Profile
+                          </button>
+                        </Link>
+                        <Link to={"/auth/signout"}>
+                          <button className="btn bg-white w-full rounded-lg bg-opacity-25 text-white font-bold">
+                            Log Out
                           </button>
                         </Link>
                       </div>
                     </div>
                   </div>
                 </div>
-              </li>
-              <li>
-                <Link
-                  to={"/auth/signout"}
-                  className="flex items-center p-2 text-red-600 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="size-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"
-                    />
-                  </svg>
-
-                  <span className="ms-3">Sign Out</span>
-                </Link>
               </li>
             </ul>
           </div>
