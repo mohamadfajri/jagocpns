@@ -21,6 +21,7 @@ const TableRank = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    if (!active) return;
     const getData = async () => {
       setIsLoading(true);
       const response = await axios.get(
