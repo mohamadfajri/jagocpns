@@ -1,7 +1,7 @@
-const prisma = require('../../utils/prismaClient');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const decoder = require('../../utils/decoder');
+const prisma = require("../../utils/prismaClient");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const decoder = require("../../utils/decoder");
 
 const createUser = async (req, res) => {
   const { email, password } = req.body;
@@ -15,8 +15,8 @@ const createUser = async (req, res) => {
     });
     res.status(201).json({ user });
   } catch (error) {
-    console.error('Error creating user:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error creating user:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -36,8 +36,8 @@ const createProfile = async (req, res) => {
     });
     res.status(201).json({ profile });
   } catch (error) {
-    console.error('Error creating profile:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error creating profile:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -45,7 +45,7 @@ const getUser = async (req, res) => {
   const user = req.user;
 
   if (!user) {
-    return res.status(404).json({ message: 'User tidak ditemukan' });
+    return res.status(404).json({ message: "User tidak ditemukan" });
   }
 
   try {
@@ -56,7 +56,7 @@ const getUser = async (req, res) => {
     });
 
     if (!profile) {
-      return res.status(404).json({ message: 'Profile tidak ditemukan' });
+      return res.status(404).json({ message: "Profile tidak ditemukan" });
     }
     const profileWithEmail = {
       ...profile,
@@ -64,8 +64,8 @@ const getUser = async (req, res) => {
     };
     res.json(profileWithEmail);
   } catch (error) {
-    console.error('Error fetching profile:', error);
-    res.status(500).json({ message: 'Internal Server Error' });
+    console.error("Error fetching profile:", error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
@@ -79,30 +79,30 @@ const userSignin = async (req, res) => {
       },
     });
     if (!user) {
-      return res.status(401).json({ message: 'Email atau password salah' });
+      return res.status(401).json({ message: "Email atau password salah" });
     }
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
-      return res.status(401).json({ message: 'Email atau password salah' });
+      return res.status(401).json({ message: "Email atau password salah" });
     }
 
     const token = jwt.sign(
       {
         id: user.id,
         email: user.email,
-        role: 'user',
+        role: "user",
       },
       process.env.SECRET,
-      { expiresIn: '24h' }
+      { expiresIn: "24h" }
     );
 
     res.json({ token });
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Error:", error);
     res
       .status(500)
-      .json({ message: 'Terjadi kesalahan saat mencoba masuk sebagai user' });
+      .json({ message: "Terjadi kesalahan saat mencoba masuk sebagai user" });
   }
 };
 
@@ -117,12 +117,12 @@ const changePassword = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(404).json({ message: 'Pengguna tidak ditemukan' });
+      return res.status(404).json({ message: "Pengguna tidak ditemukan" });
     }
 
     const isMatch = await bcrypt.compare(oldPassword, user.password);
     if (!isMatch) {
-      return res.status(401).json({ message: 'Password lama salah' });
+      return res.status(401).json({ message: "Password lama salah" });
     }
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
@@ -131,12 +131,12 @@ const changePassword = async (req, res) => {
       data: { password: hashedPassword },
     });
 
-    return res.status(200).json({ message: 'Password berhasil diubah' });
+    return res.status(200).json({ message: "Password berhasil diubah" });
   } catch (error) {
     console.log(error);
     return res
       .status(500)
-      .json({ message: 'Terjadi kesalahan saat mencoba mengubah password' });
+      .json({ message: "Terjadi kesalahan saat mencoba mengubah password" });
   }
 };
 
@@ -158,13 +158,13 @@ const updateProfile = async (req, res) => {
     });
 
     res.status(200).json({
-      message: 'Profil berhasil diperbarui',
+      message: "Profil berhasil diperbarui",
     });
   } catch (error) {
-    console.error('Error updating profile:', error);
+    console.error("Error updating profile:", error);
     res.status(500).json({
       success: false,
-      message: 'Terjadi kesalahan saat memperbarui profil',
+      message: "Terjadi kesalahan saat memperbarui profil",
       error: error.message,
     });
   }
@@ -200,10 +200,37 @@ const getUserTryouts = async (req, res) => {
       tryoutsNotCompleted,
     });
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Error:", error);
     res.status(500).json({
-      message: 'Terjadi kesalahan saat mencoba mengambil data tryout',
+      message: "Terjadi kesalahan saat mencoba mengambil data tryout",
     });
+  }
+};
+
+const getUserTryOutById = async (req, res) => {
+  const userId = req.user.id;
+  const tryOutListId= parseInt(req.params.tryoutListId);
+  try {
+    const data = await prisma.ownership.findMany({
+      where: {
+        userId,
+        tryoutListId: tryOutListId
+      },
+      include: {
+        tryoutList: {
+          select:{
+            title: true
+          }
+        }
+      }
+    });
+    res.status(200).json(data);
+  } catch (error) {
+    res
+      .status(500)
+      .json({
+        message: "Terjadi kesalahan saat mencoba mengambil data tryout",
+      });
   }
 };
 
@@ -243,7 +270,7 @@ const getListByUserId = async (req, res) => {
       undone: formatUndone,
     });
   } catch (error) {
-    res.status(500).json({ message: 'Failed to get ownerships by user ID' });
+    res.status(500).json({ message: "Failed to get ownerships by user ID" });
   }
 };
 
@@ -271,8 +298,8 @@ const getSummary = async (req, res) => {
       totalUser: totalUserCount + 5000,
     });
   } catch (error) {
-    console.error('Error fetching summary:', error);
-    res.status(500).json({ message: 'Failed to fetch summary' });
+    console.error("Error fetching summary:", error);
+    res.status(500).json({ message: "Failed to fetch summary" });
   }
 };
 
@@ -286,4 +313,5 @@ module.exports = {
   getListByUserId,
   getSummary,
   updateProfile,
+  getUserTryOutById,
 };

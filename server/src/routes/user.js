@@ -6,6 +6,7 @@ const {
   changePassword,
   createProfile,
   getListByUserId,
+  getUserTryOutById,
   getSummary,
   updateProfile,
 } = require('../controllers/user/user');
@@ -70,6 +71,7 @@ router.get('/user/review/:tryoutListId', userOnly, getReview);
 router.get('/user/search', userOnly, searchEmail);
 router.post('/user/checkout', userOnly, checkout);
 router.get('/user/mylists', userOnly, getListByUserId);
+router.get("/user/mylist/:tryoutListId", userOnly, getUserTryOutById);
 router.get('/user/review/answer/:tryoutListId', userOnly, getUserAnswer);
 router.get('/user/myscore/:tryoutListId', userOnly, getUserScoreById);
 
