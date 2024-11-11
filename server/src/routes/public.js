@@ -15,6 +15,7 @@ const {
   forgotPasswordHandler,
   resetPasswordHandler,
 } = require('../controllers/public/forgotpassword');
+const {getUserCount} = require("../controllers/admin/analytic");
 
 const router = express.Router();
 
@@ -27,5 +28,6 @@ router.get('/public/links', getLinks);
 router.get('/public/isOnlineTryout/:id', getIsOnlineStatus);
 router.post('/public/forgot-password', forgotPasswordHandler);
 router.post('/public/reset-password', resetPasswordHandler);
+router.get('/public/usercount', getUserCount);
 
 module.exports = router;
