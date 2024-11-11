@@ -41,7 +41,7 @@ const HiUser = () => {
   }, [profile]);
 
   return (
-    <div className="sm:flex-row rounded-2xl bg-white px-12 xl:px-12 py-14 xl:py-14">
+    <div className="sm:flex-row rounded-2xl bg-white px-12 xl:px-12 py-14 xl:py-14 border">
       <div className="flex justify-between items-center">
         <div>
           <p className="font-bold text-2xl xl:text-5xl">Hai, {nameRes}!</p>
