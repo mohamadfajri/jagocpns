@@ -48,6 +48,7 @@ import InformationManager from "./pages/admin/InformationManager";
 import BroadcastEmail from "./pages/admin/BroadcastEmail";
 import TryoutInformation from "./pages/TryoutInformations.jsx";
 import MyBimbel from "./pages/MyBimbel.jsx";
+import RankPage from "./components/app/Ranking/RankPage.jsx";
 
 const App = () => {
   return (
@@ -79,6 +80,7 @@ const App = () => {
             <Route path=":id/" element={<CheckoutBar />} />
           </Route>
           <Route path="ranks/" element={<RankingPage />} />
+          <Route path="ranks/rankingpage/:id" element={<RankPage />} />
           <Route path="topup/" element={<TopupTab />} />
           <Route path="information/" element={<InformationPage />} />
           <Route path="profile/" element={<ProfilePage />} />
