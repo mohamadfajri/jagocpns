@@ -5,11 +5,13 @@ import { useRank } from "../stores/useRank";
 import { fetcher } from "../utils/fetcher.js";
 import TableRank from "../components/app/Ranking/TableRank.jsx";
 import { TryoutCardRanking } from "../components/app/Ranking/TryoutCard.jsx";
+import { useNavigate } from "react-router-dom";
 
 const RankingPage = () => {
   const [dataTryout, setDataTryout] = useState([]);
   const { setActive, active } = useRank();
   const targetSectionRef = useRef(null);
+  const navigate = useNavigate()
 
   const getList = async () => {
     try {
@@ -59,10 +61,10 @@ const RankingPage = () => {
   const handleRanking = (id) => {
     setActive(id);
     console.log("id", id);
-    targetSectionRef.current.scrollIntoView({ behavior: "smooth" });
+    navigate(`rankingpage/${id}`)
+    // targetSectionRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
-  console.log(dataTryout);
   return (
     <div>
       <div className="sm:p-10 sm:ml-64 sm:mt-0 pb-16 dark:bg-black min-h-screen">
