@@ -1,5 +1,43 @@
 const prisma = require('../../utils/prismaClient');
 
+
+const getUserRankById = async (req, res) => {
+  const userId = parseInt(req.params.id);
+  const tryoutListId = parseInt(req.params.tryoutListId);
+
+  try {
+    // Mengambil semua skor yang sesuai dengan tryoutListId dan mengurutkannya secara descending berdasarkan nilai total
+    const scores = await prisma.score.findMany({
+      where: {
+        tryoutListId: tryoutListId,
+      },
+      orderBy: {
+        total: 'desc',
+      },
+    });
+
+    // Menemukan peringkat user berdasarkan urutan index + 1
+    const userRank = scores.findIndex(score => score.userId === userId) + 1;
+
+    if (userRank > 0) {
+      res.status(200).json({
+        userId: userId,
+        rank: userRank,
+      });
+    } else {
+      res.status(404).json({
+        message: 'User not found in this tryout list',
+      });
+    }
+  } catch (error) {
+    console.error("Error fetching user rank:", error);
+    res.status(500).json({
+      message: 'Internal Server Error',
+    });
+  }
+};
+
+
 const getUserRankingsByTryout = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const pageSize = 10;
@@ -102,4 +140,4 @@ const getUserRankingsByTryout = async (req, res) => {
   }
 };
 
-module.exports = { getUserRankingsByTryout };
+module.exports = { getUserRankingsByTryout, getUserRankById };
