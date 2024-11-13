@@ -142,7 +142,7 @@ const Sidebar = () => {
                 <Link
                   to={"/app/tryoutstore"}
                   className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white group ${
-                    location.pathname === "/app/tryoutstore"
+                    location.pathname.includes("/app/tryoutstore") 
                       ? "bg-[#FFCB01]"
                       : "hover:bg-gray-200 dark:hover:bg-gray-700"
                   }`}
@@ -168,7 +168,7 @@ const Sidebar = () => {
                     />
                   </svg>
 
-                  <span className="ms-3">Beli Trout</span>
+                  <span className="ms-3">Beli Tryout</span>
                 </Link>
               </li>
 
