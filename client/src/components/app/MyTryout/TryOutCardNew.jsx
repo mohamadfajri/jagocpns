@@ -7,6 +7,8 @@ export const TryOutCardNew = ({
   url,
   imageUrl,
   price,
+  onClick,
+  className
 }) => {
   const formatIDR = (number) => {
     return new Intl.NumberFormat("id-ID", {
@@ -16,7 +18,7 @@ export const TryOutCardNew = ({
     }).format(number);
   };
   return (
-    <div className="border w-72 rounded-xl">
+    <div className={`${className} border w-72 rounded-xl`}>
       <div className="aspect-video">
         <img src={imageUrl} alt="" className="rounded-t-xl" />
       </div>
@@ -67,9 +69,10 @@ export const TryOutCardNew = ({
             <p>100 Menit</p>
           </div>
         </div>
+        <p className="font-medium mt-2 text-lg">{formatIDR(price)}</p>
         <div className="mt-5">
           <Link to={url}>
-            <button className="btn bg-[#FFCB01] py-2 w-full font-medium rounded-lg">
+            <button onClick={onClick} className="btn bg-[#FFCB01] py-2 w-full font-medium rounded-lg">
               {action}
             </button>
           </Link>
