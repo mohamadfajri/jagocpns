@@ -1,6 +1,6 @@
 const { createServer } = require("http");
 const { parse } = require("url");
-const next = require('next');
+// const next = require('next');
 const app = require("../src/server.js");
 
 const port = 3000;
