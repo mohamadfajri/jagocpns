@@ -109,9 +109,8 @@ const ProfileMain = () => {
         </div>
 
         <Button
-          className="w-fit"
+          className="w-1/2 bg-[#06C270]" 
           disabled={!isChange}
-          color={"success"}
           type="submit"
         >
           Simpan
