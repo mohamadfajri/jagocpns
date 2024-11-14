@@ -1,7 +1,8 @@
 const prisma = require("../../utils/prismaClient");
 
 const createTryout = async (req, res) => {
-  const { title, price, description } = req.body;
+  const { title, price, description, batch } = req.body;
+  const batchInt = parseInt(batch, 10);
 
   try {
     await prisma.tryoutList.create({
@@ -10,6 +11,7 @@ const createTryout = async (req, res) => {
         price: BigInt(price),
         imageUrl: req.image,
         description,
+        batch: batchInt,
       },
     });
     res.status(201).json({ message: "created" });
@@ -23,8 +25,8 @@ const getAllTryouts = async (req, res) => {
   try {
     const tryouts = await prisma.tryoutList.findMany({
       orderBy: {
-        title: "asc"
-      }
+        title: "asc",
+      },
     });
 
     const data = tryouts.map((tryout) => ({
@@ -56,8 +58,8 @@ const getTryout = async (req, res) => {
       skip,
       take: limit,
       orderBy: {
-        title: "asc"
-      }
+        title: "asc",
+      },
     });
 
     const data = tryouts.map((tryout) => ({
@@ -329,6 +331,35 @@ const getTryOutOwnershipCount = async (req, res) => {
   }
 };
 
+const getTryoutOwner = async (req, res) => {
+  const { tryoutListId } = req.params;
+  try {
+    const tryoutOwner = await prisma.ownership.findMany({
+      where: {
+        tryoutListId: parseInt(tryoutListId),
+      },
+      select: {
+        userId: true,
+        tryoutListId: true,
+        profile: {
+          select: phone,
+        },
+        user: {
+          select: {
+            email: true,
+          },
+        },
+      },
+    });
+    res.status(200).json(tryoutOwner);
+  } catch (error) {
+    res.status(500).json,
+      {
+        message: "Error fetching tryout owner",
+      };
+  }
+};
+
 module.exports = {
   createTryout,
   getTryoutById,
@@ -341,4 +372,5 @@ module.exports = {
   deleteTryoutFromOwnership,
   getAllTryouts,
   getTryOutOwnershipCount,
+  getTryoutOwner,
 };

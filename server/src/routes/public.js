@@ -13,6 +13,7 @@ const {
   getTryoutById,
   getFreeTryouts,
   getIsOnlineStatus,
+  getTryoutByBatch,
 } = require("../controllers/public/tryoutList");
 const {
   forgotPasswordHandler,
@@ -26,6 +27,7 @@ router.get("/public/information/:type", getInformationByType);
 router.get("/public/rank", getUserRankingsByTryout);
 router.get("/public/rank/tryout/:tryoutListId/user/:id", getUserRankById);
 router.get("/public/tryouts", getAllTryout);
+router.get("/public/getbatch", getTryoutByBatch);
 router.get("/public/tryout/:id", getTryoutById);
 router.get("/public/freetryouts", getFreeTryouts);
 router.get("/public/links", getLinks);

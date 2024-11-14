@@ -60,7 +60,7 @@ const TryoutInformation = () => {
       {!isOnline && (
         <div className="mt-5 font-bold text-lg">
           <p>
-            Mohon maaf untuk Tryout ini belum dapat dikerjakan sekarang.
+            Mohon maaf untuk Tryout ini belum dapat dikerjakan sekarang. <br />
             Silahkan mengerjakan sesuai dengan jadwal yang telah ditentukan.
           </p>
         </div>

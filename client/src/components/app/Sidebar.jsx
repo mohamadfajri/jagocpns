@@ -66,7 +66,7 @@ const Sidebar = () => {
                 <Link
                   to={"/app/mytryouts"}
                   className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white group ${
-                    location.pathname === "/app/mytryouts"
+                    location.pathname.includes("/app/mytryouts")
                       ? "bg-[#FFCB01]"
                       : "hover:bg-gray-200 dark:hover:bg-gray-700"
                   }`}
@@ -117,7 +117,7 @@ const Sidebar = () => {
                 <Link
                   to={"/app/ranks"}
                   className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white group ${
-                    location.pathname.includes("/app/ranks") 
+                    location.pathname.includes("/app/ranks")
                       ? "bg-[#FFCB01]"
                       : "hover:bg-gray-200 dark:hover:bg-gray-700"
                   }`}
@@ -142,7 +142,7 @@ const Sidebar = () => {
                 <Link
                   to={"/app/tryoutstore"}
                   className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white group ${
-                    location.pathname.includes("/app/tryoutstore") 
+                    location.pathname.includes("/app/tryoutstore")
                       ? "bg-[#FFCB01]"
                       : "hover:bg-gray-200 dark:hover:bg-gray-700"
                   }`}
@@ -342,7 +342,7 @@ const Sidebar = () => {
                     <Link
                       to={"/app/mytryouts"}
                       className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white group ${
-                        location.pathname === "/app/mytryouts"
+                        location.pathname.includes("/app/mytryouts")
                           ? "bg-[#FFCB01]"
                           : "hover:bg-gray-200 dark:hover:bg-gray-700"
                       }`}

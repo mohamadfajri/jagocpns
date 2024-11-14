@@ -18,8 +18,8 @@ model User {
   id                Int           @id @default(autoincrement())
   email             String        @unique
   password          String
-  resetToken        String?    
-  resetTokenExpires DateTime?  
+  resetToken        String?
+  resetTokenExpires DateTime?
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
   profile           Profile?
@@ -31,7 +31,6 @@ model User {
   ownerships        Ownership[]
   freeForms         FreeForm[]
 }
-
 
 model Admin {
   id        Int      @id @default(autoincrement())
@@ -69,7 +68,7 @@ model PaidList {
   userId       Int
   tryoutListId Int
   user         User       @relation(fields: [userId], references: [id])
-  tryoutList   TryoutList @relation(fields: [tryoutListId], references: [id],onDelete: Cascade)
+  tryoutList   TryoutList @relation(fields: [tryoutListId], references: [id], onDelete: Cascade)
 
   @@unique([userId, tryoutListId])
 }
@@ -80,6 +79,7 @@ model TryoutList {
   price       BigInt
   imageUrl    String
   description String
+  batch       Int         @default(1)
   status      Boolean     @default(false)
   isOnline    Boolean     @default(false)
   createdAt   DateTime    @default(now())
@@ -131,7 +131,7 @@ model Score {
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   user         User       @relation(fields: [userId], references: [id])
-  tryoutList   TryoutList @relation(fields: [tryoutListId], references: [id],onDelete: Cascade)
+  tryoutList   TryoutList @relation(fields: [tryoutListId], references: [id], onDelete: Cascade)
 
   @@unique([userId, tryoutListId])
 }
@@ -164,7 +164,7 @@ model Payment {
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   user         User       @relation(fields: [userId], references: [id])
-  tryoutList   TryoutList @relation(fields: [tryoutListId], references: [id],onDelete: Cascade)
+  tryoutList   TryoutList @relation(fields: [tryoutListId], references: [id], onDelete: Cascade)
 }
 
 model Information {
@@ -205,9 +205,9 @@ model FreeForm {
 }
 
 model Links {
-  id  Int @id @default(autoincrement())
-  url String
-  title String
+  id       Int    @id @default(autoincrement())
+  url      String
+  title    String
   imageUrl String
 }
 

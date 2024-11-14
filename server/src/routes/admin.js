@@ -25,6 +25,7 @@ const {
   deleteTryoutFromOwnership,
   getAllTryouts,
   getTryOutOwnershipCount,
+  getTryoutOwner,
 } = require("../controllers/admin/tryoutList");
 const upload = require("../utils/multer");
 const {
@@ -76,6 +77,7 @@ router.get(
   adminOnly,
   getTryOutOwnershipCount
 );
+router.get("/admin/tryoutowner/:tryoutListId", adminOnly, getTryoutOwner);
 router.get("/admin/tryout/:id", adminOnly, getTryoutById);
 router.patch("/admin/tryout/:id", adminOnly, upload, updateTryout);
 router.delete("/admin/tryout/:id", adminOnly, deleteTryout);

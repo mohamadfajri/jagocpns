@@ -6,6 +6,9 @@ import TopUpMenu from '../../../pages/TopUpMenu';
 const TopupTab = () => {
   return (
     <div className='sm:p-10 sm:ml-64 dark:bg-black min-h-screen sm:mt-0 pb-16 mt-2 mx-4 sm:mx-0'>
+      <div className='mb-5'>
+        <p className='text-2xl font-bold'>Top Up Saldo</p>
+      </div>
       <Tabs aria-label='Tabs with icons' style='default'>
         <Tabs.Item as='button' active title='Topup' icon={HiCreditCard}>
           <TopUpMenu />

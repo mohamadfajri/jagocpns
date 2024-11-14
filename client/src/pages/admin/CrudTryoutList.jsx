@@ -11,15 +11,17 @@ import {
   TextInput,
 } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchAdmin } from "../../utils/fetchAdmin";
+import Swal from "sweetalert2";
 
 const CrudTryoutList = () => {
   const [form, setForm] = useState({
     id: "",
     title: "",
     price: "",
+    batch: 1,
     description: "",
     status: false,
     statusKerjakan: false,
@@ -27,14 +29,16 @@ const CrudTryoutList = () => {
   });
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPage] = useState(1);
   const [id, setId] = useState();
   const [purchaseCounts, setPurchaseCounts] = useState({});
-  const [filteredData, setFilteredData] = useState([])
-  const [search, setSearch] = useState('');
+  const [filteredData, setFilteredData] = useState([]);
+  const [search, setSearch] = useState("");
+  const fileInputRef = useRef(null);
 
   const navigate = useNavigate();
 
@@ -42,11 +46,21 @@ const CrudTryoutList = () => {
     const page = p ? p : 1;
     const response = await fetchAdmin(`/tryout?page=${page}`);
     setData(response.data.data);
-    console.log(data)
-    setFilteredData(response.data.data)
-    console.log("filtered:" , filteredData)
+    setFilteredData(response.data.data);
     setTotalPage(response.data.meta.totalPages);
   };
+
+  const fetchTryoutowner = async () => {
+    try {
+      const response = await fetchAdmin(`/tryoutowner/14`);
+      console.log("response tryout owner", response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchTryoutowner();
+  }, []);
 
   const fetchPurchaseCount = async (id) => {
     try {
@@ -62,7 +76,9 @@ const CrudTryoutList = () => {
 
   useEffect(() => {
     setFilteredData(
-      data.filter((item) => item.title.toLowerCase().includes(search.toLowerCase()))
+      data.filter((item) =>
+        item.title.toLowerCase().includes(search.toLowerCase())
+      )
     );
   }, [search, data]);
 
@@ -84,6 +100,7 @@ const CrudTryoutList = () => {
       title: "",
       price: "",
       description: "",
+      batch: 1,
       status: false,
       statusKerjakan: false,
       image: null,
@@ -93,9 +110,9 @@ const CrudTryoutList = () => {
 
   const updateData = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     try {
-      await fetchAdmin.patch(
+      const response = await fetchAdmin.patch(
         `/tryout/${form.id}`,
         {
           title: form.title,
@@ -104,6 +121,7 @@ const CrudTryoutList = () => {
           image: form.image,
           status: form.status,
           statusKerjakan: form.statusKerjakan,
+          batch: parseInt(form.batch),
         },
         {
           headers: {
@@ -111,12 +129,20 @@ const CrudTryoutList = () => {
           },
         }
       );
-      console.log(form);
-      await fetchData();
-      setIsOpenEdit(false);
+      console.log(response);
+      if (response.status === 200) {
+        setIsOpenEdit(false);
+        Swal.fire({
+          title: "Data Updated Successfully",
+          confirmButtonColor: "#3085d6",
+        });
+      }
     } catch (error) {
       console.error("Error updating data:", error);
       // Optionally, you can add further error handling here, such as showing an error message to the user
+    } finally {
+      await fetchData();
+      setIsLoading(false);
     }
   };
 
@@ -137,7 +163,6 @@ const CrudTryoutList = () => {
 
   const handleFile = (e) => {
     const file = e.target.files[0];
-    console.log(file);
 
     setForm((prevForm) => ({
       ...prevForm,
@@ -147,7 +172,7 @@ const CrudTryoutList = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     try {
       const response = await fetchAdmin.post(
         "/tryout",
@@ -155,6 +180,7 @@ const CrudTryoutList = () => {
           title: form.title,
           price: form.price,
           description: form.description,
+          batch: parseInt(form.batch),
           image: form.image,
           status: form.status,
           statusKerjakan: form.statusKerjakan,
@@ -165,19 +191,21 @@ const CrudTryoutList = () => {
           },
         }
       );
-      console.log("Form submitted successfully:", response.data);
-      setForm({
-        title: "",
-        price: "",
-        description: "",
-        status: false,
-        statusKerjakan: false,
-        image: null,
-      });
-      await fetchData();
-      setIsOpen(false);
+      if (response.status === 201 || response.status === 200) {
+        setIsOpen(false);
+        Swal.fire({
+          title: "Tryout Data Created Successfully",
+          confirmButtonColor: "#3085d6",
+        });
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
+      }
     } catch (error) {
       console.error("Error submitting form:", error);
+    } finally {
+      setIsLoading(false);
+      await fetchData();
     }
   };
   const deleteData = async (id) => {
@@ -192,7 +220,7 @@ const CrudTryoutList = () => {
   return (
     <div className="py-4 ml-64 dark:bg-black min-h-screen">
       <div className="mb-8 mx-4">
-        <h1 className="text-2xl font-semibold">Tryout List</h1>
+        <h1 className="text-2xl font-semibold">Tryout L ist</h1>
       </div>
       <div className="flex mx-4 pb-8">
         <div className="max-w-md">
@@ -288,7 +316,6 @@ const CrudTryoutList = () => {
                         onClick={async () => {
                           setIsOpenEdit(true);
                           await fetchSingle(item.id);
-                          console.log(form.status);
                         }}
                         color={"blue"}
                         size={"xs"}
@@ -394,6 +421,20 @@ const CrudTryoutList = () => {
               </div>
               <div>
                 <div className="mb-2 block">
+                  <Label htmlFor="batch" value="Batch" />
+                </div>
+                <Select
+                  onChange={handleChange}
+                  value={form.batch}
+                  required
+                  id="batch"
+                >
+                  <option value="1">Batch 1</option>
+                  <option value="2">Batch 2</option>
+                </Select>
+              </div>
+              <div>
+                <div className="mb-2 block">
                   <Label htmlFor="image" value="Gambar" />
                 </div>
                 <FileInput
@@ -401,12 +442,13 @@ const CrudTryoutList = () => {
                   type="file"
                   id="image"
                   onChange={handleFile}
+                  ref={fileInputRef}
                 />
               </div>
               <div>
                 <div className="mb-2 block">
-                  <Button type="submit" color={"success"}>
-                    Submit
+                  <Button type="submit" color={"success"} disabled={isLoading}>
+                    {isLoading ? "Loading" : "Submit"}
                   </Button>
                 </div>
               </div>
@@ -468,6 +510,20 @@ const CrudTryoutList = () => {
               </div>
               <div>
                 <div className="mb-2 block">
+                  <Label htmlFor="batch" value="Batch" />
+                </div>
+                <Select
+                  onChange={handleChange}
+                  value={form.batch}
+                  required
+                  id="batch"
+                >
+                  <option value="1">Batch 1</option>
+                  <option value="2">Batch 2</option>
+                </Select>
+              </div>
+              <div>
+                <div className="mb-2 block">
                   <Label htmlFor="description" value="Deskripsi" />
                 </div>
                 <Textarea
@@ -491,8 +547,8 @@ const CrudTryoutList = () => {
               </div>
               <div>
                 <div className="mb-2 block">
-                  <Button type="submit" color={"success"}>
-                    Submit
+                  <Button type="submit" color={"success"} disabled={isLoading}>
+                    {isLoading ? "Loading" : "Update"}
                   </Button>
                 </div>
               </div>

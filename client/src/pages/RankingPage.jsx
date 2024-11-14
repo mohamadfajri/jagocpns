@@ -6,63 +6,87 @@ import { fetcher } from "../utils/fetcher.js";
 import TableRank from "../components/app/Ranking/TableRank.jsx";
 import { TryoutCardRanking } from "../components/app/Ranking/TryoutCard.jsx";
 import { useNavigate } from "react-router-dom";
+import { ResponsiveContainer } from "recharts";
 
 const RankingPage = () => {
   const [dataTryout, setDataTryout] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(``);
   const { setActive, active } = useRank();
   const targetSectionRef = useRef(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const getList = async () => {
     try {
       const response = await fetcher.get("/user/getTryoutList");
       console.log(response.data.data);
-      setDataTryout(response.data.data)
-        .sort((a, b) => {
-          const aTitle = a.title.toLowerCase();
-          const bTitle = b.title.toLowerCase();
+      setFilteredData(response.data.data);
+      setDataTryout(response.data.data);
+      // .sort((a, b) => {
+      //   const aTitle = a.title.toLowerCase();
+      //   const bTitle = b.title.toLowerCase();
 
-          if (aTitle.includes("gratis") && !bTitle.includes("gratis")) {
-            return -1;
-          }
-          if (!aTitle.includes("gratis") && bTitle.includes("gratis")) {
-            return 1;
-          }
+      //   if (aTitle.includes("gratis") && !bTitle.includes("gratis")) {
+      //     return -1;
+      //   }
+      //   if (!aTitle.includes("gratis") && bTitle.includes("gratis")) {
+      //     return 1;
+      //   }
 
-          if (aTitle.includes("premium") && !bTitle.includes("premium")) {
-            return -1;
-          }
-          if (!aTitle.includes("premium") && bTitle.includes("premium")) {
-            return 1;
-          }
+      //   if (aTitle.includes("premium") && !bTitle.includes("premium")) {
+      //     return -1;
+      //   }
+      //   if (!aTitle.includes("premium") && bTitle.includes("premium")) {
+      //     return 1;
+      //   }
 
-          if (aTitle.includes("bimbel") && !bTitle.includes("bimbel")) {
-            return 1;
-          }
-          if (!aTitle.includes("bimbel") && bTitle.includes("bimbel")) {
-            return -1;
-          }
+      //   if (aTitle.includes("bimbel") && !bTitle.includes("bimbel")) {
+      //     return 1;
+      //   }
+      //   if (!aTitle.includes("bimbel") && bTitle.includes("bimbel")) {
+      //     return -1;
+      //   }
 
-          return 0;
-        })
-        .map((item) => ({
-          id: item.id.toString(),
-          title: item.title,
-        }));
+      //   return 0;
+      // })
+      // .map((item) => ({
+      //   id: item.id.toString(),
+      //   title: item.title,
+      // }));
     } catch (error) {
       console.error("Error fetching tryout list:", error);
     }
   };
 
+  console.log("filtered data", filteredData);
+
   useEffect(() => {
     getList();
   }, []);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (searchQuery) {
+        setFilteredData(
+          dataTryout.filter((item) =>
+            item.title.toLowerCase().includes(searchQuery.toLowerCase())
+          )
+        );
+      } else {
+        setFilteredData(dataTryout);
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery, dataTryout]);
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  }
   const handleRanking = (id) => {
     setActive(id);
     console.log("id", id);
-    navigate(`rankingpage/${id}`)
-    // targetSectionRef.current.scrollIntoView({ behavior: "smooth" });
+    navigate(`rankingpage/${id}`);
   };
 
   return (
@@ -74,6 +98,7 @@ const RankingPage = () => {
               type="text"
               className="peer w-full rounded-lg border border-gray-300 px-4 py-2 pl-10 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
               placeholder="Search..."
+              onChange={handleSearch}
             />
             <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
               <svg
@@ -93,7 +118,7 @@ const RankingPage = () => {
         </div>
 
         <div className="grid grid-cols-5 gap-3 mt-5">
-          {dataTryout.map((tryout, index) => (
+          {filteredData.map((tryout, index) => (
             <TryoutCardRanking
               key={index}
               title={tryout.title}
@@ -106,12 +131,12 @@ const RankingPage = () => {
           ))}
         </div>
 
-        <div ref={targetSectionRef}>
+        {/* <div ref={targetSectionRef}>
           <TableRank />
         </div>
 
         {!active && <Unchoosen />}
-        {active && <Choosen />}
+        {active && <Choosen />} */}
       </div>
     </div>
   );
