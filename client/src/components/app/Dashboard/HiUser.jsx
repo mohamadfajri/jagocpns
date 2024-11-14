@@ -51,8 +51,6 @@ const HiUser = () => {
           <Avatar img={avatar} alt={`avatar of ${nameRes}`} rounded size="xl" />
         </div>
       </div>
-
-     
     </div>
   );
 };
