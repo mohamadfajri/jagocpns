@@ -75,7 +75,7 @@ const App = () => {
             <Route path="score/:id/" element={<ScoreModal />} />
             <Route path="tryout/:id/" element={<TryoutModal />} />
           </Route>
-          <Route path="tryoutinformation/:id" element={<TryoutInformation />} />
+          <Route path="mytryouts/tryoutinformation/:id" element={<TryoutInformation />} />
           <Route path="mybimbel" element={<MyBimbel />} />
           <Route path="tryoutstore/" element={<BuyTryOut />}>
             <Route path=":id/" element={<CheckoutBar />} />
