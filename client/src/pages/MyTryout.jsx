@@ -13,7 +13,7 @@ const Mytryout = () => {
     const getData = async () => {
       try {
         setIsLoading(true);
-        const { data } = await fetcher.get("/user/mylists");
+        const { data } = await fetcher.get("/user/mytryout");
         setDone(data.done);
         setUndone(data.undone);
         setIsLoading(false);
