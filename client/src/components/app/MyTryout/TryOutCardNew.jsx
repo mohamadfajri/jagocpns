@@ -18,7 +18,7 @@ export const TryOutCardNew = ({
     }).format(number);
   };
   return (
-    <div className={`${className} border w-72 rounded-xl`}>
+    <div className={`${className} border w-80 sm:w-56 md:w-60 xl:w-72 rounded-xl`}>
       <div className="aspect-video">
         <img src={imageUrl} alt="" className="rounded-t-xl" />
       </div>
@@ -66,7 +66,7 @@ export const TryOutCardNew = ({
               />
             </svg>
 
-            <p>100 Menit</p>
+            <p>90 Menit</p>
           </div>
         </div>
         {price && (
