@@ -8,7 +8,7 @@ const RankingPage = () => {
   const [dataTryout, setDataTryout] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchQuery, setSearchQuery] = useState(``);
-  const { setActive, active } = useRank();
+  const { setActive } = useRank();
   const navigate = useNavigate();
 
   const getList = async () => {
@@ -22,7 +22,6 @@ const RankingPage = () => {
     }
   };
 
-  console.log("filtered data", filteredData);
 
   useEffect(() => {
     getList();
