@@ -1,19 +1,14 @@
-import { useEffect, useState, useRef } from "react";
-import Choosen from "../components/app/Ranking/Choosen";
-import Unchoosen from "../components/app/Ranking/Unchoosen";
+import { useEffect, useState } from "react";
 import { useRank } from "../stores/useRank";
 import { fetcher } from "../utils/fetcher.js";
-import TableRank from "../components/app/Ranking/TableRank.jsx";
 import { TryoutCardRanking } from "../components/app/Ranking/TryoutCard.jsx";
 import { useNavigate } from "react-router-dom";
-import { ResponsiveContainer } from "recharts";
 
 const RankingPage = () => {
   const [dataTryout, setDataTryout] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchQuery, setSearchQuery] = useState(``);
   const { setActive, active } = useRank();
-  const targetSectionRef = useRef(null);
   const navigate = useNavigate();
 
   const getList = async () => {
@@ -22,37 +17,6 @@ const RankingPage = () => {
       console.log(response.data.data);
       setFilteredData(response.data.data);
       setDataTryout(response.data.data);
-      // .sort((a, b) => {
-      //   const aTitle = a.title.toLowerCase();
-      //   const bTitle = b.title.toLowerCase();
-
-      //   if (aTitle.includes("gratis") && !bTitle.includes("gratis")) {
-      //     return -1;
-      //   }
-      //   if (!aTitle.includes("gratis") && bTitle.includes("gratis")) {
-      //     return 1;
-      //   }
-
-      //   if (aTitle.includes("premium") && !bTitle.includes("premium")) {
-      //     return -1;
-      //   }
-      //   if (!aTitle.includes("premium") && bTitle.includes("premium")) {
-      //     return 1;
-      //   }
-
-      //   if (aTitle.includes("bimbel") && !bTitle.includes("bimbel")) {
-      //     return 1;
-      //   }
-      //   if (!aTitle.includes("bimbel") && bTitle.includes("bimbel")) {
-      //     return -1;
-      //   }
-
-      //   return 0;
-      // })
-      // .map((item) => ({
-      //   id: item.id.toString(),
-      //   title: item.title,
-      // }));
     } catch (error) {
       console.error("Error fetching tryout list:", error);
     }
@@ -82,7 +46,7 @@ const RankingPage = () => {
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
-  }
+  };
   const handleRanking = (id) => {
     setActive(id);
     console.log("id", id);
@@ -117,26 +81,18 @@ const RankingPage = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-5 gap-3 mt-5">
+        <div className="flex flex-col items-center md:grid md:grid-cols-2 xl:grid xl:grid-cols-5 gap-3 md:gap-x-10 mt-5">
           {filteredData.map((tryout, index) => (
             <TryoutCardRanking
               key={index}
               title={tryout.title}
               desc={tryout.description}
               action={"Lihat Ranking"}
-              // url={`/app/tryoutinformation/${tryout.tryoutListId}`}
               onClick={() => handleRanking(tryout.id)}
               imageUrl={tryout.imageUrl}
             />
           ))}
         </div>
-
-        {/* <div ref={targetSectionRef}>
-          <TableRank />
-        </div>
-
-        {!active && <Unchoosen />}
-        {active && <Choosen />} */}
       </div>
     </div>
   );
