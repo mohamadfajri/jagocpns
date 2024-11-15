@@ -26,7 +26,7 @@ const Mytryout = () => {
 
   return (
     <>
-      <div className="mt-3 sm:mt-3 xl:mt-0 p-5 sm:p-5 xl:p-10 md:ml-64 xl:ml-64 dark:bg-black min-h-screen">
+      <div className="mb-20 mt-3 sm:mt-3 xl:mt-0 p-5 sm:p-5 xl:p-10 md:ml-64 xl:ml-64 dark:bg-black min-h-screen">
         <p className="font-bold text-2xl">Tryout SKB</p>
 
         <p className="mt-5">
@@ -37,7 +37,7 @@ const Mytryout = () => {
 
         <div>
           <p className="font-bold text-2xl mt-12">Belum Dikerjakan</p>
-          <div className="mt-5 flex flex-col gap-3 items-center xl:grid xl:grid-cols-5">
+          <div className="mt-5 flex flex-col gap-3 items-center md:grid md:grid-cols-2 xl:grid xl:grid-cols-5">
             {unDone.length !== 0 ? (
               unDone.map((tryout, index) => (
                 <div key={index}>
@@ -65,7 +65,7 @@ const Mytryout = () => {
 
         <div>
           <p className="font-bold text-2xl mt-12">Sudah Dikerjakan</p>
-          <div className="mt-5 flex flex-col gap-3 items-center xl:grid xl:grid-cols-5">
+          <div className="mt-5 flex flex-col gap-3 items-center md:grid md:grid-cols-2 xl:grid xl:grid-cols-5">
             {done.length !== 0 ? (
               done.map((tryout, index) => (
                 <div key={index}>
