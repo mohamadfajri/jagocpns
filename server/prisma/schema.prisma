@@ -80,6 +80,7 @@ model TryoutList {
   imageUrl    String
   description String
   batch       Int         @default(1)
+  type        String      @default("Tryout")
   status      Boolean     @default(false)
   isOnline    Boolean     @default(false)
   createdAt   DateTime    @default(now())
