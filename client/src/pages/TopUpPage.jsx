@@ -67,7 +67,7 @@ const TopUpPage = () => {
 
   return (
     <>
-      <div className="grid grid-cols-4 gap-5">
+      <div className="flex flex-col-reverse xl:grid xl:grid-cols-4 xl:gap-5">
         <div className="col-span-3">
           <div className="flex gap-3 items-center">
             <svg
@@ -158,7 +158,7 @@ const TopUpPage = () => {
             </button>
           </div>
         </div>
-        <div className="mt-14">
+        <div className="xl:mt-14 mb-5 xl:mb-0">
           <SaldoCard saldo={formatIDR(balance)} />
         </div>
       </div>
