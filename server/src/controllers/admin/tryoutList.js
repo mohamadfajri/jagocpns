@@ -20,6 +20,40 @@ const createTryout = async (req, res) => {
     res.status(500).json({ message: "Failed to create tryout list", error });
   }
 };
+const updateTryout = async (req, res) => {
+  const { id } = req.params;
+  const { title, price, description, status, statusKerjakan, batch } = req.body;
+  const stringToBool = (str) => str === "true";
+  const statusFormatted = stringToBool(status);
+  const statusKerjakanFormatted = stringToBool(statusKerjakan);
+  const image = req.image;
+  const batchInt = parseInt(batch, 10);
+
+  try {
+    let updatedData = {
+      title,
+      price: BigInt(price),
+      description,
+      status: statusFormatted,
+      isOnline: statusKerjakanFormatted,
+      batch: batchInt,
+    };
+
+    if (image) {
+      updatedData.imageUrl = req.image;
+    }
+
+    const updatedTryout = await prisma.tryoutList.update({
+      where: { id: parseInt(id) },
+      data: updatedData,
+    });
+
+    res.status(200).json({ message: "Tryout updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to update tryout", error });
+  }
+};
 
 const getAllTryouts = async (req, res) => {
   try {
@@ -103,6 +137,7 @@ const getTryoutById = async (req, res) => {
       price: tryout.price.toString(),
       imageUrl: tryout.imageUrl,
       description: tryout.description,
+      batch: tryout.batch,
       status: tryout.status,
       statusKerjakan: tryout.isOnline,
     };
@@ -113,39 +148,6 @@ const getTryoutById = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Failed to fetch tryout", error });
-  }
-};
-
-const updateTryout = async (req, res) => {
-  const { id } = req.params;
-  const { title, price, description, status, statusKerjakan } = req.body;
-  const stringToBool = (str) => str === "true";
-  const statusFormatted = stringToBool(status);
-  const statusKerjakanFormatted = stringToBool(statusKerjakan);
-  const image = req.image;
-
-  try {
-    let updatedData = {
-      title,
-      price: BigInt(price),
-      description,
-      status: statusFormatted,
-      isOnline: statusKerjakanFormatted,
-    };
-
-    if (image) {
-      updatedData.imageUrl = req.image;
-    }
-
-    const updatedTryout = await prisma.tryoutList.update({
-      where: { id: parseInt(id) },
-      data: updatedData,
-    });
-
-    res.status(200).json({ message: "Tryout updated successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Failed to update tryout", error });
   }
 };
 
