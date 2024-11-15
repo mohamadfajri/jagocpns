@@ -1,7 +1,7 @@
 import BimbelCard from "../components/app/MyTryout/BimbelCard.jsx";
 export default function MyBimbel() {
   return (
-    <div className="mt-3 sm:mt-3 xl:mt-0 p-5 sm:p-5 xl:p-10 md:ml-64 xl:ml-64 dark:bg-black min-h-screen">
+    <div className="mb-10 mt-3 sm:mt-3 xl:mt-0 p-5 sm:p-5 xl:p-10 md:ml-64 xl:ml-64 dark:bg-black min-h-screen">
       <p className="font-bold text-2xl">Bimbel</p>
 
       <p className="mt-5">
