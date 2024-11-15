@@ -3,9 +3,7 @@ import { TryOutCardNew } from "../components/app/MyTryout/TryOutCardNew.jsx";
 import { fetcher } from "../utils/fetcher.js";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Modal } from "flowbite-react";
-import { useAlert } from "../stores/useAlert.js";
 import Swal from "sweetalert2";
-import { Navigate } from "react-router-dom";
 
 export default function CheckOutPage() {
   const location = useLocation();
@@ -14,7 +12,6 @@ export default function CheckOutPage() {
   const [tryout, setTryout] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [user, setUser] = useState([{}]);
-  const { setAlert } = useAlert();
   const navigate = useNavigate();
 
   const formatIDR = (number) => {
@@ -45,11 +42,14 @@ export default function CheckOutPage() {
         target: user,
         tryoutListId: id,
       });
-      swalFireConfirmmed();
+      if (response.status === 200) {
+        swalFireConfirmmed();
+      }
       setOpenModal(false);
     } catch (error) {
-      swalFireDenied();
-      console.error(error);
+      if (error.response.status === 400) {
+        swalFireDenied(error.response.data.message);
+      }
     }
   };
 
@@ -67,15 +67,15 @@ export default function CheckOutPage() {
     getUser();
   }, []);
 
-  const swalFireDenied = () => {
+  const swalFireDenied = (message) => {
     const denidedIcon = `<svg width="106" height="105" viewBox="0 0 106 105" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M53 0.416748C81.7605 0.416748 105.084 23.7395 105.084 52.5C105.084 81.2605 81.7605 104.584 53 104.584C24.2395 104.584 0.916748 81.2605 0.916748 52.5C0.916748 23.7395 24.2395 0.416748 53 0.416748ZM64.9429 33.1926L53 45.1357L41.0574 33.1931L33.6929 40.5576L45.6355 52.5L33.6929 64.4429L41.0574 71.8074L53 59.8647L64.9429 71.8074L72.3074 64.4429L60.3647 52.5L72.3074 40.5574L64.9429 33.1926Z" fill="#FF3B3B"/>
-</svg>
-`;
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M53 0.416748C81.7605 0.416748 105.084 23.7395 105.084 52.5C105.084 81.2605 81.7605 104.584 53 104.584C24.2395 104.584 0.916748 81.2605 0.916748 52.5C0.916748 23.7395 24.2395 0.416748 53 0.416748ZM64.9429 33.1926L53 45.1357L41.0574 33.1931L33.6929 40.5576L45.6355 52.5L33.6929 64.4429L41.0574 71.8074L53 59.8647L64.9429 71.8074L72.3074 64.4429L60.3647 52.5L72.3074 40.5574L64.9429 33.1926Z" fill="#FF3B3B"/>
+  </svg>
+  `;
     Swal.fire({
       icon: "error",
       iconHtml: denidedIcon,
-      text: "Pastikan Saldo Cukup / Anda Sudah Memiliki Tryout Ini",
+      text: `${message}`,
       confirmButtonColor: "#FF3B3B",
       confirmButtonText: "Coba Lagi",
     });
@@ -145,11 +145,11 @@ export default function CheckOutPage() {
         dismissible
         show={openModal}
         onClose={() => setOpenModal(false)}
-        size="4xl"
+        size="md"
       >
         <Modal.Body>
           <div className="space-y-4">
-            <div className="flex border rounded-xl">
+            {/* <div className="flex border rounded-xl">
               <div className="w-3/4">
                 <img
                   src={tryout.imageUrl}
@@ -165,20 +165,34 @@ export default function CheckOutPage() {
                   <p className="text-xl font-bold">{formatIDR(tryout.price)}</p>
                 </div>
               </div>
+            </div> */}
+
+            <div className="">
+              <div className="flex justify-center mb-5">
+                <TryOutCardNew
+                  title={tryout.title}
+                  desc={tryout.description}
+                  // action={"Beli"}
+                  imageUrl={tryout.imageUrl}
+                  price={tryout.price}
+                  // onClick={() => setOpenModal(true)}
+                />
+              </div>
+
+              <div className="flex justify-between">
+                <div>
+                  <p className="font-bold">Nama Tryout</p>
+                  <p className="font-bold">Qty</p>
+                  <p className="font-bold">Total Harga</p>
+                </div>
+                <div>
+                  <p>{tryout.title}</p>
+                  <p>1</p>
+                  <p>{formatIDR(tryout.price)}</p>
+                </div>
+              </div>
             </div>
 
-            <div className="flex justify-between">
-              <div>
-                <p className="font-bold">Nama Tryout</p>
-                <p className="font-bold">Qty</p>
-                <p className="font-bold">Total Harga</p>
-              </div>
-              <div>
-                <p>{tryout.title}</p>
-                <p>1</p>
-                <p>{formatIDR(tryout.price)}</p>
-              </div>
-            </div>
             <div>
               <button
                 onClick={() => handleCheckOut()}
