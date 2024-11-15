@@ -1,8 +1,5 @@
-import { Outlet } from "react-router-dom";
-import TryoutCard from "../components/app/MyTryout/TryoutCard";
 import { useEffect, useState } from "react";
 import { fetcher } from "../utils/fetcher";
-import LoadingTable from "../components/LoadingTable";
 import { Tabs } from "flowbite-react";
 import { TryOutCardNew } from "../components/app/MyTryout/TryOutCardNew.jsx";
 const BuyTryOut = () => {
@@ -10,12 +7,18 @@ const BuyTryOut = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [batchOne, setBatchOne] = useState([]);
   const [batchTwo, setBatchTwo] = useState([]);
+  const [filteredDataBatchOne, setFilteredDataBatchOne] = useState([]);
+  const [filteredDataBatchTwo, setFilteredDataBatchTwo] = useState([]);
+  const [searchQueryOne, setSearchQueryOne] = useState(``);
+  const [searchQueryTwo, setSearchQueryTwo] = useState(``);
 
   const getTryoutBatch1 = async () => {
     const batch = 1;
     try {
-      const response = await fetcher.get(`/public/getbatch/${batch}`);
+      const response = await fetcher.get(`/public/getbatch/${parseInt(batch)}`);
+      console.log("response batch 1", response);
       setBatchOne(response.data.data);
+      setFilteredDataBatchOne(response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -26,7 +29,7 @@ const BuyTryOut = () => {
     try {
       const response = await fetcher.get(`/public/getbatch/${batch}`);
       setBatchTwo(response.data.data);
-      console.log("response batch 2", response.data.data);
+      setFilteredDataBatchTwo(response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -36,7 +39,6 @@ const BuyTryOut = () => {
     getTryoutBatch1();
     getTryoutBatch2();
   }, []);
-  console.log(batchTwo);
 
   useEffect(() => {
     const getTryouts = async () => {
@@ -47,6 +49,46 @@ const BuyTryOut = () => {
     };
     getTryouts();
   }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (searchQueryOne) {
+        setFilteredDataBatchOne(
+          batchOne.filter((item) =>
+            item.title.toLowerCase().includes(searchQueryOne.toLowerCase())
+          )
+        );
+      } else {
+        setFilteredDataBatchOne(batchOne);
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchQueryOne, batchOne]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (searchQueryTwo) {
+        setFilteredDataBatchTwo(
+          batchTwo.filter((item) =>
+            item.title.toLowerCase().includes(searchQueryTwo.toLowerCase())
+          )
+        );
+      } else {
+        setFilteredDataBatchTwo(batchTwo);
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchQueryTwo, batchTwo]);
+
+  const handleSearchBatchOne = (e) => {
+    setSearchQueryOne(e.target.value);
+  };
+
+  const handleSearchBatchTwo = (e) => {
+    setSearchQueryTwo(e.target.value);
+  };
 
   return (
     <div className="mb-20 sm:p-10 sm:ml-64 dark:bg-black min-h-screen sm:mt-0">
@@ -81,12 +123,13 @@ const BuyTryOut = () => {
                 type="text"
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ketik untuk mencari tryout..."
+                onChange={handleSearchBatchOne}
               />
             </div>
 
             <div className="flex flex-col items-center sm:flex sm:flex-col sm:items-center md:grid md:grid-cols-2 xl:grid xl:grid-cols-5 gap-5">
-              {getTryoutBatch1
-                ? batchOne.map((item, index) => (
+              {filteredDataBatchOne
+                ? filteredDataBatchOne.map((item, index) => (
                     <TryOutCardNew
                       key={index}
                       title={item.title}
@@ -121,11 +164,12 @@ const BuyTryOut = () => {
                 type="text"
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ketik untuk mencari tryout..."
+                onChange={handleSearchBatchTwo}
               />
             </div>
             <div className="flex flex-col items-center sm:flex sm:flex-col sm:items-center md:grid md:grid-cols-2 xl:grid xl:grid-cols-5 gap-5">
-              {batchTwo.length > 0
-                ? batchTwo.map((item, index) => (
+              {filteredDataBatchTwo.length > 0
+                ? filteredDataBatchTwo.map((item, index) => (
                     <TryOutCardNew
                       key={index}
                       title={item.title}
