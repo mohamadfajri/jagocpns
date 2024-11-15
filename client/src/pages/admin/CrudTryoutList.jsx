@@ -12,7 +12,7 @@ import {
 } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { fetchAdmin } from "../../utils/fetchAdmin";
 import Swal from "sweetalert2";
 
@@ -26,6 +26,7 @@ const CrudTryoutList = () => {
     status: false,
     statusKerjakan: false,
     image: null,
+    type: "",
   });
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
@@ -49,18 +50,6 @@ const CrudTryoutList = () => {
     setFilteredData(response.data.data);
     setTotalPage(response.data.meta.totalPages);
   };
-
-  const fetchTryoutowner = async () => {
-    try {
-      const response = await fetchAdmin(`/tryoutowner/14`);
-      console.log("response tryout owner", response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    fetchTryoutowner();
-  }, []);
 
   const fetchPurchaseCount = async (id) => {
     try {
@@ -93,6 +82,7 @@ const CrudTryoutList = () => {
       status: response.data.status,
       statusKerjakan: response.data.statusKerjakan,
       image: null,
+      type: response.data.type,
     });
   };
 
@@ -105,6 +95,7 @@ const CrudTryoutList = () => {
       status: false,
       statusKerjakan: false,
       image: null,
+      type: "",
     });
     setIsOpen(true);
   };
@@ -123,6 +114,7 @@ const CrudTryoutList = () => {
           status: form.status,
           statusKerjakan: form.statusKerjakan,
           batch: parseInt(form.batch),
+          type: form.type,
         },
         {
           headers: {
@@ -186,6 +178,7 @@ const CrudTryoutList = () => {
           image: form.image,
           status: form.status,
           statusKerjakan: form.statusKerjakan,
+          type: form.type,
         },
         {
           headers: {
@@ -222,7 +215,7 @@ const CrudTryoutList = () => {
   return (
     <div className="py-4 ml-64 dark:bg-black min-h-screen">
       <div className="mb-8 mx-4">
-        <h1 className="text-2xl font-semibold">Tryout L ist</h1>
+        <h1 className="text-2xl font-semibold">Tryout List</h1>
       </div>
       <div className="flex mx-4 pb-8">
         <div className="max-w-md">
@@ -361,6 +354,31 @@ const CrudTryoutList = () => {
                         </svg>
                       </Button>
                     </li>
+                    <li>
+                      <Link to={`buyerInformations/${item.id}`}>
+                        <Button
+                          size={"xs"}
+                          className="bg-yellow-300 hover:bg-yellow-400"
+                        >
+                          <svg
+                            className="w-6 h-6 text-white dark:text-white"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            fill="white"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeWidth="2"
+                              d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
+                            />
+                          </svg>
+                        </Button>
+                      </Link>
+                    </li>
                   </ul>
                 </Table.Cell>
               </Table.Row>
@@ -433,6 +451,20 @@ const CrudTryoutList = () => {
                 >
                   <option value="1">Batch 1</option>
                   <option value="2">Batch 2</option>
+                </Select>
+              </div>
+              <div>
+                <div className="mb-2 block">
+                  <Label htmlFor="type" value="Type" />
+                </div>
+                <Select
+                  onChange={handleChange}
+                  value={form.type}
+                  required
+                  id="type"
+                >
+                  <option value="Tryout">Tryout</option>
+                  <option value="Bimbel">Bimbel</option>
                 </Select>
               </div>
               <div>
@@ -522,6 +554,20 @@ const CrudTryoutList = () => {
                 >
                   <option value="1">Batch 1</option>
                   <option value="2">Batch 2</option>
+                </Select>
+              </div>
+              <div>
+                <div className="mb-2 block">
+                  <Label htmlFor="type" value="Type" />
+                </div>
+                <Select
+                  onChange={handleChange}
+                  value={form.type}
+                  required
+                  id="type"
+                >
+                  <option value="Tryout">Tryout</option>
+                  <option value="Bimbel">Bimbel</option>
                 </Select>
               </div>
               <div>
