@@ -53,11 +53,11 @@ export default function RankPage() {
 
   return (
     <div>
-      <div className="sm:p-10 sm:ml-64 sm:mt-0 pb-16 dark:bg-black min-h-screen">
+      <div className="p-5 sm:p-10 sm:ml-64 sm:mt-0 pb-16 dark:bg-black min-h-screen">
         <p className="text-2xl font-bold">Daftar Ranking</p>
         <p className="font-bold text-3xl">{tryOutName}</p>
-        <div className="grid grid-cols-5 gap-5">
-          <div className="mt-5 col-span-4">
+        <div className="flex flex-col-reverse mt-5 xl:mt-0 xl:grid xl:grid-cols-5 gap-5">
+          <div className="mt-5 xl:col-span-4">
             <TableRank />
             <PaginationRank />
           </div>
