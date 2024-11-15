@@ -89,6 +89,7 @@ const CrudTryoutList = () => {
       title: response.data.title,
       price: parseInt(response.data.price),
       description: response.data.description,
+      batch: response.data.batch,
       status: response.data.status,
       statusKerjakan: response.data.statusKerjakan,
       image: null,
@@ -136,6 +137,7 @@ const CrudTryoutList = () => {
           title: "Data Updated Successfully",
           confirmButtonColor: "#3085d6",
         });
+        setIsLoading(false);
       }
     } catch (error) {
       console.error("Error updating data:", error);
