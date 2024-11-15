@@ -25,15 +25,40 @@ const getAllTryout = async (req, res) => {
 };
 
 const getTryoutByBatch = async (req, res) => {
+  const { batch } = req.params;
   try {
-    const tryouts = await prisma.tryoutList.findMany()
-    res.status(200).json(tryouts)
+    const tryoutListByBatch = await prisma.tryoutList.findMany({
+      where: {
+        batch: parseInt(batch),
+      },
+      orderBy: {
+        title: "asc",
+      },
+    });
+
+    if (tryoutListByBatch.length === 0) {
+      return res.status(404).json({
+        message: "Data Tryout Tidak Ditemukan",
+      });
+    }
+
+    const serializedData = tryoutListByBatch.map((item) => ({
+      ...item,
+      price: Number(item.price), // Konversi price dari BigInt ke Number
+    }));
+
+    return res.status(200).json({
+      message: "Data tryout batch 1 berhasil diambil",
+      data: serializedData,
+    });
   } catch (error) {
-    res.status(500).json({
-      message: "Terjadi Kesalahan"
-    })
+    console.error("Error:", error);
+    return res.status(500).json({
+      message: "terjadi kesalahan",
+      error: error.message,
+    });
   }
-}
+};
 
 const getTryoutById = async (req, res) => {
   const { id } = req.params;
