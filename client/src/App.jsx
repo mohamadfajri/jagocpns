@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 // import DarkToggle from './components/DarkToggle';
 import Mytryout from "./pages/MyTryout";
 import BuyTryOut from "./pages/BuyTryOut";
+import BuyBimbel from "./pages/BuyBimbel.jsx";
 import CheckoutBar from "./pages/CheckoutBar";
 import ToDashboard from "./pages/ToDashboard";
 import NotFound from "./pages/NotFound";
@@ -50,6 +51,8 @@ import TryoutInformation from "./pages/TryoutInformations.jsx";
 import MyBimbel from "./pages/MyBimbel.jsx";
 import RankPage from "./components/app/Ranking/RankPage.jsx";
 import CheckOutPage from "./pages/CheckOutPage.jsx";
+import CheckOutPageBimbel from "./pages/CheckOutPageBimbel.jsx";
+import BuyerInformations from "./pages/admin/BuyerInformations.jsx";
 
 const App = () => {
   return (
@@ -75,12 +78,20 @@ const App = () => {
             <Route path="score/:id/" element={<ScoreModal />} />
             <Route path="tryout/:id/" element={<TryoutModal />} />
           </Route>
-          <Route path="mytryouts/tryoutinformation/:id" element={<TryoutInformation />} />
+          <Route
+            path="mytryouts/tryoutinformation/:id"
+            element={<TryoutInformation />}
+          />
           <Route path="mybimbel" element={<MyBimbel />} />
           <Route path="tryoutstore/" element={<BuyTryOut />}>
             <Route path=":id/" element={<CheckoutBar />} />
           </Route>
-          <Route path="tryoutstore/checkout/:id" element = {<CheckOutPage />} />
+          <Route path="bimbelstore/" element={<BuyBimbel />} />
+          <Route path="tryoutstore/checkout/:id" element={<CheckOutPage />} />
+          <Route
+            path="bimbelstore/checkout/:id"
+            element={<CheckOutPageBimbel />}
+          />
           <Route path="ranks/" element={<RankingPage />} />
           <Route path="ranks/rankingpage/:id" element={<RankPage />} />
           <Route path="topup/" element={<TopupTab />} />
@@ -108,6 +119,10 @@ const App = () => {
           <Route path="dashboard/" element={<AdminDashboard />} />
           <Route path="crud/user/" element={<CrudUser />} />
           <Route path="crud/tryout/" element={<CrudTryoutList />} />
+          <Route
+            path="crud/tryout/buyerInformations/:id"
+            element={<BuyerInformations />}
+          />
           <Route path="topup-manager/" element={<TopupManager />} />
           <Route path="freeform/" element={<FreeFormApproval />} />
           <Route path="links/" element={<LinkManager />} />
