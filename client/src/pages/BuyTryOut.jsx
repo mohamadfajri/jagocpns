@@ -8,6 +8,35 @@ import { TryOutCardNew } from "../components/app/MyTryout/TryOutCardNew.jsx";
 const BuyTryOut = () => {
   const [tryouts, setTryouts] = useState([{}]);
   const [isLoading, setIsLoading] = useState(false);
+  const [batchOne, setBatchOne] = useState([]);
+  const [batchTwo, setBatchTwo] = useState([]);
+
+  const getTryoutBatch1 = async () => {
+    const batch = 1;
+    try {
+      const response = await fetcher.get(`/public/getbatch/${batch}`);
+      setBatchOne(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getTryoutBatch2 = async () => {
+    const batch = 2;
+    try {
+      const response = await fetcher.get(`/public/getbatch/${batch}`);
+      setBatchTwo(response.data.data);
+      console.log("response batch 2", response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getTryoutBatch1();
+    getTryoutBatch2();
+  }, []);
+  console.log(batchTwo);
 
   useEffect(() => {
     const getTryouts = async () => {
@@ -19,22 +48,8 @@ const BuyTryOut = () => {
     getTryouts();
   }, []);
 
-  const getTryoutByBatch = async () => {
-    try {
-      const response = await fetcher.get(`/public/tryouts/batch/1`);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    getTryoutByBatch();
-  });
-
-  console.log("tryout data", tryouts);
-
   return (
-    <div className="sm:p-10 sm:ml-64 dark:bg-black min-h-screen sm:mt-0">
+    <div className="mb-20 sm:p-10 sm:ml-64 dark:bg-black min-h-screen sm:mt-0">
       <div>
         <p className="font-bold text-2xl">Tryout SKB</p>
         <p className="mt-5">
@@ -69,18 +84,20 @@ const BuyTryOut = () => {
               />
             </div>
 
-            <div className="grid grid-cols-5 gap-5">
-              {tryouts.map((item, index) => (
-                <TryOutCardNew
-                  key={index}
-                  title={item.title}
-                  desc={item.description}
-                  action={"Beli"}
-                  url={`/app/tryoutstore/checkout/${item.id}`}
-                  imageUrl={item.imageUrl}
-                  price={item.price}
-                />
-              ))}
+            <div className="flex flex-col items-center sm:flex sm:flex-col sm:items-center md:grid md:grid-cols-2 xl:grid xl:grid-cols-5 gap-5">
+              {getTryoutBatch1
+                ? batchOne.map((item, index) => (
+                    <TryOutCardNew
+                      key={index}
+                      title={item.title}
+                      desc={item.description}
+                      action={"Beli"}
+                      url={`/app/tryoutstore/checkout/${item.id}`}
+                      imageUrl={item.imageUrl}
+                      price={item.price}
+                    />
+                  ))
+                : "belum ada list tryout"}
             </div>
           </Tabs.Item>
           <Tabs.Item active title="Batch 2">
@@ -106,7 +123,21 @@ const BuyTryOut = () => {
                 placeholder="Ketik untuk mencari tryout..."
               />
             </div>
-            <p>Batch 2</p>
+            <div className="flex flex-col items-center sm:flex sm:flex-col sm:items-center md:grid md:grid-cols-2 xl:grid xl:grid-cols-5 gap-5">
+              {batchTwo.length > 0
+                ? batchTwo.map((item, index) => (
+                    <TryOutCardNew
+                      key={index}
+                      title={item.title}
+                      desc={item.description}
+                      action={"Beli"}
+                      url={`/app/tryoutstore/checkout/${item.id}`}
+                      imageUrl={item.imageUrl}
+                      price={item.price}
+                    />
+                  ))
+                : "Belum ada list tryout"}
+            </div>
           </Tabs.Item>
         </Tabs>
       </div>
