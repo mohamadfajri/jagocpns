@@ -14,6 +14,7 @@ const {
   getFreeTryouts,
   getIsOnlineStatus,
   getTryoutByBatch,
+  getAllBimbel,
 } = require("../controllers/public/tryoutList");
 const {
   forgotPasswordHandler,
@@ -30,6 +31,7 @@ router.get("/public/tryouts", getAllTryout);
 router.get("/public/getbatch/:batch", getTryoutByBatch);
 router.get("/public/tryout/:id", getTryoutById);
 router.get("/public/freetryouts", getFreeTryouts);
+router.get("/public/bimbel", getAllBimbel)
 router.get("/public/links", getLinks);
 router.get("/public/isOnlineTryout/:id", getIsOnlineStatus);
 router.post("/public/forgot-password", forgotPasswordHandler);

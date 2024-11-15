@@ -209,38 +209,39 @@ const getUserTryouts = async (req, res) => {
 
 const getUserTryOutById = async (req, res) => {
   const userId = req.user.id;
-  const tryOutListId= parseInt(req.params.tryoutListId);
+  const tryOutListId = parseInt(req.params.tryoutListId);
   try {
     const data = await prisma.ownership.findMany({
       where: {
         userId,
-        tryoutListId: tryOutListId
+        tryoutListId: tryOutListId,
       },
       include: {
         tryoutList: {
-          select:{
-            title: true
-          }
-        }
-      }
+          select: {
+            title: true,
+          },
+        },
+      },
     });
     res.status(200).json(data);
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Terjadi kesalahan saat mencoba mengambil data tryout",
-      });
+    res.status(500).json({
+      message: "Terjadi kesalahan saat mencoba mengambil data tryout",
+    });
   }
 };
 
-const getListByUserId = async (req, res) => {
+const getTryoutByUserId = async (req, res) => {
   const userId = req.user.id;
 
   try {
     const ownerships = await prisma.ownership.findMany({
       where: {
         userId: Number(userId),
+        tryoutList: {
+          type: "Tryout",
+        },
       },
       include: {
         tryoutList: true,
@@ -271,6 +272,50 @@ const getListByUserId = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: "Failed to get ownerships by user ID" });
+  }
+};
+
+const getBimbelByUserId = async (req, res) => {
+  const userId = req.user.id;
+
+  try {
+    const ownerships = await prisma.ownership.findMany({
+      where: {
+        userId: Number(userId),
+        tryoutList: {
+          type: "Bimbel",
+        },
+      },
+      include: {
+        tryoutList: true,
+      },
+    });
+
+    if (ownerships.length === 0){
+      return res.status(404).json({
+        message: "Kepemilikan bimbel tidak ditemukan",
+      })
+    }
+
+    const serializedData = ownerships.map((item) => ({
+      id: item.id,
+      userId: item.userId,
+      tryoutListId: item.tryoutListId,
+      isDone: item.isDone,
+      price: Number(item.tryoutList.price), // Konversi price dari BigInt ke Number
+      title: item.tryoutList.title,
+      imageUrl: item.tryoutList.imageUrl,
+      description: item.tryoutList.description,
+    }));
+
+    res.status(200).json({
+      data: serializedData
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Gagal mendapatkan kepemilikan berdasarkan ID pengguna",
+      error: error.message,
+    });
   }
 };
 
@@ -310,8 +355,9 @@ module.exports = {
   userSignin,
   changePassword,
   getUserTryouts,
-  getListByUserId,
+  getTryoutByUserId,
   getSummary,
   updateProfile,
   getUserTryOutById,
+  getBimbelByUserId,
 };

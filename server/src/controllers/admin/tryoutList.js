@@ -1,7 +1,7 @@
 const prisma = require("../../utils/prismaClient");
 
 const createTryout = async (req, res) => {
-  const { title, price, description, batch } = req.body;
+  const { title, price, description, batch, type } = req.body;
   const batchInt = parseInt(batch, 10);
 
   try {
@@ -12,6 +12,7 @@ const createTryout = async (req, res) => {
         imageUrl: req.image,
         description,
         batch: batchInt,
+        type: type,
       },
     });
     res.status(201).json({ message: "created" });
@@ -22,7 +23,8 @@ const createTryout = async (req, res) => {
 };
 const updateTryout = async (req, res) => {
   const { id } = req.params;
-  const { title, price, description, status, statusKerjakan, batch } = req.body;
+  const { title, price, description, status, statusKerjakan, batch, type } =
+    req.body;
   const stringToBool = (str) => str === "true";
   const statusFormatted = stringToBool(status);
   const statusKerjakanFormatted = stringToBool(statusKerjakan);
@@ -37,6 +39,7 @@ const updateTryout = async (req, res) => {
       status: statusFormatted,
       isOnline: statusKerjakanFormatted,
       batch: batchInt,
+      type: type,
     };
 
     if (image) {
@@ -334,31 +337,71 @@ const getTryOutOwnershipCount = async (req, res) => {
 };
 
 const getTryoutOwner = async (req, res) => {
-  const { tryoutListId } = req.params;
   try {
-    const tryoutOwner = await prisma.ownership.findMany({
+    const { tryoutListId } = req.params;
+    const page = parseInt(req.query.page, 10) || 1; // Halaman saat ini
+    const limit = parseInt(req.query.limit, 10) || 10; // Jumlah data per halaman
+    const offset = (page - 1) * limit;
+
+    // Validasi input
+    if (!tryoutListId || isNaN(tryoutListId)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid tryoutListId",
+      });
+    }
+
+    // Hitung total data
+    const totalItems = await prisma.user.count({
       where: {
-        tryoutListId: parseInt(tryoutListId),
-      },
-      select: {
-        userId: true,
-        tryoutListId: true,
-        profile: {
-          select: phone,
-        },
-        user: {
-          select: {
-            email: true,
+        ownerships: {
+          some: {
+            tryoutListId: parseInt(tryoutListId, 10),
           },
         },
       },
     });
-    res.status(200).json(tryoutOwner);
+
+    // Hitung total halaman
+    const totalPages = Math.ceil(totalItems / limit);
+
+    // Query untuk mendapatkan data user
+    const users = await prisma.user.findMany({
+      where: {
+        ownerships: {
+          some: {
+            tryoutListId: parseInt(tryoutListId, 10),
+          },
+        },
+      },
+      select: {
+        email: true,
+        profile: {
+          select: {
+            phone: true,
+          },
+        },
+      },
+      skip: offset,
+      take: limit,
+    });
+
+    res.status(200).json({
+      success: true,
+      data: users,
+      meta: {
+        totalItems,
+        totalPages,
+        currentPage: page,
+        rowsPerPage: limit,
+      },
+    });
   } catch (error) {
-    res.status(500).json,
-      {
-        message: "Error fetching tryout owner",
-      };
+    console.error("Error fetching tryout owner:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error fetching tryout owner",
+    });
   }
 };
 

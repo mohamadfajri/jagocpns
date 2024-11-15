@@ -30,6 +30,7 @@ const getTryoutByBatch = async (req, res) => {
     const tryoutListByBatch = await prisma.tryoutList.findMany({
       where: {
         batch: parseInt(batch),
+        type: "Tryout",
       },
       orderBy: {
         title: "asc",
@@ -155,6 +156,31 @@ const getIsOnlineStatus = async (req, res) => {
   }
 };
 
+const getAllBimbel = async (req, res) => {
+  try {
+    const bimbel = await prisma.tryoutList.findMany({
+      where: {
+        type: "Bimbel",
+      },
+    });
+    if (bimbel.length === 0) {
+      return res.status(404).json({
+        message: "Data Bimbel Tidak Ditemukan",
+      });
+    }
+    const serializedData = bimbel.map((item) => ({
+      ...item,
+      price: Number(item.price), // Konversi price dari BigInt ke Number
+    }));
+    return res.status(200).json(serializedData);
+  } catch (error) {
+    return res.status(500).json({
+      message: "Terjadi kesalahan saat mencoba mengambil data bimbel",
+      error: error.message,
+    });
+  }
+}
+
 module.exports = {
   getAllTryout,
   getTryoutById,
@@ -162,4 +188,5 @@ module.exports = {
   getFreeTryouts,
   getIsOnlineStatus,
   getTryoutByBatch,
+  getAllBimbel,
 };

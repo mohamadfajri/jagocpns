@@ -273,14 +273,6 @@ const checkout = async (req, res) => {
       select: { amount: true },
     });
 
-    if (!userBalance) {
-      return res.status(404).json({ message: 'User balance not found' });
-    }
-
-    if (userBalance.amount < totalPrice) {
-      return res.status(400).json({ message: 'Saldo tidak cukup' });
-    }
-
     const existingOwnerships = await prisma.ownership.findMany({
       where: {
         tryoutListId: Number(tryoutListId),
@@ -301,6 +293,35 @@ const checkout = async (req, res) => {
         message: `User(s) ${userEmails.join(', ')} sudah memiliki tryout ini`,
       });
     }
+
+    if (!userBalance) {
+      return res.status(404).json({ message: 'User balance not found' });
+    }
+
+    if (userBalance.amount < totalPrice) {
+      return res.status(400).json({ message: 'Saldo tidak cukup' });
+    }
+
+    // const existingOwnerships = await prisma.ownership.findMany({
+    //   where: {
+    //     tryoutListId: Number(tryoutListId),
+    //     userId: {
+    //       in: targetIds,
+    //     },
+    //   },
+    //   include: {
+    //     user: true,
+    //   },
+    // });
+
+    // if (existingOwnerships.length > 0) {
+    //   const userEmails = existingOwnerships.map(
+    //     (ownership) => ownership.user.email
+    //   );
+    //   return res.status(400).json({
+    //     message: `User(s) ${userEmails.join(', ')} sudah memiliki tryout ini`,
+    //   });
+    // }
 
     await prisma.balance.update({
       where: { userId },
