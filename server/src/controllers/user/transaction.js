@@ -1,4 +1,4 @@
-const prisma = require('../../utils/prismaClient');
+const prisma = require("../../utils/prismaClient");
 
 const createTransaction = async (req, res) => {
   const { amount } = req.body;
@@ -12,14 +12,14 @@ const createTransaction = async (req, res) => {
       where: {
         userId: userId,
         status: {
-          in: ['unpaid', 'checking'],
+          in: ["unpaid", "checking"],
         },
       },
     });
 
     if (existingTransaction) {
       return res.status(400).json({
-        message: 'User already has an unpaid or checking transaction',
+        message: "User already has an unpaid or checking transaction",
       });
     }
 
@@ -27,14 +27,14 @@ const createTransaction = async (req, res) => {
       data: {
         userId: userId,
         amount: updatedAmount,
-        status: 'unpaid',
+        status: "unpaid",
       },
     });
 
-    res.status(201).json({ message: 'Transaksi berhasil dibuat' });
+    res.status(201).json({ message: "Transaksi berhasil dibuat" });
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ message: 'Gagal membuat transaksi baru' });
+    console.error("Error:", error);
+    res.status(500).json({ message: "Gagal membuat transaksi baru" });
   }
 };
 
@@ -43,19 +43,19 @@ const createVerification = async (req, res) => {
   const imageUrl = req.image ? req.image : null;
 
   if (!imageUrl) {
-    return res.status(400).json({ message: 'Image is required' });
+    return res.status(400).json({ message: "Image is required" });
   }
 
   try {
     const transaction = await prisma.transaction.findFirst({
       where: {
         userId,
-        status: 'unpaid',
+        status: "unpaid",
       },
     });
 
     if (!transaction) {
-      return res.status(404).json({ message: 'Transaction not found' });
+      return res.status(404).json({ message: "Transaction not found" });
     }
 
     const updatedTransaction = await prisma.transaction.update({
@@ -63,17 +63,17 @@ const createVerification = async (req, res) => {
         id: transaction.id,
       },
       data: {
-        status: 'checking',
+        status: "checking",
         imageUrl: imageUrl,
       },
     });
 
     res.status(200).json({
-      message: 'Verification created successfully',
+      message: "Verification created successfully",
     });
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ message: 'Failed to create verification' });
+    console.error("Error:", error);
+    res.status(500).json({ message: "Failed to create verification" });
   }
 };
 
@@ -84,20 +84,20 @@ const getSuccessTransaction = async (req, res) => {
     const transactions = await prisma.transaction.findMany({
       where: {
         userId: userId,
-        status: 'paid',
+        status: "paid",
       },
     });
 
     if (transactions.length === 0) {
-      return res.status(404).json({ message: 'No paid transactions found' });
+      return res.status(404).json({ message: "No paid transactions found" });
     }
 
     const getId = (date, id) => {
-      const ddmmyyyy = `${date.getDate().toString().padStart(2, '0')}${(
+      const ddmmyyyy = `${date.getDate().toString().padStart(2, "0")}${(
         date.getMonth() + 1
       )
         .toString()
-        .padStart(2, '0')}${date.getFullYear()}`;
+        .padStart(2, "0")}${date.getFullYear()}`;
       const formattedId = `JAGO-${ddmmyyyy}${id}`;
       return formattedId;
     };
@@ -110,12 +110,12 @@ const getSuccessTransaction = async (req, res) => {
     }));
 
     res.status(200).json({
-      message: 'Paid transactions retrieved successfully',
+      message: "Paid transactions retrieved successfully",
       data: format,
     });
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ message: 'Failed to retrieve transactions' });
+    console.error("Error:", error);
+    res.status(500).json({ message: "Failed to retrieve transactions" });
   }
 };
 
@@ -127,7 +127,7 @@ const getTransactionStatus = async (req, res) => {
       where: {
         userId,
         status: {
-          not: 'paid',
+          not: "paid",
         },
       },
     });
@@ -135,22 +135,22 @@ const getTransactionStatus = async (req, res) => {
     if (!transaction) {
       return res
         .status(404)
-        .json({ message: 'Tidak ada transaksi aktif untuk pengguna ini' });
+        .json({ message: "Tidak ada transaksi aktif untuk pengguna ini" });
     }
 
     res.status(200).json({
       transaction: transaction.status,
       status:
-        transaction.status === 'unpaid'
+        transaction.status === "unpaid"
           ? true
-          : transaction.status === 'checking'
+          : transaction.status === "checking"
           ? true
           : false,
     });
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Error:", error);
     res.status(500).json({
-      message: 'Terjadi kesalahan saat mencoba mendapatkan status transaksi',
+      message: "Terjadi kesalahan saat mencoba mendapatkan status transaksi",
     });
   }
 };
@@ -162,12 +162,12 @@ const cancelTransaction = async (req, res) => {
     const transaction = await prisma.transaction.findFirst({
       where: {
         userId: userId,
-        status: 'unpaid',
+        status: "unpaid",
       },
     });
 
     if (!transaction) {
-      return res.status(404).json({ message: 'No unpaid transaction found' });
+      return res.status(404).json({ message: "No unpaid transaction found" });
     }
     await prisma.transaction.delete({
       where: {
@@ -177,10 +177,10 @@ const cancelTransaction = async (req, res) => {
 
     return res
       .status(200)
-      .json({ message: 'Transaction cancelled successfully' });
+      .json({ message: "Transaction cancelled successfully" });
   } catch (error) {
-    console.error('Error cancelling transaction:', error);
-    return res.status(500).json({ message: 'Failed to cancel transaction' });
+    console.error("Error cancelling transaction:", error);
+    return res.status(500).json({ message: "Failed to cancel transaction" });
   }
 };
 
@@ -191,7 +191,7 @@ const getTransaction = async (req, res) => {
     const transaction = await prisma.transaction.findFirst({
       where: {
         userId: parseInt(userId),
-        OR: [{ status: 'unpaid' }, { status: 'checking' }],
+        OR: [{ status: "unpaid" }, { status: "checking" }],
       },
       include: {
         user: {
@@ -208,15 +208,15 @@ const getTransaction = async (req, res) => {
     });
 
     if (!transaction) {
-      return res.status(404).json({ message: 'Transaction not found' });
+      return res.status(404).json({ message: "Transaction not found" });
     }
 
     const createdAt = new Date(transaction.createdAt);
-    const ddmmyyyy = `${createdAt.getDate().toString().padStart(2, '0')}${(
+    const ddmmyyyy = `${createdAt.getDate().toString().padStart(2, "0")}${(
       createdAt.getMonth() + 1
     )
       .toString()
-      .padStart(2, '0')}${createdAt.getFullYear()}`;
+      .padStart(2, "0")}${createdAt.getFullYear()}`;
     const uniquePart = transaction.amount.toString().slice(-3);
     const formattedId = `JAGO-${ddmmyyyy}${transaction.id}`;
 
@@ -233,112 +233,301 @@ const getTransaction = async (req, res) => {
 
     res.status(200).json(response);
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ message: 'Failed to fetch transaction' });
+    console.error("Error:", error);
+    res.status(500).json({ message: "Failed to fetch transaction" });
   }
+};
+
+// const checkout = async (req, res) => {
+//   const userId = Number(req.user.id);
+//   const { tryoutListId, target } = req.body;
+
+//   if (!Array.isArray(target) || target.length === 0) {
+//     return res.status(400).json({ message: 'Target list is invalid or empty' });
+//   }
+
+//   const targetIds = target.map((user) => Number(user.id));
+//   if (targetIds.some((id) => isNaN(id))) {
+//     return res
+//       .status(400)
+//       .json({ message: 'One or more target IDs are invalid' });
+//   }
+
+//   try {
+//     const tryout = await prisma.tryoutList.findUnique({
+//       where: { id: Number(tryoutListId) },
+//       select: { price: true },
+//     });
+
+//     if (!tryout) {
+//       return res.status(404).json({ message: 'Tryout not found' });
+//     }
+
+//     const tryoutPrice = Number(tryout.price);
+//     const totalPrice = BigInt(
+//       target.length > 1 ? (tryoutPrice * target.length) / 2 : tryoutPrice
+//     );
+
+//     const userBalance = await prisma.balance.findUnique({
+//       where: { userId },
+//       select: { amount: true },
+//     });
+
+//     const existingOwnerships = await prisma.ownership.findMany({
+//       where: {
+//         tryoutListId: Number(tryoutListId),
+//         userId: {
+//           in: targetIds,
+//         },
+//       },
+//       include: {
+//         user: true,
+//       },
+//     });
+
+//     if (existingOwnerships.length > 0) {
+//       const userEmails = existingOwnerships.map(
+//         (ownership) => ownership.user.email
+//       );
+//       return res.status(400).json({
+//         message: `User(s) ${userEmails.join(', ')} sudah memiliki tryout ini`,
+//       });
+//     }
+
+//     if (!userBalance) {
+//       return res.status(404).json({ message: 'User balance not found' });
+//     }
+
+//     if (userBalance.amount < totalPrice) {
+//       return res.status(400).json({ message: 'Saldo tidak cukup' });
+//     }
+
+//     await prisma.balance.update({
+//       where: { userId },
+//       data: { amount: userBalance.amount - totalPrice },
+//     });
+
+//     const ownerships = targetIds.map((targetUserId) => ({
+//       userId: targetUserId,
+//       tryoutListId: Number(tryoutListId),
+//     }));
+
+//     await prisma.ownership.createMany({ data: ownerships });
+
+//     res.status(200).json({ message: 'Pembelian tryout berhasil' });
+//   } catch (error) {
+//     console.error('Error:', error);
+//     res.status(500).json({ message: 'Terjadi kesalahan saat checkout' });
+//   }
+// };
+
+const DISCOUNT_CODES = {
+  JAGOCPNS: { amount: 10000n, type: "fixed" },
+  WELCOME50: { amount: 50n, type: "percentage" },
+  FLASH25: { amount: 25n, type: "percentage" },
+};
+
+const calculateDiscount = (price, discountCode) => {
+  const discountInfo = DISCOUNT_CODES[discountCode];
+  if (!discountInfo) return 0n;
+
+  if (discountInfo.type === "fixed") {
+    return discountInfo.amount;
+  } else if (discountInfo.type === "percentage") {
+    return (price * discountInfo.amount) / 100n;
+  }
+  return 0n;
 };
 
 const checkout = async (req, res) => {
   const userId = Number(req.user.id);
-  const { tryoutListId, target } = req.body;
-
-  if (!Array.isArray(target) || target.length === 0) {
-    return res.status(400).json({ message: 'Target list is invalid or empty' });
-  }
-
-  const targetIds = target.map((user) => Number(user.id));
-  if (targetIds.some((id) => isNaN(id))) {
-    return res
-      .status(400)
-      .json({ message: 'One or more target IDs are invalid' });
-  }
+  const { tryoutListId, target, discountCode } = req.body;
 
   try {
-    const tryout = await prisma.tryoutList.findUnique({
-      where: { id: Number(tryoutListId) },
-      select: { price: true },
-    });
-
-    if (!tryout) {
-      return res.status(404).json({ message: 'Tryout not found' });
+    if (!tryoutListId || typeof tryoutListId !== "number") {
+      return res.status(400).json({ message: "ID tryout tidak valid" });
     }
 
-    const tryoutPrice = Number(tryout.price);
-    const totalPrice = BigInt(
-      target.length > 1 ? (tryoutPrice * target.length) / 2 : tryoutPrice
-    );
+    if (!Array.isArray(target) || target.length === 0) {
+      return res
+        .status(400)
+        .json({ message: "Target list is invalid or empty" });
+    }
 
-    const userBalance = await prisma.balance.findUnique({
-      where: { userId },
-      select: { amount: true },
+    const targetIds = target.map((user) => {
+      const id = Number(user.id);
+      if (isNaN(id) || id <= 0) {
+        throw new Error("Invalid user ID format");
+      }
+      return id;
     });
 
-    const existingOwnerships = await prisma.ownership.findMany({
-      where: {
-        tryoutListId: Number(tryoutListId),
-        userId: {
-          in: targetIds,
+    // Start database transaction
+    const result = await prisma.$transaction(async (prisma) => {
+      // Verify all target users exist
+      const users = await prisma.user.findMany({
+        where: {
+          id: {
+            in: targetIds,
+          },
         },
-      },
-      include: {
-        user: true,
-      },
-    });
-
-    if (existingOwnerships.length > 0) {
-      const userEmails = existingOwnerships.map(
-        (ownership) => ownership.user.email
-      );
-      return res.status(400).json({
-        message: `User(s) ${userEmails.join(', ')} sudah memiliki tryout ini`,
+        select: {
+          id: true,
+          email: true,
+        },
       });
-    }
 
-    if (!userBalance) {
-      return res.status(404).json({ message: 'User balance not found' });
-    }
+      if (users.length !== targetIds.length) {
+        throw new Error("Satu atau lebih user tidak ditemukan");
+      }
 
-    if (userBalance.amount < totalPrice) {
-      return res.status(400).json({ message: 'Saldo tidak cukup' });
-    }
+      // Get tryout details
+      const tryout = await prisma.tryoutList.findUnique({
+        where: { id: tryoutListId },
+        select: {
+          id: true,
+          price: true,
+          status: true,
+          title: true,
+        },
+      });
 
-    // const existingOwnerships = await prisma.ownership.findMany({
-    //   where: {
-    //     tryoutListId: Number(tryoutListId),
-    //     userId: {
-    //       in: targetIds,
-    //     },
-    //   },
-    //   include: {
-    //     user: true,
-    //   },
-    // });
+      if (!tryout) {
+        throw new Error("Tryout tidak ditemukan");
+      }
 
-    // if (existingOwnerships.length > 0) {
-    //   const userEmails = existingOwnerships.map(
-    //     (ownership) => ownership.user.email
-    //   );
-    //   return res.status(400).json({
-    //     message: `User(s) ${userEmails.join(', ')} sudah memiliki tryout ini`,
-    //   });
-    // }
+      if (!tryout.status) {
+        throw new Error("Tryout tidak tersedia untuk dibeli");
+      }
 
-    await prisma.balance.update({
-      where: { userId },
-      data: { amount: userBalance.amount - totalPrice },
+      // Calculate price with discount
+      let basePrice = tryout.price;
+      let discountAmount = 0n;
+
+      if (discountCode) {
+        const upperDiscountCode = discountCode.trim().toUpperCase();
+        if (!DISCOUNT_CODES[upperDiscountCode]) {
+          throw new Error("Kode diskon tidak valid");
+        }
+        discountAmount = calculateDiscount(basePrice, upperDiscountCode);
+      }
+
+      // Calculate final price
+      const priceAfterDiscount = basePrice - discountAmount;
+      const totalPrice =
+        target.length > 1
+          ? (priceAfterDiscount * BigInt(target.length)) / BigInt(2)
+          : priceAfterDiscount;
+
+      // Check user balance
+      const userBalance = await prisma.balance.findUnique({
+        where: { userId },
+        select: { amount: true },
+      });
+
+      if (!userBalance) {
+        throw new Error("Saldo user tidak ditemukan");
+      }
+
+      if (userBalance.amount < totalPrice) {
+        throw new Error("Saldo tidak cukup");
+      }
+
+      // Check existing ownerships
+      const existingOwnerships = await prisma.ownership.findMany({
+        where: {
+          tryoutListId,
+          userId: {
+            in: targetIds,
+          },
+        },
+        include: {
+          user: {
+            select: {
+              email: true,
+            },
+          },
+        },
+      });
+
+      if (existingOwnerships.length > 0) {
+        const userEmails = existingOwnerships.map(
+          (ownership) => ownership.user.email
+        );
+        throw new Error(
+          `User(s) ${userEmails.join(", ")} sudah memiliki tryout ini`
+        );
+      }
+
+      // Update balance
+      await prisma.balance.update({
+        where: { userId },
+        data: { amount: userBalance.amount - totalPrice },
+      });
+
+      // Create ownerships
+      const ownerships = targetIds.map((targetUserId) => ({
+        userId: targetUserId,
+        tryoutListId,
+        isDone: false,
+      }));
+
+      await prisma.ownership.createMany({ data: ownerships });
+
+      // Create transaction record
+      const transaction = await prisma.transaction.create({
+        data: {
+          userId,
+          amount: totalPrice,
+          status: "paid",
+        },
+      });
+
+      // Create payment records
+      const payments = targetIds.map((targetUserId) => ({
+        userId: targetUserId,
+        tryoutListId,
+      }));
+
+      await prisma.payment.createMany({ data: payments });
+
+      return {
+        transactionId: transaction.id,
+        originalPrice: basePrice.toString(),
+        discount: discountAmount.toString(),
+        finalPrice: totalPrice.toString(),
+        tryoutTitle: tryout.title,
+      };
     });
 
-    const ownerships = targetIds.map((targetUserId) => ({
-      userId: targetUserId,
-      tryoutListId: Number(tryoutListId),
-    }));
-
-    await prisma.ownership.createMany({ data: ownerships });
-
-    res.status(200).json({ message: 'Pembelian tryout berhasil' });
+    return res.status(200).json({
+      message: "Pembelian tryout berhasil",
+      data: {
+        transactionId: result.transactionId,
+        originalPrice: result.originalPrice,
+        discount: result.discount,
+        finalPrice: result.finalPrice,
+        tryoutTitle: result.tryoutTitle,
+      },
+    });
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ message: 'Terjadi kesalahan saat checkout' });
+    console.error("Checkout Error:", error);
+
+    const errorMessages = {
+      "Saldo tidak cukup": 400,
+      "Tryout tidak ditemukan": 404,
+      "Tryout tidak tersedia untuk dibeli": 400,
+      "Satu atau lebih user tidak ditemukan": 404,
+      "Kode diskon tidak valid": 400,
+      "User(s) sudah memiliki tryout ini": 400
+    };
+
+    const statusCode = errorMessages[error.message] || 500;
+
+    return res.status(statusCode).json({
+      message: error.message || "Terjadi kesalahan saat checkout",
+      error: process.env.NODE_ENV === "development" ? error.stack : undefined,
+    });
   }
 };
 
