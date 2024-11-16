@@ -5,6 +5,7 @@ import { Button, Modal } from "flowbite-react";
 import { useCbt } from "../stores/useCbt";
 import { useAlert } from "../stores/useAlert";
 import SplitText from "../components/SplitText";
+import Logo from "../assets/images/logo-extend-black.png";
 
 const CbtTryout = () => {
   const [soal, setSoal] = useState([]);
@@ -190,7 +191,7 @@ const CbtTryout = () => {
       setIsWorking(null);
       setInitialTime(null);
       setAnswers([]);
-      navigate("/app/dashboard");
+      navigate("/app/mytryouts");
     } catch (error) {
       setAlert({
         title: "Gagal!",
@@ -209,7 +210,7 @@ const CbtTryout = () => {
         <div
           className={`text-center border border-black cursor-pointer pt-1 flex-shrink-0 w-9 h-9 mr-3 ${
             answers[activeNumber - 1] === key
-              ? "bg-gray-600 text-white"
+              ? "bg-[#FFCB01] text-white"
               : "bg-white"
           }`}
         >
@@ -244,7 +245,8 @@ const CbtTryout = () => {
             </Modal>
           </div>
         }
-        <div className="fixed top-0 left-0 right-0 bg-white">
+
+        {/* <div className="fixed top-0 left-0 right-0 bg-white">
           <header className="flex justify-between border-b bg-white border-black">
             <div className="ml-4">
               <img
@@ -262,9 +264,13 @@ const CbtTryout = () => {
               </div>
             </div>
           </header>
-        </div>
-        <div className="flex h-screen pt-10 flex-col md:flex-row">
-          <div className="md:w-1/5 flex flex-col sm:overflow-y-auto mt-8 border-r border-black">
+        </div> */}
+
+        <div className="flex h-screen pe-5 flex-col md:flex-row">
+          <div className="md:w-1/5 flex flex-col sm:overflow-y-auto mt-0 border-r border-black">
+            <div className="mt-3">
+              <img src={Logo} alt="" className="" />
+            </div>
             <div className="w-full navigation overflow-auto flex md:grid md:grid-cols-2 lg:grid-cols-5 gap-y-4 p-4">
               {numbers.map((number, index) => (
                 <div
@@ -272,7 +278,7 @@ const CbtTryout = () => {
                   onClick={() => handleNavigate(index)}
                   className={`text-center border border-black cursor-pointer py-2 flex-shrink-0 w-10 h-10 mr-2 ${
                     activeNumber === number
-                      ? "bg-gray-600 text-white"
+                      ? "bg-[#FFCB01] text-white"
                       : answers[index] !== "x" && activeNumber !== number
                       ? "bg-green-500 text-white"
                       : ""
@@ -283,10 +289,13 @@ const CbtTryout = () => {
               ))}
             </div>
           </div>
-          <div className="md:w-4/5 overflow-y-auto mb-8">
+
+          <div className="md:w-3/5 overflow-y-auto mb-8">
             {activeSoal && (
-              <div className="p-10">
-                <h1 className="text-xl font-semibold mb-6">
+              <div className="ps-5 py-5">
+                <h1
+                  className="text-xl font-bold mb-6 border border-gray-400 border-2 w-fit p-3 rounded-xl"
+                >
                   Soal {activeNumber}
                 </h1>
                 <div className="mb-8">
@@ -306,8 +315,8 @@ const CbtTryout = () => {
                     {renderOption("E", activeSoal.optionE, activeSoal.imageE)}
                   </ul>
                 </div>
-                <div className="fixed bottom-4 bg-white border border-black rounded-lg">
-                  <div className="flex flex-row text-sm my-1">
+                <div className="fixed bottom-4 bg-white rounded-lg">
+                  {/* <div className="flex flex-row text-sm my-1">
                     <button
                       onClick={prevQuestion}
                       disabled={activeNumber === 1}
@@ -379,10 +388,175 @@ const CbtTryout = () => {
                         </span>
                       </button>
                     )}
+                  </div> */}
+                  <div className="flex border border-gray-300 rounded-xl">
+                    <button
+                      onClick={prevQuestion}
+                      disabled={activeNumber === 1}
+                      className={`flex flex-row items-center font-medium mr-4 px-2 py-1 rounded-s-xl ${
+                        activeNumber === 1
+                          ? "text-gray-400"
+                          : "text-black bg-[#FFCB01]"
+                      }`}
+                    >
+                      <span className="mr-2 rounded-full p-1">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          className="w-6 h-6"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M7.72 12.53a.75.75 0 010-1.06l7.5-7.5a.75.75 0 111.06 1.06L9.31 12l6.97 6.97a.75.75 0 11-1.06 1.06l-7.5-7.5z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                      Sebelumnya
+                    </button>
+                    {activeNumber < numbers.length && (
+                      <button
+                        onClick={nextQuestion}
+                        className="flex flex-row items-center font-medium px-2 py-1 bg-[#FFCB01] text-black rounded-e-xl"
+                      >
+                        Selanjutnya
+                        <span className="ml-2  rounded-full p-1">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            className="w-6 h-6"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M16.28 11.47a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 011.06-1.06l7.5 7.5z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </span>
+                      </button>
+                    )}
+                    {activeNumber === numbers.length && (
+                      <button
+                        onClick={callNextAndSubmit}
+                        className="flex flex-row items-center font-medium px-2 py-1 hover:bg-gray-100"
+                        disabled={activeNumber === numbers.length}
+                      >
+                        Selanjutnya
+                        <span className="ml-2 rounded-full p-1">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            className="w-6 h-6"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M16.28 11.47a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 011.06-1.06l7.5 7.5z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </span>
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
             )}
+          </div>
+
+          <div className="flex justify-end md:w-1/5">
+            <div className="flex flex-col items-center ">
+              <div className="border border-gray-300 rounded-xl h-10 py-10 px-10 my-4 flex items-center justify-center">
+                <h2 className="font-medium text-2xl">{timeLeft}</h2>
+              </div>
+              {/* <div className="flex mb-5 border border-gray-300 rounded-xl">
+                <button
+                  onClick={prevQuestion}
+                  disabled={activeNumber === 1}
+                  className={`flex flex-row items-center font-medium mr-4 px-2 py-1 rounded-s-xl ${
+                    activeNumber === 1
+                      ? "text-gray-400"
+                      : "text-black bg-[#FFCB01]"
+                  }`}
+                >
+                  <span className="mr-2 rounded-full p-1">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M7.72 12.53a.75.75 0 010-1.06l7.5-7.5a.75.75 0 111.06 1.06L9.31 12l6.97 6.97a.75.75 0 11-1.06 1.06l-7.5-7.5z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                  Sebelumnya
+                </button>
+                {activeNumber < numbers.length && (
+                  <button
+                    onClick={nextQuestion}
+                    className="flex flex-row items-center font-medium px-2 py-1 bg-[#FFCB01] text-black rounded-e-xl"
+                  >
+                    Selanjutnya
+                    <span className="ml-2  rounded-full p-1">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M16.28 11.47a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 011.06-1.06l7.5 7.5z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                )}
+                {activeNumber === numbers.length && (
+                  <button
+                    onClick={callNextAndSubmit}
+                    className="flex flex-row items-center font-medium px-2 py-1 hover:bg-gray-100"
+                    disabled={activeNumber === numbers.length}
+                  >
+                    Selanjutnya
+                    <span className="ml-2 rounded-full p-1">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M16.28 11.47a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 011.06-1.06l7.5 7.5z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                )}
+              </div> */}
+              <div className="border border-gray-300 rounded-xl p-3 w-72">
+                <p className="text-center font-medium text-xl">
+                  Sudah Selesai?
+                </p>
+                <hr className="mt-3" />
+                <Button
+                  color={"success"}
+                  onClick={callNextAndSubmit}
+                  className="w-full mt-3"
+                >
+                  Submit
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
