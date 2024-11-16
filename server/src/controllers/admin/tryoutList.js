@@ -62,7 +62,7 @@ const getAllTryouts = async (req, res) => {
   try {
     const tryouts = await prisma.tryoutList.findMany({
       orderBy: {
-        title: "asc",
+        createdAt: "desc",
       },
     });
 

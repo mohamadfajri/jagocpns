@@ -29,6 +29,7 @@ const {
   getIsAnswer,
   createScore,
   getAllSoalById,
+  resetTryout
 } = require("../controllers/user/cbt");
 const { getTryout, getAllTryouts } = require("../controllers/admin/tryoutList");
 const ownerOnly = require("../middlewares/ownerOnly");
@@ -76,5 +77,6 @@ router.get("/user/mybimbel", userOnly, getBimbelByUserId);
 router.get("/user/mylist/:tryoutListId", userOnly, getUserTryOutById);
 router.get("/user/review/answer/:tryoutListId", userOnly, getUserAnswer);
 router.get("/user/myscore/:tryoutListId", userOnly, getUserScoreById);
+router.post('/user/tryout/reset',userOnly, resetTryout);
 
 module.exports = router;
