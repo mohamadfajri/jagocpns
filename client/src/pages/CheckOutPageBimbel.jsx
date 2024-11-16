@@ -26,6 +26,8 @@ export default function CheckOutPageBimbel() {
   const [appliedDiscount, setAppliedDiscount] = useState(null);
   const [discountMessage, setDiscountMessage] = useState("");
 
+  console.log("user", user)
+
   const calculateDiscount = (price, discountInfo) => {
     if (!discountInfo) return 0;
     if (discountInfo.type === "fixed") {
@@ -72,6 +74,7 @@ export default function CheckOutPageBimbel() {
   const getUser = async () => {
     try {
       const response = await fetcher("/user");
+      console.log(response.data)
       setUser([
         {
           id: response.data.userId,
@@ -182,7 +185,7 @@ export default function CheckOutPageBimbel() {
             action={"Beli"}
             imageUrl={tryout.imageUrl}
             price={tryout.price}
-            onClick={() => setOpenModal(true)}
+            onOpenModal={() => setOpenModal(true)}
           />
         </div>
       </div>

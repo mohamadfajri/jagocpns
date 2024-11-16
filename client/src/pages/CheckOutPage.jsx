@@ -182,7 +182,7 @@ export default function CheckOutPage() {
             action={"Beli"}
             imageUrl={tryout.imageUrl}
             price={tryout.price}
-            onClick={() => setOpenModal(true)}
+            onOpenModal={() => setOpenModal(true)}
           />
         </div>
       </div>
