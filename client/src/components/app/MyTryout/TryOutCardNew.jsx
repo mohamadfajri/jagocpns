@@ -7,8 +7,12 @@ export const TryOutCardNew = ({
   url,
   imageUrl,
   price,
-  onClick,
+  onKerjakanUlang,  // Ubah dari onClick ke onKerjakanUlang
   className,
+  kerjakanUlang,
+  isResetting,  // Tambahkan prop isResetting
+  disabled,
+  onOpenModal     // Tambahkan prop disabled
 }) => {
   const formatIDR = (number) => {
     return new Intl.NumberFormat("id-ID", {
@@ -17,9 +21,12 @@ export const TryOutCardNew = ({
       minimumFractionDigits: 0,
     }).format(number);
   };
+
   return (
-    <div className={`${className} border w-80 sm:w-56 md:w-60 xl:w-72 rounded-xl`}>
-      <div className="aspect-video">
+    <div
+      className={`${className} border w-80 sm:w-56 md:w-60 xl:w-72 rounded-xl`}
+    >
+       <div className="aspect-video">
         <img src={imageUrl} alt="" className="rounded-t-xl" />
       </div>
       <div className="p-4">
@@ -72,15 +79,26 @@ export const TryOutCardNew = ({
         {price && (
           <p className="font-medium mt-2 text-lg">{formatIDR(price)}</p>
         )}
-        <div className="mt-5">
+        <div className={`mt-5 grid grid-cols-2 gap-3`}>
           <Link to={url}>
             <button
-              onClick={onClick}
-              className="btn bg-[#FFCB01] py-2 w-full font-medium rounded-lg"
+              className="bg-[#FFCB01] py-2 w-full font-medium rounded-lg"
+              onClick={onOpenModal}
             >
               {action}
             </button>
           </Link>
+          {kerjakanUlang && (
+            <button
+              onClick={onKerjakanUlang}  // Ubah dari onClick ke onKerjakanUlang
+              disabled={disabled || isResetting}
+              className={`bg-[#FFCB01] py-2 w-full font-medium rounded-lg ${
+                (disabled || isResetting) ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+            >
+              {isResetting ? 'Mereset...' : 'Kerjakan ulang'}
+            </button>
+          )}
         </div>
       </div>
     </div>
