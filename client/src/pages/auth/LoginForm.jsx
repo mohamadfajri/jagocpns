@@ -12,6 +12,7 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({ email: '', password: '' });
   const { setToken, setProfile } = useAuth();
+  const [isLoading, setIsLoading]= useState(false)
 
   const { setAlert } = useAlert();
 
@@ -26,6 +27,7 @@ const LoginForm = () => {
   };
 
   const signIn = async () => {
+    setIsLoading(true)
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/user/signin`,
@@ -36,6 +38,7 @@ const LoginForm = () => {
       );
       setToken(response.data.token);
       setAlert({ title: 'Info!', message: 'Login Berhasil', color: 'success' });
+      setIsLoading(false)
     } catch (error) {
       setAlert({
         title: 'Error!',
@@ -146,9 +149,10 @@ const LoginForm = () => {
               </div>
               <button
                 type='submit'
+                disabled={isLoading}
                 className='w-full text-white bg-jago-4 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800'
               >
-                Sign in
+                {isLoading ? "Loading" : "Sign in"}
               </button>
               <p className='text-sm font-light text-gray-500 dark:text-gray-400'>
                 <Link

@@ -169,7 +169,7 @@ const CheckoutBar = () => {
                     ? formatIDR((data.price * qty) / 2)
                     : formatIDR(data.price)}
                 </p>
-              </div>
+              </div>   
             </div>
             <div className='max-w-md mx-auto text-sm'>
               <table className='table-auto w-full border border-gray-300'>

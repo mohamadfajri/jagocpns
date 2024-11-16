@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 import {
   Button,
   Dropdown,
@@ -6,10 +6,10 @@ import {
   Modal,
   Textarea,
   TextInput,
-} from 'flowbite-react';
-import { fetchQuestioner } from '../../utils/fetchQuestioner';
-import { useParams } from 'react-router-dom';
-import { useAlert } from '../../stores/useAlert';
+} from "flowbite-react";
+import { fetchQuestioner } from "../../utils/fetchQuestioner";
+import { useParams } from "react-router-dom";
+import { useAlert } from "../../stores/useAlert";
 
 const TryoutEditor = () => {
   const [tryout, setTryout] = useState({
@@ -20,15 +20,15 @@ const TryoutEditor = () => {
     imageD: null,
     imageE: null,
     imageExplanation: null,
-    number: '',
-    type: '',
-    question: '',
-    explanation: '',
-    optionA: '',
-    optionB: '',
-    optionC: '',
-    optionD: '',
-    optionE: '',
+    number: "",
+    type: "",
+    question: "",
+    explanation: "",
+    optionA: "",
+    optionB: "",
+    optionC: "",
+    optionD: "",
+    optionE: "",
     scoreA: 0,
     scoreB: 0,
     scoreC: 0,
@@ -56,13 +56,13 @@ const TryoutEditor = () => {
   useEffect(() => {
     const setType = () => {
       if (activeNumber <= 30) {
-        setTryout((prev) => ({ ...prev, type: 'twk' }));
+        setTryout((prev) => ({ ...prev, type: "twk" }));
       } else if (activeNumber <= 65) {
-        setTryout((prev) => ({ ...prev, type: 'tiu' }));
+        setTryout((prev) => ({ ...prev, type: "tiu" }));
       } else if (activeNumber <= 110) {
-        setTryout((prev) => ({ ...prev, type: 'tkp' }));
+        setTryout((prev) => ({ ...prev, type: "tkp" }));
       } else {
-        setTryout((prev) => ({ ...prev, type: 'twk' }));
+        setTryout((prev) => ({ ...prev, type: "twk" }));
       }
     };
     setType();
@@ -108,7 +108,7 @@ const TryoutEditor = () => {
           scoreE: soal.scoreE,
         });
       } catch (error) {
-        console.error('Error fetching soal:', error);
+        console.error("Error fetching soal:", error);
       }
     };
 
@@ -117,14 +117,14 @@ const TryoutEditor = () => {
 
   useEffect(() => {
     const originalTryout = {
-      type: '',
-      question: '',
-      explanation: '',
-      optionA: '',
-      optionB: '',
-      optionC: '',
-      optionD: '',
-      optionE: '',
+      type: "",
+      question: "",
+      explanation: "",
+      optionA: "",
+      optionB: "",
+      optionC: "",
+      optionD: "",
+      optionE: "",
       scoreA: 0,
       scoreB: 0,
       scoreC: 0,
@@ -153,33 +153,45 @@ const TryoutEditor = () => {
       [id]: value,
     }));
   };
+
+  const handleOptionScoreChange = (option) => {
+    setTryout((prevState) => ({
+      ...prevState,
+      scoreA: option === "A" ? 5 : 0,
+      scoreB: option === "B" ? 5 : 0,
+      scoreC: option === "C" ? 5 : 0,
+      scoreD: option === "D" ? 5 : 0,
+      scoreE: option === "E" ? 5 : 0,
+    }));
+  };
+
   const clearImages = async () => {
     try {
-      const { data } = await fetchQuestioner.patch('/tryoutimage', {
+      const { data } = await fetchQuestioner.patch("/tryoutimage", {
         number: activeNumber,
         tryoutListId: Number(id),
       });
-      setAlert({ title: 'success', message: data.message, color: 'success' });
+      setAlert({ title: "success", message: data.message, color: "success" });
     } catch (error) {
       setAlert({
-        title: 'Failed',
+        title: "Failed",
         message: error.response.data.message,
-        color: 'failure',
+        color: "failure",
       });
     }
   };
 
   const handleClear = () => {
     setTryout({
-      number: '',
-      type: '',
-      question: '',
-      explanation: '',
-      optionA: '',
-      optionB: '',
-      optionC: '',
-      optionD: '',
-      optionE: '',
+      number: "",
+      type: "",
+      question: "",
+      explanation: "",
+      optionA: "",
+      optionB: "",
+      optionC: "",
+      optionD: "",
+      optionE: "",
       scoreA: 0,
       scoreB: 0,
       scoreC: 0,
@@ -225,22 +237,22 @@ const TryoutEditor = () => {
         },
         {
           headers: {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",
           },
         }
       );
       setAlert({
-        title: 'Berhasil!',
-        message: 'Soal Ditambahkan!',
-        color: 'success',
+        title: "Berhasil!",
+        message: "Soal Ditambahkan!",
+        color: "success",
       });
       setLoading(false);
     } catch (error) {
       setLoading(false);
       setAlert({
-        title: 'Error!',
-        message: 'Soal Gagal ditambahkan, hubungi developer!',
-        color: 'failure',
+        title: "Error!",
+        message: "Soal Gagal ditambahkan, hubungi developer!",
+        color: "failure",
       });
     }
   };
@@ -267,20 +279,20 @@ const TryoutEditor = () => {
   };
 
   return (
-    <div className='flex'>
-      <div className='w-1/5 bg-white border-r border-gray-300'>
-        <div className='fixed top-0 left-0 right-0 bg-white z-10'>
-          <header className='flex justify-between border-b border-black h-20'>
-            <h1 className='text-2xl m-2 md:m-6 font-medium'>Tryout Editor</h1>
+    <div className="flex">
+      <div className="w-1/5 bg-white border-r border-gray-300">
+        <div className="fixed top-0 left-0 right-0 bg-white z-10">
+          <header className="flex justify-between border-b border-black h-20">
+            <h1 className="text-2xl m-2 md:m-6 font-medium">Tryout Editor</h1>
           </header>
         </div>
-        <div className='flex flex-col mt-20'>
-          <div className='w-full navigation overflow-auto flex md:grid md:grid-cols-2 lg:grid-cols-5 gap-y-4 p-4'>
+        <div className="flex flex-col mt-20">
+          <div className="w-full navigation overflow-auto flex md:grid md:grid-cols-2 lg:grid-cols-5 gap-y-4 p-4">
             {numbers.map((number) => (
               <button
                 key={number}
                 className={`text-center border border-black cursor-pointer py-2 flex-shrink-0 w-10 h-10 mr-2 ${
-                  activeNumber === number ? 'bg-gray-600 text-white' : ''
+                  activeNumber === number ? "bg-gray-600 text-white" : ""
                 }`}
                 onClick={() => setActiveNumber(number)}
               >
@@ -290,170 +302,216 @@ const TryoutEditor = () => {
           </div>
         </div>
       </div>
-      <div className='w-4/5 py-24 px-8'>
-        <h1 className='text-xl font-medium my-4'>Soal Nomer {activeNumber}</h1>
-        <form className='flex max-w-md flex-col gap-4'>
+      <div className="w-4/5 py-24 px-8">
+        <h1 className="text-xl font-medium my-4">Soal Nomer {activeNumber}</h1>
+        <form className="flex max-w-md flex-col gap-4">
           <div>
             <Dropdown
-              label={tryout.type ? tryout.type : 'Tipe Soal'}
-              color={'success'}
+              label={tryout.type ? tryout.type : "Tipe Soal"}
+              color={"success"}
               dismissOnClick={true}
             >
-              <Dropdown.Item onClick={handleType('tiu')}>TIU</Dropdown.Item>
-              <Dropdown.Item onClick={handleType('twk')}>TWK</Dropdown.Item>
-              <Dropdown.Item onClick={handleType('tkp')}>TKP</Dropdown.Item>
+              <Dropdown.Item onClick={handleType("tiu")}>TIU</Dropdown.Item>
+              <Dropdown.Item onClick={handleType("twk")}>TWK</Dropdown.Item>
+              <Dropdown.Item onClick={handleType("tkp")}>TKP</Dropdown.Item>
             </Dropdown>
           </div>
           <div>
             <Textarea
-              id='question'
-              placeholder='Soal...'
+              id="question"
+              placeholder="Soal..."
               rows={4}
               value={tryout.question}
               onChange={handleInputChange}
+              wrap="soft"
             />
           </div>
           <div>
-            <FileInput ref={fileInputRef} id='image' onChange={handleFile} />
+            <FileInput ref={fileInputRef} id="image" onChange={handleFile} />
           </div>
           <div>
-            <ul className='space-y-2'>
-              <li className='flex space-x-2'>
+            <ul className="space-y-2">
+              <li className="flex space-x-2 items-center">
                 <TextInput
-                  className='w-4/5'
-                  id='optionA'
-                  placeholder='Opsi Jawaban'
-                  addon='A'
+                  className="w-4/5"
+                  id="optionA"
+                  placeholder="Opsi Jawaban"
+                  addon="A"
                   required
                   value={tryout.optionA}
                   onChange={handleInputChange}
                 />
                 <FileInput
                   ref={fileInputRef}
-                  id='imageA'
+                  id="imageA"
                   onChange={handleFile}
                 />
-                <TextInput
-                  className='w-1/5'
-                  id='scoreA'
-                  type='number'
-                  placeholder='Value'
-                  required
-                  value={tryout.scoreA}
-                  onChange={handleInputChange}
-                  shadow
-                />
+                {activeNumber > 100 ? (
+                  <TextInput
+                    className="w-1/5"
+                    id="scoreA"
+                    type="number"
+                    placeholder="Value"
+                    required
+                    value={tryout.scoreA}
+                    onChange={handleInputChange}
+                    shadow
+                  />
+                ) : (
+                  <input
+                    type="radio"
+                    name="correctOption"
+                    checked={tryout.scoreA === 5}
+                    onChange={() => handleOptionScoreChange("A")}
+                  />
+                )}
               </li>
-              <li className='flex space-x-2'>
+              <li className="flex space-x-2 items-center">
                 <TextInput
-                  id='optionB'
-                  className='w-4/5'
-                  placeholder='Opsi Jawaban'
-                  addon='B'
+                  id="optionB"
+                  className="w-4/5"
+                  placeholder="Opsi Jawaban"
+                  addon="B"
                   required
                   value={tryout.optionB}
                   onChange={handleInputChange}
                 />
                 <FileInput
                   ref={fileInputRef}
-                  id='imageB'
+                  id="imageB"
                   onChange={handleFile}
                 />
-                <TextInput
-                  className='w-1/5'
-                  id='scoreB'
-                  type='number'
-                  placeholder='Value'
-                  required
-                  value={tryout.scoreB}
-                  onChange={handleInputChange}
-                  shadow
-                />
+                {activeNumber > 100 ? (
+                  <TextInput
+                    className="w-1/5"
+                    id="scoreB"
+                    type="number"
+                    placeholder="Value"
+                    required
+                    value={tryout.scoreB}
+                    onChange={handleInputChange}
+                    shadow
+                  />
+                ) : (
+                  <input
+                    type="radio"
+                    name="correctOption"
+                    checked={tryout.scoreB === 5}
+                    onChange={() => handleOptionScoreChange("B")}
+                  />
+                )}
               </li>
-              <li className='flex space-x-2'>
+              <li className="flex space-x-2 items-center">
                 <TextInput
-                  id='optionC'
-                  className='w-4/5'
-                  placeholder='Opsi Jawaban'
-                  addon='C'
+                  id="optionC"
+                  className="w-4/5"
+                  placeholder="Opsi Jawaban"
+                  addon="C"
                   required
                   value={tryout.optionC}
                   onChange={handleInputChange}
                 />
                 <FileInput
                   ref={fileInputRef}
-                  id='imageC'
+                  id="imageC"
                   onChange={handleFile}
                 />
-                <TextInput
-                  className='w-1/5'
-                  id='scoreC'
-                  type='number'
-                  placeholder='Value'
-                  required
-                  value={tryout.scoreC}
-                  onChange={handleInputChange}
-                  shadow
-                />
+                {activeNumber > 100 ? (
+                  <TextInput
+                    className="w-1/5"
+                    id="scoreC"
+                    type="number"
+                    placeholder="Value"
+                    required
+                    value={tryout.scoreC}
+                    onChange={handleInputChange}
+                    shadow
+                  />
+                ) : (
+                  <input
+                    type="radio"
+                    name="correctOption"
+                    checked={tryout.scoreC === 5}
+                    onChange={() => handleOptionScoreChange("C")}
+                  />
+                )}
               </li>
-              <li className='flex space-x-2'>
+              <li className="flex space-x-2 items-center">
                 <TextInput
-                  id='optionD'
-                  className='w-4/5'
-                  placeholder='Opsi Jawaban'
-                  addon='D'
+                  id="optionD"
+                  className="w-4/5"
+                  placeholder="Opsi Jawaban"
+                  addon="D"
                   required
                   value={tryout.optionD}
                   onChange={handleInputChange}
                 />
                 <FileInput
                   ref={fileInputRef}
-                  id='imageD'
+                  id="imageD"
                   onChange={handleFile}
                 />
-                <TextInput
-                  className='w-1/5'
-                  id='scoreD'
-                  type='number'
-                  placeholder='Value'
-                  required
-                  value={tryout.scoreD}
-                  onChange={handleInputChange}
-                  shadow
-                />
+                {activeNumber > 100 ? (
+                  <TextInput
+                    className="w-1/5"
+                    id="scoreD"
+                    type="number"
+                    placeholder="Value"
+                    required
+                    value={tryout.scoreD}
+                    onChange={handleInputChange}
+                    shadow
+                  />
+                ) : (
+                  <input
+                    type="radio"
+                    name="correctOption"
+                    checked={tryout.scoreD === 5}
+                    onChange={() => handleOptionScoreChange("D")}
+                  />
+                )}
               </li>
-              <li className='flex space-x-2'>
+              <li className="flex space-x-2 items-center">
                 <TextInput
-                  id='optionE'
-                  className='w-4/5'
-                  placeholder='Opsi Jawaban'
-                  addon='E'
+                  id="optionE"
+                  className="w-4/5"
+                  placeholder="Opsi Jawaban"
+                  addon="E"
                   required
                   value={tryout.optionE}
                   onChange={handleInputChange}
                 />
                 <FileInput
                   ref={fileInputRef}
-                  id='imageE'
+                  id="imageE"
                   onChange={handleFile}
                 />
-                <TextInput
-                  className='w-1/5'
-                  id='scoreE'
-                  type='number'
-                  placeholder='Value'
-                  required
-                  value={tryout.scoreE}
-                  onChange={handleInputChange}
-                  shadow
-                />
+                {activeNumber > 100 ? (
+                  <TextInput
+                    className="w-1/5"
+                    id="scoreE"
+                    type="number"
+                    placeholder="Value"
+                    required
+                    value={tryout.scoreE}
+                    onChange={handleInputChange}
+                    shadow
+                  />
+                ) : (
+                  <input
+                    type="radio"
+                    name="correctOption"
+                    checked={tryout.scoreE === 5}
+                    onChange={() => handleOptionScoreChange("E")}
+                  />
+                )}
               </li>
             </ul>
           </div>
           <div>
             <Textarea
-              id='explanation'
-              placeholder='Penjelasan...'
+              id="explanation"
+              placeholder="Penjelasan..."
               required
               rows={4}
               value={tryout.explanation}
@@ -461,31 +519,31 @@ const TryoutEditor = () => {
             />
             <FileInput
               ref={fileInputRef}
-              id='imageExplanation'
+              id="imageExplanation"
               onChange={handleFile}
             />
           </div>
-          <div className='flex space-x-2'>
+          <div className="flex space-x-2">
             <Button
               disabled={loading}
-              color={'failure'}
-              size='sm'
+              color={"failure"}
+              size="sm"
               onClick={clearImages}
             >
               Clear Image
             </Button>
             <Button
               disabled={loading}
-              color={'success'}
-              size='sm'
+              color={"success"}
+              size="sm"
               onClick={handleSave}
             >
               Save
             </Button>
             <Button
               disabled={!isSave | loading}
-              color={'success'}
-              size='sm'
+              color={"success"}
+              size="sm"
               onClick={handleSaveAndNext}
             >
               Next
@@ -496,15 +554,15 @@ const TryoutEditor = () => {
       <Modal show={warning} onClose={() => setWarning(false)}>
         <Modal.Header>Warning!!!</Modal.Header>
         <Modal.Body>
-          <div className='space-y-6'>
-            <p className='text-base leading-relaxed text-gray-500 dark:text-gray-400'>
+          <div className="space-y-6">
+            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
               Soal sudah mencapai 110
             </p>
           </div>
         </Modal.Body>
         <Modal.Footer>
           <Button
-            color='gray'
+            color="gray"
             onClick={() => {
               setNumbers(numbers.slice(0, -1));
               setActiveNumber(activeNumber - 1);

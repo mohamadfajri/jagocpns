@@ -1,4 +1,4 @@
-const prisma = require('../../utils/prismaClient');
+const prisma = require("../../utils/prismaClient");
 
 const getSoalByNumber = async (req, res) => {
   const tryoutListId = parseInt(req.params.id);
@@ -30,13 +30,13 @@ const getSoalByNumber = async (req, res) => {
         imageE: soal.imageE,
       });
     } else {
-      res.status(404).json({ error: 'Soal not found' });
+      res.status(404).json({ error: "Soal not found" });
     }
   } catch (error) {
     console.log(error);
     res
       .status(500)
-      .json({ error: 'An error occurred while fetching the tryout' });
+      .json({ error: "An error occurred while fetching the tryout" });
   }
 };
 
@@ -56,13 +56,13 @@ const getSoalData = async (req, res) => {
     });
 
     if (!tryoutList) {
-      return res.status(404).json({ error: 'TryoutList not found' });
+      return res.status(404).json({ error: "TryoutList not found" });
     }
 
     res.json({ data: { title: tryoutList.title }, totalSoal: totalSoal });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -72,7 +72,7 @@ const createAnswer = async (req, res) => {
   const { answers } = req.body;
 
   if (!Array.isArray(answers) || answers.length === 0) {
-    return res.status(400).json({ message: 'Invalid answers array' });
+    return res.status(400).json({ message: "Invalid answers array" });
   }
 
   const answerData = answers.map((answer, index) => ({
@@ -108,30 +108,30 @@ const createAnswer = async (req, res) => {
       if (tryout) {
         let score = 0;
         switch (answer.answer) {
-          case 'optionA':
+          case "optionA":
             score = tryout.scoreA;
             break;
-          case 'optionB':
+          case "optionB":
             score = tryout.scoreB;
             break;
-          case 'optionC':
+          case "optionC":
             score = tryout.scoreC;
             break;
-          case 'optionD':
+          case "optionD":
             score = tryout.scoreD;
             break;
-          case 'optionE':
+          case "optionE":
             score = tryout.scoreE;
             break;
           default:
             break;
         }
 
-        if (tryout.type === 'tiu') {
+        if (tryout.type === "tiu") {
           tiuScore += score;
-        } else if (tryout.type === 'twk') {
+        } else if (tryout.type === "twk") {
           twkScore += score;
-        } else if (tryout.type === 'tkp') {
+        } else if (tryout.type === "tkp") {
           tkpScore += score;
         }
       }
@@ -160,15 +160,15 @@ const createAnswer = async (req, res) => {
     });
 
     return res.status(201).json({
-      message: 'Jawaban berhasil disubmit!',
+      message: "Jawaban berhasil disubmit!",
     });
   } catch (error) {
-    if (error.code === 'P2002') {
-      return res.status(400).json({ error: 'Data sudah ada' });
+    if (error.code === "P2002") {
+      return res.status(400).json({ error: "Data sudah ada" });
     } else {
       return res.status(500).json({
         message:
-          'Failed to submit answers, calculate score, and update isDone status',
+          "Failed to submit answers, calculate score, and update isDone status",
       });
     }
   }
@@ -179,7 +179,7 @@ const getAnswer = async (req, res) => {
   const userId = req.user.id;
 
   if (!tryoutListId || !number) {
-    return res.status(400).json({ error: 'Missing required query parameters' });
+    return res.status(400).json({ error: "Missing required query parameters" });
   }
 
   try {
@@ -194,7 +194,7 @@ const getAnswer = async (req, res) => {
     });
 
     if (!answer) {
-      return res.status(200).json({ error: 'Answer not found' });
+      return res.status(200).json({ error: "Answer not found" });
     }
 
     res.status(200).json(answer);
@@ -202,7 +202,7 @@ const getAnswer = async (req, res) => {
     console.error(error);
     res
       .status(500)
-      .json({ error: 'An error occurred while fetching the answer' });
+      .json({ error: "An error occurred while fetching the answer" });
   }
 };
 
@@ -213,13 +213,13 @@ const getIsAnswer = async (req, res) => {
   const userId = parseInt(id);
 
   if (!userId || !tryoutListId) {
-    return res.status(400).json({ error: 'Missing userId or tryoutListId' });
+    return res.status(400).json({ error: "Missing userId or tryoutListId" });
   }
 
   const tryoutListIdInt = parseInt(tryoutListId);
 
   if (isNaN(userId) || isNaN(tryoutListIdInt)) {
-    return res.status(400).json({ error: 'Invalid userId or tryoutListId' });
+    return res.status(400).json({ error: "Invalid userId or tryoutListId" });
   }
 
   try {
@@ -237,7 +237,7 @@ const getIsAnswer = async (req, res) => {
     res.json(numbers);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -269,30 +269,30 @@ const createScore = async (req, res) => {
       if (tryout) {
         let score = 0;
         switch (answer.answer) {
-          case 'optionA':
+          case "optionA":
             score = tryout.scoreA;
             break;
-          case 'optionB':
+          case "optionB":
             score = tryout.scoreB;
             break;
-          case 'optionC':
+          case "optionC":
             score = tryout.scoreC;
             break;
-          case 'optionD':
+          case "optionD":
             score = tryout.scoreD;
             break;
-          case 'optionE':
+          case "optionE":
             score = tryout.scoreE;
             break;
           default:
             break;
         }
 
-        if (tryout.type === 'tiu') {
+        if (tryout.type === "tiu") {
           tiuScore += score;
-        } else if (tryout.type === 'twk') {
+        } else if (tryout.type === "twk") {
           twkScore += score;
-        } else if (tryout.type === 'tkp') {
+        } else if (tryout.type === "tkp") {
           tkpScore += score;
         }
       }
@@ -313,12 +313,12 @@ const createScore = async (req, res) => {
 
     res.status(201).json(newScore);
   } catch (error) {
-    if (error.code === 'P2002') {
+    if (error.code === "P2002") {
       // Prisma unique constraint violation error code
-      res.status(400).json({ error: 'Data sudah ada' });
+      res.status(400).json({ error: "Data sudah ada" });
     } else {
       console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: "Internal server error" });
     }
   }
 };
@@ -339,7 +339,7 @@ const getAllSoalById = async (req, res) => {
     if (ownership) {
       return res
         .status(400)
-        .json({ message: 'Anda sudah mengerjakan tryout ini' });
+        .json({ message: "Anda sudah mengerjakan tryout ini" });
     }
 
     const tryouts = await prisma.tryout.findMany({
@@ -347,7 +347,7 @@ const getAllSoalById = async (req, res) => {
         tryoutListId: Number(tryoutListId),
       },
       orderBy: {
-        number: 'asc',
+        number: "asc",
       },
     });
 
@@ -372,8 +372,74 @@ const getAllSoalById = async (req, res) => {
 
     res.status(200).json(format);
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ message: 'Failed to get tryouts by tryoutListId' });
+    console.error("Error:", error);
+    res.status(500).json({ message: "Failed to get tryouts by tryoutListId" });
+  }
+};
+
+const resetTryout = async (req, res) => {
+  try {
+    const { userId, tryoutListId } = req.body;
+
+    // Validasi input
+    if (!userId || !tryoutListId) {
+      return res.status(400).json({
+        status: "error",
+        message: "userId dan tryoutListId harus diisi",
+      });
+    }
+
+    // Cek kepemilikan tryout
+    const ownership = await prisma.ownership.findFirst({
+      where: {
+        userId: parseInt(userId),
+        tryoutListId: parseInt(tryoutListId),
+      },
+    });
+
+    if (!ownership) {
+      return res.status(404).json({
+        status: "error",
+        message: "Tryout tidak ditemukan atau Anda tidak memiliki akses",
+      });
+    }
+
+    // Reset status isDone
+    await prisma.ownership.update({
+      where: {
+        id: ownership.id,
+      },
+      data: {
+        isDone: false,
+      },
+    });
+
+    // Hapus jawaban sebelumnya
+    await prisma.answer.deleteMany({
+      where: {
+        userId: parseInt(userId),
+        tryoutListId: parseInt(tryoutListId),
+      },
+    });
+
+    // Hapus score sebelumnya
+    await prisma.score.deleteMany({
+      where: {
+        userId: parseInt(userId),
+        tryoutListId: parseInt(tryoutListId),
+      },
+    });
+
+    return res.status(200).json({
+      status: "success",
+      message: "Tryout berhasil direset",
+    });
+  } catch (error) {
+    console.error("Error resetting tryout:", error);
+    return res.status(500).json({
+      status: "error",
+      message: "Terjadi kesalahan saat mereset tryout",
+    });
   }
 };
 
@@ -385,4 +451,5 @@ module.exports = {
   getAnswer,
   getIsAnswer,
   getAllSoalById,
+  resetTryout,
 };

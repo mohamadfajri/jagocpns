@@ -1,105 +1,154 @@
-import { Link, Outlet } from 'react-router-dom';
-import TryoutCard from '../components/app/MyTryout/TryoutCard';
-import { useEffect, useState } from 'react';
-import { fetcher } from '../utils/fetcher';
-import LoadingTable from '../components/LoadingTable';
+import { Outlet } from "react-router-dom";
+import { TryOutCardNew } from "../components/app/MyTryout/TryOutCardNew.jsx";
+import { useEffect, useState, useCallback } from "react";
+import { fetcher } from "../utils/fetcher";
+import LoadingTable from "../components/LoadingTable";
 
-const Mytryout = () => {
-  const [done, setDone] = useState([{}]);
-  const [unDone, setUndone] = useState([{}]);
+const INITIAL_STATE = {
+  done: [],
+  undone: [],
+};
+
+const MyTryout = () => {
+  const [tryoutData, setTryoutData] = useState(INITIAL_STATE);
   const [isLoading, setIsLoading] = useState(false);
+  const [isResetting, setIsResetting] = useState(false);
+  const [error, setError] = useState(null);
+  const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        setIsLoading(true);
-        const { data } = await fetcher.get('/user/mylists');
-        setDone(data.done);
-        setUndone(data.undone);
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
-        setIsLoading(false);
-      }
-    };
-    getData();
+  const fetchUser = useCallback(async () => {
+    try {
+      const response = await fetcher.get("/user");
+      setUser(response.data);
+    } catch (err) {
+      console.error("Failed to fetch user data:", err);
+      setError("Gagal memuat data pengguna");
+    }
   }, []);
 
+  const getData = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      const { data } = await fetcher.get("/user/mytryout");
+      setTryoutData({
+        done: data.done || [],
+        undone: data.undone || [],
+      });
+    } catch (err) {
+      setError("Gagal memuat data tryout");
+      console.error("Failed to fetch tryout data:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchUser();
+    getData();
+  }, [fetchUser, getData]);
+
+  const handleKerjakanUlang = useCallback(
+    async (tryoutListId) => {
+      if (!user?.userId) {
+        setError("Data pengguna tidak tersedia");
+        return;
+      }
+
+      try {
+        setIsResetting(true);
+        setError(null);
+
+        await fetcher.post("/user/tryout/reset", {
+          userId: user.userId,
+          tryoutListId: Number(tryoutListId),
+        });
+
+        // Refresh data setelah reset berhasil
+        await getData();
+        alert("Tryout berhasil direset!");
+      } catch (err) {
+        console.error("Error saat mereset tryout:", err);
+        setError(
+          err?.response?.data?.message ||
+            "Terjadi kesalahan saat mereset tryout"
+        );
+      } finally {
+        setIsResetting(false);
+      }
+    },
+    [user, getData]
+  );
+
+  const renderTryoutCards = useCallback(
+    (tryouts, action, urlPrefix = "") => {
+      if (!tryouts?.length) {
+        return <div className="col-span-full">Anda Belum memiliki Tryout</div>;
+      }
+
+      return tryouts.map((tryout, index) => (
+        <div key={`${tryout.tryoutListId}-${index}`}>
+          {isLoading ? (
+            <LoadingTable />
+          ) : (
+            <TryOutCardNew
+              title={tryout.title}
+              desc={tryout.description}
+              action={action}
+              url={`${urlPrefix}${tryout.tryoutListId}`}
+              imageUrl={tryout.imageUrl}
+              kerjakanUlang={action === "Nilai Saya"}
+              onKerjakanUlang={() => handleKerjakanUlang(tryout.tryoutListId)}
+              isResetting={isResetting}
+              disabled={isResetting}
+            />
+          )}
+        </div>
+      ));
+    },
+    [isLoading, isResetting, handleKerjakanUlang]
+  );
   return (
     <>
-      <div className='sm:mt-0 sm:p-10 sm:ml-64 dark:bg-black min-h-screen'>
-        <main className='flex flex-col'>
-          <section className='sm:h-1/2'>
-            <div className='m-4 p-4 border rounded-lg'>
-              <h1 className='sm:text-2xl'>Belum Dikerjakan</h1>
-              {unDone.length !== 0 ? (
-                <div className='rounded-lg p-4 my-2 border grid grid-cols-2 sm:grid-cols-5 gap-4'>
-                  {isLoading ? (
-                    <LoadingTable />
-                  ) : (
-                    unDone?.map((tryout, index) => (
-                      <TryoutCard
-                        title={tryout.title}
-                        desc={tryout.description}
-                        key={index}
-                        action={'kerjakan'}
-                        url={`tryout/${tryout.tryoutListId}`}
-                        imageUrl={tryout.imageUrl}
-                      />
-                    ))
-                  )}
-                </div>
-              ) : (
-                <div className='flex space-x-1 justify-center sm:text-lg m-4'>
-                  <h2>
-                    Anda belum memiliki tryout,silahkan membeli terlebih dahulu
-                    di
-                  </h2>
-                  <Link
-                    to={'/app/tryoutstore'}
-                    className='ml-2 text-blue-600 font-semibold hover:underline'
-                  >
-                    Beli Tryout
-                  </Link>
-                </div>
-              )}
-            </div>
-          </section>
-          <section className='h-1/2'>
-            <div className='m-4 p-4 border rounded-lg'>
-              <h1 className='sm:text-2xl'>Sudah Dikerjakan</h1>
-              {done.length !== 0 ? (
-                <div className='rounded-lg p-4 my-2 border grid sm:grid-cols-5 grid-cols-2 gap-4'>
-                  {isLoading ? (
-                    <LoadingTable />
-                  ) : (
-                    done?.map((tryout, index) => (
-                      <TryoutCard
-                        title={tryout.title}
-                        desc={tryout.desc}
-                        key={index}
-                        action={'nilai saya'}
-                        url={`score/${tryout.tryoutListId}`}
-                        imageUrl={tryout.imageUrl}
-                      />
-                    ))
-                  )}
-                </div>
-              ) : (
-                <div className='flex space-x-1 justify-center sm:text-lg m-4'>
-                  <h2>
-                    Anda belum mengerjakan tryout apapun, silahkan kerjakan
-                    terlebih dahulu!
-                  </h2>
-                </div>
-              )}
-            </div>
-          </section>
-        </main>
-      </div>
+      <main className="mb-20 mt-3 sm:mt-3 xl:mt-0 p-5 sm:p-5 xl:p-10 md:ml-64 xl:ml-64 dark:bg-black min-h-screen">
+        <h1 className="font-bold text-2xl">Tryout SKB</h1>
+
+        <p className="mt-5">
+          Pilih paket belajar mandiri yang paling sesuai dengan kebutuhan
+          belajarmu.
+        </p>
+
+        {error && (
+          <div className="mt-4 p-4 bg-red-100 text-red-700 rounded-lg">
+            {error}
+          </div>
+        )}
+
+        <hr className="my-12" />
+
+        <section>
+          <h2 className="font-bold text-2xl mb-5">Belum Dikerjakan</h2>
+          <div className="mt-5 flex flex-col gap-3 items-center md:grid md:grid-cols-2 xl:grid xl:grid-cols-5">
+            {renderTryoutCards(
+              tryoutData.undone,
+              "Kerjakan",
+              "/app/mytryouts/tryoutinformation/"
+            )}
+          </div>
+        </section>
+
+        <hr className="my-12" />
+
+        <section>
+          <h2 className="font-bold text-2xl mb-5">Sudah Dikerjakan</h2>
+          <div className="mt-5 flex flex-col gap-3 items-center md:grid md:grid-cols-2 xl:grid xl:grid-cols-5">
+            {renderTryoutCards(tryoutData.done, "Nilai Saya", "score/")}
+          </div>
+        </section>
+      </main>
       <Outlet />
     </>
   );
 };
 
-export default Mytryout;
+export default MyTryout;

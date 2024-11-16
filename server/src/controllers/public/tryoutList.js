@@ -1,10 +1,13 @@
-const prisma = require('../../utils/prismaClient');
+const prisma = require("../../utils/prismaClient");
 
 const getAllTryout = async (req, res) => {
   try {
     const tryouts = await prisma.tryoutList.findMany({
       where: {
         status: true,
+      },
+      orderBy: {
+        title: "asc",
       },
     });
     const format = tryouts.map((t) => ({
@@ -14,9 +17,46 @@ const getAllTryout = async (req, res) => {
 
     return res.status(200).json(format);
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Error:", error);
     return res.status(500).json({
-      message: 'Terjadi kesalahan saat mencoba mengambil data tryout',
+      message: "Terjadi kesalahan saat mencoba mengambil data tryout",
+    });
+  }
+};
+
+const getTryoutByBatch = async (req, res) => {
+  const { batch } = req.params;
+  try {
+    const tryoutListByBatch = await prisma.tryoutList.findMany({
+      where: {
+        batch: parseInt(batch),
+        type: "Tryout",
+      },
+      orderBy: {
+        title: "asc",
+      },
+    });
+
+    if (tryoutListByBatch.length === 0) {
+      return res.status(404).json({
+        message: "Data Tryout Tidak Ditemukan",
+      });
+    }
+
+    const serializedData = tryoutListByBatch.map((item) => ({
+      ...item,
+      price: Number(item.price), // Konversi price dari BigInt ke Number
+    }));
+
+    return res.status(200).json({
+      message: "Data tryout batch 1 berhasil diambil",
+      data: serializedData,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    return res.status(500).json({
+      message: "terjadi kesalahan",
+      error: error.message,
     });
   }
 };
@@ -33,16 +73,16 @@ const getTryoutById = async (req, res) => {
     });
 
     if (!tryout) {
-      return res.status(404).json({ message: 'Tryout tidak ditemukan' });
+      return res.status(404).json({ message: "Tryout tidak ditemukan" });
     }
 
     const format = { ...tryout, price: tryout.price.toString() };
 
     return res.status(200).json(format);
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Error:", error);
     return res.status(500).json({
-      message: 'Terjadi kesalahan saat mencoba mengambil data tryout',
+      message: "Terjadi kesalahan saat mencoba mengambil data tryout",
     });
   }
 };
@@ -55,23 +95,23 @@ const getTryoutByName = async (req, res) => {
       where: {
         name: {
           contains: name,
-          mode: 'insensitive',
+          mode: "insensitive",
         },
       },
     });
 
     if (tryouts.length === 0) {
       return res.status(404).json({
-        message: 'Tidak ada tryout yang ditemukan dengan nama tersebut',
+        message: "Tidak ada tryout yang ditemukan dengan nama tersebut",
       });
     }
 
     return res.status(200).json(tryouts);
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Error:", error);
     return res
       .status(500)
-      .json({ message: 'Terjadi kesalahan saat mencoba mencari data tryout' });
+      .json({ message: "Terjadi kesalahan saat mencoba mencari data tryout" });
   }
 };
 
@@ -90,8 +130,8 @@ const getFreeTryouts = async (req, res) => {
     }));
     return res.status(200).json(format);
   } catch (error) {
-    console.error('Error fetching free tryouts:', error);
-    return res.status(500).json({ message: 'Failed to fetch free tryouts' });
+    console.error("Error fetching free tryouts:", error);
+    return res.status(500).json({ message: "Failed to fetch free tryouts" });
   }
 };
 
@@ -105,16 +145,41 @@ const getIsOnlineStatus = async (req, res) => {
     });
 
     if (!tryoutList) {
-      return res.status(404).json({ message: 'TryoutList not found' });
+      return res.status(404).json({ message: "TryoutList not found" });
     }
 
     return res.status(200).json({ isOnline: tryoutList.isOnline });
   } catch (error) {
     return res
       .status(500)
-      .json({ message: 'An error occurred', error: error.message });
+      .json({ message: "An error occurred", error: error.message });
   }
 };
+
+const getAllBimbel = async (req, res) => {
+  try {
+    const bimbel = await prisma.tryoutList.findMany({
+      where: {
+        type: "Bimbel",
+      },
+    });
+    if (bimbel.length === 0) {
+      return res.status(404).json({
+        message: "Data Bimbel Tidak Ditemukan",
+      });
+    }
+    const serializedData = bimbel.map((item) => ({
+      ...item,
+      price: Number(item.price), // Konversi price dari BigInt ke Number
+    }));
+    return res.status(200).json(serializedData);
+  } catch (error) {
+    return res.status(500).json({
+      message: "Terjadi kesalahan saat mencoba mengambil data bimbel",
+      error: error.message,
+    });
+  }
+}
 
 module.exports = {
   getAllTryout,
@@ -122,4 +187,6 @@ module.exports = {
   getTryoutByName,
   getFreeTryouts,
   getIsOnlineStatus,
+  getTryoutByBatch,
+  getAllBimbel,
 };
