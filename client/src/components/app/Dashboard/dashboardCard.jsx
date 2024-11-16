@@ -17,6 +17,15 @@ export const DashboardCard = () => {
     };
     getUserSummary();
   }, []);
+
+  const formatIDR = (number) => {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+    }).format(number);
+  };
+
   return (
     <div className="flex flex-col xl:flex xl:flex-row xl:gap-5 gap-5">
       <div className=" bg-gradient-to-r from-[#00E109] to-[#00B97B] rounded-2xl p-5 xl:w-1/3 xl:p-5">
@@ -39,7 +48,7 @@ export const DashboardCard = () => {
           </div>
           <div>
             <p className="text-white font-bold text-4xl text-end">
-              Rp. {userSummary.balance}
+              {formatIDR(userSummary.balance)}
             </p>
             <Link to={"/app/topup"}>
               <button className="btn bg-white bg-opacity-20 font-semibold w-full text-white rounded-lg mt-2 p-2">
