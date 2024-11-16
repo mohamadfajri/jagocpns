@@ -16,7 +16,6 @@ const BuyTryOut = () => {
     const batch = 1;
     try {
       const response = await fetcher.get(`/public/getbatch/${parseInt(batch)}`);
-      console.log("response batch 1", response);
       setBatchOne(response.data.data);
       setFilteredDataBatchOne(response.data.data);
     } catch (error) {
@@ -185,36 +184,6 @@ const BuyTryOut = () => {
           </Tabs.Item>
         </Tabs>
       </div>
-
-      {/* <section>
-        <div className="m-4 p-4 border rounded-lg">
-          <h1 className="text-2xl">Beli Tryout</h1>
-          {tryouts.length > 0 ? (
-            <div className="rounded-lg p-4 my-2 border grid grid-cols-2 sm:grid-cols-5 gap-4">
-              {isLoading ? (
-                <LoadingTable />
-              ) : (
-                tryouts?.map((tryout, index) => (
-                  <TryoutCard
-                    title={tryout.title}
-                    desc={tryout.description}
-                    key={index}
-                    action={"Beli"}
-                    url={`/app/tryoutstore/${tryout.id}`}
-                    imageUrl={tryout.imageUrl}
-                    price={tryout.price}
-                  />
-                ))
-              )}
-            </div>
-          ) : (
-            <div className="flex space-x-1 justify-center text-lg m-4">
-              <h2>Belum ada list Tryout</h2>
-            </div>
-          )}
-          <Outlet />
-        </div>
-      </section> */}
     </div>
   );
 };
