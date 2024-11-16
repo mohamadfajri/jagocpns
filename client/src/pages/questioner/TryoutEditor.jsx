@@ -165,8 +165,6 @@ const TryoutEditor = () => {
     }));
   };
 
-
-
   const clearImages = async () => {
     try {
       const { data } = await fetchQuestioner.patch("/tryoutimage", {
@@ -348,7 +346,7 @@ const TryoutEditor = () => {
                   id="imageA"
                   onChange={handleFile}
                 />
-                {activeNumber > 5 ? (
+                {activeNumber > 100 ? (
                   <TextInput
                     className="w-1/5"
                     id="scoreA"
@@ -383,7 +381,7 @@ const TryoutEditor = () => {
                   id="imageB"
                   onChange={handleFile}
                 />
-                {activeNumber > 5 ? (
+                {activeNumber > 100 ? (
                   <TextInput
                     className="w-1/5"
                     id="scoreB"
@@ -418,7 +416,7 @@ const TryoutEditor = () => {
                   id="imageC"
                   onChange={handleFile}
                 />
-                {activeNumber > 5 ? (
+                {activeNumber > 100 ? (
                   <TextInput
                     className="w-1/5"
                     id="scoreC"
@@ -453,7 +451,7 @@ const TryoutEditor = () => {
                   id="imageD"
                   onChange={handleFile}
                 />
-                {activeNumber > 5 ? (
+                {activeNumber > 100 ? (
                   <TextInput
                     className="w-1/5"
                     id="scoreD"
@@ -488,7 +486,7 @@ const TryoutEditor = () => {
                   id="imageE"
                   onChange={handleFile}
                 />
-                {activeNumber > 5 ? (
+                {activeNumber > 100 ? (
                   <TextInput
                     className="w-1/5"
                     id="scoreE"
