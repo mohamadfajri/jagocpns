@@ -91,61 +91,193 @@ const TopUpPage = () => {
             <li>
               <button
                 onClick={() => handleChoose(20000)}
-                className={`sm:w-full sm:h-44 w-24 py-6 rounded-xl ${
-                  total === 20000 ? "bg-[#FFCB01]" : "border border-gray-300"
-                } hover:bg-[#FFCB01]`}
+                className={`w-full p-6 rounded-[24px] ${
+                  total === 20000
+                    ? "bg-[#FFCB01]"
+                    : "bg-white border border-gray-200"
+                } hover:bg-[#FFCB01] transition-colors`}
               >
-                20.000
+                <div className="flex flex-col gap-y-14 text-left">
+                  <p className="text-4xl font-bold">20.000</p>
+                  <div className="flex items-center justify-between">
+                    <p className="text-2xl font-semibold">Rp20.000</p>
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9 18L15 12L9 6"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
               </button>
             </li>
             <li>
               <button
                 onClick={() => handleChoose(40000)}
-                className={`sm:w-full sm:h-44 w-24 py-6 rounded-xl ${
-                  total === 40000 ? "bg-[#FFCB01]" : "border border-gray-300"
-                } hover:bg-[#FFCB01]`}
+                className={`w-full p-6 rounded-[24px] ${
+                  total === 40000
+                    ? "bg-[#FFCB01]"
+                    : "bg-white border border-gray-200"
+                } hover:bg-[#FFCB01] transition-colors`}
               >
-                40.000
+                <div className="flex flex-col gap-y-14 text-left">
+                  <p className="text-4xl font-bold">40.000</p>
+                  <div className="flex items-center justify-between">
+                    <p className="text-2xl font-semibold">Rp40.000</p>
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9 18L15 12L9 6"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
               </button>
             </li>
             <li>
               <button
                 onClick={() => handleChoose(60000)}
-                className={`sm:w-full sm:h-44 w-24 py-6 rounded-xl ${
-                  total === 60000 ? "bg-[#FFCB01]" : "border border-gray-300"
-                } hover:bg-[#FFCB01]`}
+                className={`w-full p-6 rounded-[24px] ${
+                  total === 60000
+                    ? "bg-[#FFCB01]"
+                    : "bg-white border border-gray-200"
+                } hover:bg-[#FFCB01] transition-colors`}
               >
-                60.000
+                <div className="flex flex-col gap-y-14 text-left">
+                  <p className="text-4xl font-bold">60.000</p>
+                  <div className="flex items-center justify-between">
+                    <p className="text-2xl font-semibold">Rp60.000</p>
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9 18L15 12L9 6"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
               </button>
             </li>
             <li>
               <button
                 onClick={() => handleChoose(100000)}
-                className={`sm:w-full sm:h-44 w-24 py-6 rounded-xl ${
-                  total === 100000 ? "bg-[#FFCB01]" : "border border-gray-300"
-                } hover:bg-[#FFCB01]`}
+                className={`w-full p-6 rounded-[24px] ${
+                  total === 100000
+                    ? "bg-[#FFCB01]"
+                    : "bg-white border border-gray-200"
+                } hover:bg-[#FFCB01] transition-colors`}
               >
-                100.000
+                <div className="flex flex-col gap-y-14 text-left">
+                  <p className="text-4xl font-bold">100.000</p>
+                  <div className="flex items-center justify-between">
+                    <p className="text-2xl font-semibold">Rp100.000</p>
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9 18L15 12L9 6"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
               </button>
             </li>
             <li>
               <button
                 onClick={() => handleChoose(200000)}
-                className={`sm:w-full sm:h-44 w-24 py-6 rounded-xl ${
-                  total === 200000 ? "bg-[#FFCB01]" : "border border-gray-300"
-                } hover:bg-[#FFCB01]`}
+                className={`w-full p-6 rounded-[24px] ${
+                  total === 200000
+                    ? "bg-[#FFCB01]"
+                    : "bg-white border border-gray-200"
+                } hover:bg-[#FFCB01] transition-colors`}
               >
-                200.000
+                <div className="flex flex-col gap-y-14 text-left">
+                  <p className="text-4xl font-bold">200.000</p>
+                  <div className="flex items-center justify-between">
+                    <p className="text-2xl font-semibold">Rp200.000</p>
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9 18L15 12L9 6"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
               </button>
             </li>
             <li>
               <button
                 onClick={() => handleChoose(300000)}
-                className={`sm:w-full sm:h-44 w-24 py-6 rounded-xl ${
-                  total === 300000 ? "bg-[#FFCB01]" : "border border-gray-300"
-                } hover:bg-[#FFCB01]`}
+                className={`w-full p-6 rounded-[24px] ${
+                  total === 300000
+                    ? "bg-[#FFCB01]"
+                    : "bg-white border border-gray-200"
+                } hover:bg-[#FFCB01] transition-colors`}
               >
-                300.000
+                <div className="flex flex-col gap-y-14 text-left">
+                  <p className="text-4xl font-bold">300.000</p>
+                  <div className="flex items-center justify-between">
+                    <p className="text-2xl font-semibold">Rp300.000</p>
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9 18L15 12L9 6"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
               </button>
             </li>
           </ul>
