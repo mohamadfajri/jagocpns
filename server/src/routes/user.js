@@ -10,6 +10,7 @@ const {
   getUserTryOutById,
   getSummary,
   updateProfile,
+  getTryoutListForRanking,
 } = require("../controllers/user/user");
 const {
   createTransaction,
@@ -19,6 +20,7 @@ const {
   checkout,
   cancelTransaction,
   getSuccessTransaction,
+  getUserTrasactions,
 } = require("../controllers/user/transaction");
 const userOnly = require("../middlewares/userOnly");
 const {
@@ -58,6 +60,9 @@ router.post("/user/transaction/verify", userOnly, upload, createVerification);
 router.get("/user/transaction", userOnly, getTransactionStatus);
 router.get("/user/transaction/data", userOnly, getTransaction);
 router.get("/user/transaction/success", userOnly, getSuccessTransaction);
+
+router.get("/user/getusertransaction", userOnly, getUserTrasactions);
+
 router.get("/user/cbt/:id/:num", ownerOnly, userOnly, getSoalByNumber);
 router.get("/user/cbt-data/:id", userOnly, getSoalData);
 router.post("/user/answer/:id", ownerOnly, userOnly, createAnswer);
@@ -66,6 +71,7 @@ router.get("/user/get-answered", userOnly, getIsAnswer);
 router.get("/user/getallsoal/:id", ownerOnly, userOnly, getAllSoalById);
 router.post("/user/finish/:toId", userOnly, createScore);
 router.get("/user/getTryoutList", userOnly, getAllTryouts);
+router.get("/user/getTryoutListForRanking", userOnly, getTryoutListForRanking)
 router.post("/user/free/:tryoutListId", userOnly, createFreeForm);
 router.get("/user/free", userOnly, getFormByUserId);
 router.get("/user/freeOwnership/:tryoutListId", userOnly, checkOwnership);
