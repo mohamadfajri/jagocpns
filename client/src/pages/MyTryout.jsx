@@ -3,6 +3,7 @@ import { TryOutCardNew } from "../components/app/MyTryout/TryOutCardNew.jsx";
 import { useEffect, useState, useCallback } from "react";
 import { fetcher } from "../utils/fetcher";
 import LoadingTable from "../components/LoadingTable";
+import Swal from "sweetalert2";
 
 const INITIAL_STATE = {
   done: [],
@@ -64,15 +65,18 @@ const MyTryout = () => {
           tryoutListId: Number(tryoutListId),
         });
 
-        // Refresh data setelah reset berhasil
         await getData();
-        alert("Tryout berhasil direset!");
+        Swal.fire({
+          text: "Tryout Bisa Dikerjakan Ulang, Silahkan Cek di Tryout Saya",
+          confirmButtonColor: "#06C270",
+        });
       } catch (err) {
         console.error("Error saat mereset tryout:", err);
-        setError(
-          err?.response?.data?.message ||
-            "Terjadi kesalahan saat mereset tryout"
-        );
+
+        Swal.fire({
+          text: "Terjadi kesalahan saat mereset tryout",
+          confirmButtonColor: "#FF3B3B",
+        });
       } finally {
         setIsResetting(false);
       }
