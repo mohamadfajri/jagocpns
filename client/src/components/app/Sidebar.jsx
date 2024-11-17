@@ -7,6 +7,7 @@ import { Avatar } from "flowbite-react";
 import { useEffect, useRef } from "react";
 import { fetcher } from "../../utils/fetcher.js";
 import avatar from "../../assets/images/avatar.png";
+import Logo from "../../assets/images/logo-extend-black.png"
 
 const Sidebar = () => {
   const [userData, setUserData] = useState([]);
@@ -74,6 +75,9 @@ const Sidebar = () => {
             ></path>
           </svg>
         </button>
+
+        <img src={Logo} alt="" className="w-24" />
+
         <Link to={"/app/profile"}>
           <Avatar img={avatar} alt="avatar of Jese" rounded size="md" />
         </Link>
