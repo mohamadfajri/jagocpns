@@ -89,7 +89,7 @@ router.delete("/admin/deleteallform", adminOnly, handleDeleteAll);
 router.get("/admin/transaction", adminOnly, getAllTransactions);
 router.get("/admin/showtryouts/:tryoutListId", adminOnly, getTryouts);
 router.post("/admin/transaction", adminOnly, acceptTransaction);
-router.delete("/admin/transaction/:id", adminOnly, rejectTransaction);
+router.patch("/admin/transaction/:id", adminOnly, rejectTransaction);
 router.post("/admin/resetpassword", adminOnly, resetPassword);
 router.post("/admin/createownership", adminOnly, createOwnership);
 router.post("/admin/deleteownership", adminOnly, deleteOwnership);
