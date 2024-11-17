@@ -348,6 +348,37 @@ const getSummary = async (req, res) => {
   }
 };
 
+const getTryoutListForRanking = async (req, res) => {
+  try {
+    const tryouts = await prisma.tryoutList.findMany({
+      where: {
+        status: true,
+        type: "Tryout"
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    const data = tryouts.map((tryout) => ({
+      id: tryout.id,
+      title: tryout.title,
+      price: tryout.price.toString(),
+      imageUrl: tryout.imageUrl,
+      description: tryout.description,
+      status: tryout.status,
+      statusKerjakan: tryout.isOnline,
+    }));
+
+    res.status(200).json({
+      data,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to fetch tryouts", error });
+  }
+}
+
 module.exports = {
   createUser,
   createProfile,
@@ -360,4 +391,5 @@ module.exports = {
   updateProfile,
   getUserTryOutById,
   getBimbelByUserId,
+  getTryoutListForRanking,
 };
