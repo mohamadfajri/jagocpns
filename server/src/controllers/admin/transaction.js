@@ -1,4 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
@@ -9,14 +9,14 @@ const getAllTransactions = async (req, res) => {
 
   try {
     const filters = {
-      status: 'checking',
+      status: "checking",
     };
 
     if (email) {
       filters.user = {
         email: {
           contains: email,
-          mode: 'insensitive',
+          mode: "insensitive",
         },
       };
     }
@@ -24,7 +24,7 @@ const getAllTransactions = async (req, res) => {
     const allTransactions = await prisma.transaction.findMany({
       where: filters,
       orderBy: {
-        updatedAt: 'asc',
+        updatedAt: "asc",
       },
       include: {
         user: {
@@ -66,11 +66,11 @@ const getAllTransactions = async (req, res) => {
     }));
 
     if (formattedTransactions.length === 0) {
-      return res.status(404).json({ message: 'No transactions found' });
+      return res.status(404).json({ message: "No transactions found" });
     }
 
     res.status(200).json({
-      message: 'All transactions retrieved successfully',
+      message: "All transactions retrieved successfully",
       data: formattedTransactions,
       meta: {
         totalPages,
@@ -80,8 +80,8 @@ const getAllTransactions = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ message: 'Failed to retrieve transactions' });
+    console.error("Error:", error);
+    res.status(500).json({ message: "Failed to retrieve transactions" });
   }
 };
 
@@ -95,7 +95,7 @@ const acceptTransaction = async (req, res) => {
         id: parseInt(id),
       },
       data: {
-        status: 'paid',
+        status: "paid",
       },
     });
 
@@ -137,13 +137,13 @@ const acceptTransaction = async (req, res) => {
     }
 
     res.status(200).json({
-      message: 'Transaction accepted successfully and balance updated',
+      message: "Transaction accepted successfully and balance updated",
     });
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Error:", error);
     res
       .status(500)
-      .json({ message: 'Failed to accept transaction and update balance' });
+      .json({ message: "Failed to accept transaction and update balance" });
   }
 };
 
@@ -151,17 +151,20 @@ const rejectTransaction = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const transaction = await prisma.transaction.delete({
+    const transaction = await prisma.transaction.update({
       where: {
         id: parseInt(id),
+      },
+      data: {
+        status: "rejected",
       },
     });
 
     res.status(200).json({
-      message: 'Transaction rejected and deleted successfully',
+      message: "Transaction rejected and deleted successfully",
     });
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Error:", error);
   }
 };
 
