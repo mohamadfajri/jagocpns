@@ -10,6 +10,8 @@ import {
 import { fetchQuestioner } from "../../utils/fetchQuestioner";
 import { useParams } from "react-router-dom";
 import { useAlert } from "../../stores/useAlert";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const TryoutEditor = () => {
   const [tryout, setTryout] = useState({
@@ -43,8 +45,37 @@ const TryoutEditor = () => {
   const { setAlert } = useAlert();
   const [loading, setLoading] = useState(false);
   const [warning, setWarning] = useState(false);
+  const [value, setValue] = useState("");
 
   const { id } = useParams();
+
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, false] }],
+      ["bold", "italic", "underline", "strike"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["link", "image"],
+      [{ align: [] }],
+      [{ color: [] }, { background: [] }],
+      ["clean"],
+    ],
+  };
+
+  // Format yang diizinkan
+  const formats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "list",
+    "bullet",
+    "link",
+    "image",
+    "align",
+    "color",
+    "background",
+  ];
 
   const handleType = (newType) => () => {
     setTryout((prevState) => ({
@@ -147,10 +178,19 @@ const TryoutEditor = () => {
   }, [activeNumber]);
 
   const handleInputChange = (e) => {
-    const { id, value } = e.target;
+    if (typeof e === "object" && e.target) {
+      const { id, value } = e.target;
+      setTryout((prevState) => ({
+        ...prevState,
+        [id]: value,
+      }));
+    }
+  };
+
+  const handleQuillChange = (value, field) => {
     setTryout((prevState) => ({
       ...prevState,
-      [id]: value,
+      [field]: value,
     }));
   };
 
@@ -316,17 +356,27 @@ const TryoutEditor = () => {
               <Dropdown.Item onClick={handleType("tkp")}>TKP</Dropdown.Item>
             </Dropdown>
           </div>
-          <div>
+          {/* <div>
             <Textarea
               id="question"
               placeholder="Soal..."
               rows={4}
               value={tryout.question}
               onChange={handleInputChange}
-              wrap="soft"
+            />
+          </div> */}
+          <div className="mb-12">
+            <ReactQuill
+              theme="snow"
+              value={tryout.question}
+              onChange={(value) => handleQuillChange(value, "question")}
+              modules={modules}
+              formats={formats}
+              placeholder="Soal..."
+              className="h-48" // Sesuaikan tinggi sesuai kebutuhan
             />
           </div>
-          <div>
+          <div className="mt-3">
             <FileInput ref={fileInputRef} id="image" onChange={handleFile} />
           </div>
           <div>
@@ -509,19 +559,24 @@ const TryoutEditor = () => {
             </ul>
           </div>
           <div>
-            <Textarea
-              id="explanation"
-              placeholder="Penjelasan..."
-              required
-              rows={4}
-              value={tryout.explanation}
-              onChange={handleInputChange}
-            />
-            <FileInput
-              ref={fileInputRef}
-              id="imageExplanation"
-              onChange={handleFile}
-            />
+            <div className="mb-12">
+              <ReactQuill
+                theme="snow"
+                value={tryout.explanation}
+                onChange={(value) => handleQuillChange(value, "explanation")}
+                modules={modules}
+                formats={formats}
+                placeholder="Penjelasan..."
+                className="h-48" //
+              />
+            </div>
+            <div className="mt-20">
+              <FileInput
+                ref={fileInputRef}
+                id="imageExplanation"
+                onChange={handleFile}
+              />
+            </div>
           </div>
           <div className="flex space-x-2">
             <Button

@@ -6,6 +6,7 @@ import { useCbt } from "../stores/useCbt";
 import { useAlert } from "../stores/useAlert";
 import SplitText from "../components/SplitText";
 import Logo from "../assets/images/logo-extend-black.png";
+import parse from "html-react-parser";
 
 const CbtTryout = () => {
   const [soal, setSoal] = useState([]);
@@ -293,14 +294,13 @@ const CbtTryout = () => {
           <div className="md:w-3/5 overflow-y-auto mb-8">
             {activeSoal && (
               <div className="ps-5 py-5">
-                <h1
-                  className="text-xl font-bold mb-6 border border-gray-400 border-2 w-fit p-3 rounded-xl"
-                >
+                <h1 className="text-xl font-bold mb-6 border border-gray-400 border-2 w-fit p-3 rounded-xl">
                   Soal {activeNumber}
                 </h1>
                 <div className="mb-8">
                   {activeSoal.question && (
-                    <SplitText text={activeSoal.question} />
+                    // <SplitText text={activeSoal.question} />
+                    <p>{parse(activeSoal.question)}</p>
                   )}
                   {activeSoal.imageUrl && (
                     <img src={activeSoal.imageUrl} alt="Question" />
