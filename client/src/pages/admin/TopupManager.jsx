@@ -6,10 +6,10 @@ import {
   Spinner,
   Table,
   TextInput,
-} from 'flowbite-react';
-import { useEffect, useState } from 'react';
-import { fetchAdmin } from '../../utils/fetchAdmin';
-import { useAlert } from '../../stores/useAlert';
+} from "flowbite-react";
+import { useEffect, useState } from "react";
+import { fetchAdmin } from "../../utils/fetchAdmin";
+import { useAlert } from "../../stores/useAlert";
 
 const TopupManager = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -20,13 +20,13 @@ const TopupManager = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [search, setSearch] = useState({ email: '', unique: '' });
+  const [search, setSearch] = useState({ email: "", unique: "" });
   const { setAlert } = useAlert();
 
   const formatIDR = (number) => {
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
       minimumFractionDigits: 0,
     }).format(number);
   };
@@ -42,9 +42,9 @@ const TopupManager = () => {
       } catch (error) {
         setLoading(false);
         setAlert({
-          title: 'Error!',
+          title: "Error!",
           message: error.response.data.message,
-          color: 'failure',
+          color: "failure",
         });
       }
     };
@@ -65,25 +65,27 @@ const TopupManager = () => {
       } catch (error) {
         setLoading(false);
         setAlert({
-          title: 'Error!',
+          title: "Error!",
           message: error.response.data.message,
-          color: 'failure',
+          color: "failure",
         });
       }
     };
     try {
-      const { data } = await fetchAdmin.delete(`/transaction/${id}`);
+      const { data } = await fetchAdmin.patch(`/transaction/${id}`, {
+        staus: "rejected",
+      });
       setAlert({
-        title: 'Sukses!',
+        title: "Sukses!",
         message: data.message,
-        color: 'success',
+        color: "success",
       });
       fetchData();
     } catch (error) {
       setAlert({
-        title: 'Gagal!',
+        title: "Gagal!",
         message: error.response.data.message,
-        color: 'failure',
+        color: "failure",
       });
     }
   };
@@ -105,7 +107,7 @@ const TopupManager = () => {
               await fetchAdmin.post(`/transaction`, { id: detail.id });
               getData();
             } catch (error) {
-              console.error('Failed to accept transaction:', error);
+              console.error("Failed to accept transaction:", error);
             }
           };
           acceptData();
@@ -132,7 +134,7 @@ const TopupManager = () => {
   };
 
   const handleEmailEnter = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       searchEmail();
     }
   };
@@ -145,36 +147,36 @@ const TopupManager = () => {
   const onPageChange = (page) => setCurrentPage(page);
 
   return (
-    <div className='py-4 ml-64 dark:bg-black min-h-screen'>
-      <div className='mb-8 mx-4'>
-        <h1 className='text-2xl font-semibold'>Top Up Manager</h1>
+    <div className="py-4 ml-64 dark:bg-black min-h-screen">
+      <div className="mb-8 mx-4">
+        <h1 className="text-2xl font-semibold">Top Up Manager</h1>
       </div>
-      <div className='flex'>
-        <div className='max-w-md mb-8 mx-4'>
+      <div className="flex">
+        <div className="max-w-md mb-8 mx-4">
           <TextInput
-            placeholder='Search by email'
-            id='email'
-            type='text'
-            sizing='md'
+            placeholder="Search by email"
+            id="email"
+            type="text"
+            sizing="md"
             onChange={handleSearchChange}
             onKeyDown={handleEmailEnter}
           />
         </div>
-        <div className='max-w-md mb-8 mx-4'>
+        <div className="max-w-md mb-8 mx-4">
           <TextInput
-            placeholder='Search by unique code'
-            id='unique'
-            type='text'
-            sizing='md'
+            placeholder="Search by unique code"
+            id="unique"
+            type="text"
+            sizing="md"
             onChange={handleSearchChange}
             onKeyDown={handleEmailEnter}
           />
         </div>
       </div>
-      <div className='overflow-x-auto'>
+      <div className="overflow-x-auto">
         {loading ? (
-          <div className='ml-6'>
-            <Spinner aria-label='spinner' /> <span>Loading</span>
+          <div className="ml-6">
+            <Spinner aria-label="spinner" /> <span>Loading</span>
           </div>
         ) : (
           <Table striped>
@@ -186,14 +188,14 @@ const TopupManager = () => {
               <Table.HeadCell>Detail</Table.HeadCell>
               <Table.HeadCell>Action</Table.HeadCell>
             </Table.Head>
-            <Table.Body className='divide-y'>
+            <Table.Body className="divide-y">
               {data.length !== 0 ? (
                 data?.map((item, index) => (
                   <Table.Row
                     key={index}
-                    className='bg-white dark:border-gray-700 dark:bg-gray-800'
+                    className="bg-white dark:border-gray-700 dark:bg-gray-800"
                   >
-                    <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
+                    <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                       {item.name}
                     </Table.Cell>
                     <Table.Cell>{item.email}</Table.Cell>
@@ -205,21 +207,21 @@ const TopupManager = () => {
                           setDetail(item);
                           setOpenModal(true);
                         }}
-                        className='text-blue text-blue-500 hover:underline'
+                        className="text-blue text-blue-500 hover:underline"
                       >
                         Lihat Bukti Transfer
                       </button>
                     </Table.Cell>
                     <Table.Cell>
-                      <ul className='flex space-x-2'>
+                      <ul className="flex space-x-2">
                         <li>
                           <Button
                             onClick={() => {
                               setDetail(item);
                               handleAcept();
                             }}
-                            color={'blue'}
-                            size={'xs'}
+                            color={"blue"}
+                            size={"xs"}
                           >
                             Accept
                           </Button>
@@ -229,8 +231,8 @@ const TopupManager = () => {
                             onClick={() => {
                               handleReject(item.id);
                             }}
-                            color={'failure'}
-                            size={'xs'}
+                            color={"failure"}
+                            size={"xs"}
                           >
                             Reject
                           </Button>
@@ -240,13 +242,13 @@ const TopupManager = () => {
                   </Table.Row>
                 ))
               ) : (
-                <h1 className='text-center'>Belum ada transaksi</h1>
+                <h1 className="text-center">Belum ada transaksi</h1>
               )}
             </Table.Body>
           </Table>
         )}
       </div>
-      <div className='flex overflow-x-auto sm:justify-center mt-8'>
+      <div className="flex overflow-x-auto sm:justify-center mt-8">
         <Pagination
           currentPage={currentPage}
           totalPages={totalPage}
@@ -257,29 +259,29 @@ const TopupManager = () => {
       <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
         <Modal.Body>
           <div>
-            <img src={detail.bukti} alt='image' />
+            <img src={detail.bukti} alt="image" />
           </div>
         </Modal.Body>
       </Modal>
       {acc && (
-        <div className='fixed bottom-4 right-4'>
-          <Alert color='success' onDismiss={() => setAcc(false)}>
-            <div className='flex justify-between items-center space-x-6'>
+        <div className="fixed bottom-4 right-4">
+          <Alert color="success" onDismiss={() => setAcc(false)}>
+            <div className="flex justify-between items-center space-x-6">
               <div>
                 <span>
-                  {' '}
-                  Saldo{' '}
-                  <strong className='font-semibold'>
-                    {' '}
+                  {" "}
+                  Saldo{" "}
+                  <strong className="font-semibold">
+                    {" "}
                     {formatIDR(detail.amount)}
-                  </strong>{' '}
+                  </strong>{" "}
                   ditambahkan ke <strong>{detail.name}</strong>
                 </span>
               </div>
               <div>
                 <button
                   onClick={handleCancel}
-                  className='underline rounded-lg text-green-600 hover:bg-green-200 p-2'
+                  className="underline rounded-lg text-green-600 hover:bg-green-200 p-2"
                 >
                   UNDO
                 </button>
