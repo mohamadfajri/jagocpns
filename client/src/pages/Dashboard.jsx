@@ -24,15 +24,15 @@ const Dashboard = () => {
   return (
     <>
       <div>
-        <div className="mb-20 px-5 py-5 xl:px-5 xl:py-5 md:ml-[270px] xl:ml-64 xl:mb-0 dark:bg-black min-h-screen">
+        <div className="mb-20 px-5 py-0 xl:px-5 xl:py-5 md:ml-[270px] xl:ml-64 xl:mb-0 dark:bg-black min-h-screen">
           <div className="xl:gap-5 xl:pe-32">
-            <div className= "h-56 sm:h-64 xl:h-80 xl:mb-5 2xl:h-96">
+            <div className= "h-36 sm:h-64 xl:h-80 mb-3 mt-3 xl:mb-5 2xl:h-96">
               <Carousel>
-                <img src={dashboardBanner} alt="..." />
-                <img src={dashboardBanner} alt="..." />
-                <img src={dashboardBanner} alt="..." />
-                <img src={dashboardBanner} alt="..." />
-                <img src={dashboardBanner} alt="..." />
+                <img src={dashboardBanner} alt="..." className="h-" />
+                <img src={dashboardBanner} alt="..." className="h-"/>
+                <img src={dashboardBanner} alt="..." className="h-"/>
+                <img src={dashboardBanner} alt="..." className="h-"/>
+                <img src={dashboardBanner} alt="..." className="h-"/>
               </Carousel>
             </div>
 
