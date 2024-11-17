@@ -5,6 +5,8 @@ import { fetcher } from "../utils/fetcher";
 import { useAlert } from "../stores/useAlert";
 import { useTopup } from "../stores/useTopup";
 import CaraTopup from "../components/app/Topup/CaraTopup";
+import Swal from "sweetalert2";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const InvoiceMenu = () => {
   const fileInputRef = useRef(null);
@@ -14,6 +16,17 @@ const InvoiceMenu = () => {
   const { set } = useTopup();
   const [status, setStatus] = useState("unpaid");
   const [fileName, setFileName] = useState("");
+  const navigate = useNavigate();
+
+  const errorIcon = `<svg width="106" height="105" viewBox="0 0 106 105" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M53 0.416748C81.7605 0.416748 105.084 23.7395 105.084 52.5C105.084 81.2605 81.7605 104.584 53 104.584C24.2395 104.584 0.916748 81.2605 0.916748 52.5C0.916748 23.7395 24.2395 0.416748 53 0.416748ZM64.9429 33.1926L53 45.1357L41.0574 33.1931L33.6929 40.5576L45.6355 52.5L33.6929 64.4429L41.0574 71.8074L53 59.8647L64.9429 71.8074L72.3074 64.4429L60.3647 52.5L72.3074 40.5574L64.9429 33.1926Z" fill="#FF3B3B"/>
+</svg>
+`;
+
+  const successIcon = `<svg width="106" height="105" viewBox="0 0 106 105" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M52.9993 0.416992C24.2346 0.416992 0.916016 23.7356 0.916016 52.5002C0.916016 81.2649 24.2346 104.584 52.9993 104.584C81.7639 104.584 105.083 81.2649 105.083 52.5002C105.083 23.7356 81.7642 0.416992 52.9993 0.416992ZM72.6125 33.8921L79.9775 41.2571L47.791 73.5784L28.4836 54.271L35.8484 46.906L47.791 58.8486L72.6125 33.8921Z" fill="#06C270"/>
+</svg>
+`;
 
   const handleFile = (e) => {
     const file = e.target.files[0];
@@ -65,12 +78,26 @@ const InvoiceMenu = () => {
         }
       );
       getStatus();
+      setLoading(false);
+      Swal.fire({
+        iconHtml: successIcon,
+        html: `Pembayaran Kamu Sedang Di Verifikasi Admin <br /> (Maks 1 x 6 jam)`,
+        showConfirmButton: true,
+        confirmButtonColor: "#06C270",
+        confirmButtonText: "Oke!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/app/dashboard");
+        }
+      });
       setAlert({ title: "Info!", message: data.message, color: "success" });
     } catch (error) {
-      setAlert({
-        title: "Info!",
-        message: error.response?.data?.message || "An error occurred",
-        color: "failure",
+      Swal.fire({
+        iconHtml: errorIcon,
+        text: error.response?.data?.message || "An error occurred",
+        showConfirmButton: true,
+        confirmButtonColor: "#FF3B3B",
+        confirmButtonText: "Coba Lagi",
       });
       setLoading(false);
     }
