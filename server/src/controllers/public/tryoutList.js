@@ -31,6 +31,7 @@ const getTryoutByBatch = async (req, res) => {
       where: {
         batch: parseInt(batch),
         type: "Tryout",
+        status: true,
       },
       orderBy: {
         title: "asc",
@@ -179,7 +180,7 @@ const getAllBimbel = async (req, res) => {
       error: error.message,
     });
   }
-}
+};
 
 module.exports = {
   getAllTryout,
