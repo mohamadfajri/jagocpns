@@ -97,13 +97,13 @@ model Tryout {
   tryoutListId     Int
   type             String
   number           Int
-  question         String?
+  question         String     @db.Text
   scoreA           Int
   scoreB           Int
   scoreC           Int
   scoreD           Int
   scoreE           Int
-  explanation      String
+  explanation      String     @db.Text
   imageExplanation String?
   imageUrl         String?
   optionA          String?
