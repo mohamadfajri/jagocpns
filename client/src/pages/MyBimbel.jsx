@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import BimbelCard from "../components/app/MyTryout/BimbelCard.jsx";
 import { fetcher } from "../utils/fetcher.js";
+import { Link } from "react-router-dom";
 export default function MyBimbel() {
   const [bimbelData, setBimbelData] = useState([]);
 
@@ -28,16 +29,29 @@ export default function MyBimbel() {
       <hr className="mt-12" />
       <div>
         <p className="font-bold text-2xl mb-5">Bimbel Saya</p>
-        {bimbelData
-          ? bimbelData.map((bimbel, index) => (
-              <BimbelCard
-                key={index}
-                title={bimbel.title}
-                image={bimbel.imageUrl}
+        {bimbelData.length ? (
+          bimbelData.map((bimbel, index) => (
+            <BimbelCard
+              key={index}
+              title={bimbel.title}
+              image={bimbel.imageUrl}
               buttonText="Grup Whatsapp"
-              />
-            ))
-          : "Data Bimbel Tidak Ditemukan"}
+            />
+          ))
+        ) : (
+          <div>
+            <div className="flex flex-col items-center justify-center mt-10">
+              <p>
+                Anda belum memiliki bimbel. Silahkan pilih kelas paket SKB kamu
+              </p>
+              <Link to={"/app/bimbelstore"}>
+                <button className="mt-3 bg-[#FFCB01] rounded-xl px-5 py-3 text-white font-bold">
+                  Beli Bimbel
+                </button>
+              </Link>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
