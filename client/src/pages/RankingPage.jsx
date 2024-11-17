@@ -13,15 +13,13 @@ const RankingPage = () => {
 
   const getList = async () => {
     try {
-      const response = await fetcher.get("/user/getTryoutList");
-      console.log(response.data.data);
+      const response = await fetcher.get("/user/getTryoutListForRanking");
       setFilteredData(response.data.data);
       setDataTryout(response.data.data);
     } catch (error) {
       console.error("Error fetching tryout list:", error);
     }
   };
-
 
   useEffect(() => {
     getList();
