@@ -86,16 +86,19 @@ const TryoutInformation = () => {
           <hr />
           <div className="grid grid-cols-2 py-5">
             <p>Passing Grade</p>
-            <p>CPNS</p>
+            <div>
+              <p>Benar: 5 Point</p>
+              <p>Salah: 0 Point</p>
+            </div>
           </div>
         </div>
 
         <div className="flex flex-col mt-5 gap-y-3">
           {isOnline ? (
             <Link to={`/start-tryout/${id}`}>
-            <button className="bg-[#06C270] w-full text-white font-bold px-20 py-3 rounded-xl">
-              Mulai Kerjakan
-            </button>
+              <button className="bg-[#06C270] w-full text-white font-bold px-20 py-3 rounded-xl">
+                Mulai Mengerjakan
+              </button>
             </Link>
           ) : (
             <button
