@@ -155,6 +155,54 @@ const getTransactionStatus = async (req, res) => {
   }
 };
 
+const getUserTrasactions = async (req, res) => {
+  const userId = req.user.id;
+  try {
+    const transactions = await prisma.transaction.findMany({
+      where: {
+        userId: parseInt(userId),
+      },
+    });
+    if (!transactions) {
+      return res.status(404).json({
+        message: "Transaction Not Found!",
+      });
+    }
+
+    const serializedTransactions = transactions.map((transaction) => ({
+      ...transaction,
+      amount: transaction.amount.toString(), // Mengkonversi BigInt ke string
+      createdAt: transaction.createdAt.toISOString(),
+      updatedAt: transaction.updatedAt.toISOString(),
+    }));
+
+    const getId = (date, id) => {
+      const ddmmyyyy = `${date.getDate().toString().padStart(2, "0")}${(
+        date.getMonth() + 1
+      )
+        .toString()
+        .padStart(2, "0")}${date.getFullYear()}`;
+      const formattedId = `JAGO-${ddmmyyyy}${id}`;
+      return formattedId;
+    };
+
+    const format = transactions.map((t) => ({
+      id: t.id,
+      date: t.updatedAt,
+      description: getId(t.updatedAt, t.id),
+      amount: t.amount.toString(),
+      status: t.status
+    }));
+
+    return res.status(200).json({ data: format });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error get user transactions",
+      error: error.message,
+    });
+  }
+};
+
 const cancelTransaction = async (req, res) => {
   const userId = req.user.id;
 
@@ -180,7 +228,9 @@ const cancelTransaction = async (req, res) => {
       .json({ message: "Transaction cancelled successfully" });
   } catch (error) {
     console.error("Error cancelling transaction:", error);
-    return res.status(500).json({ message: "Failed to cancel transaction" });
+    return res
+      .status(500)
+      .json({ message: "Failed to cancel transaction", error: error.message });
   }
 };
 
@@ -237,89 +287,6 @@ const getTransaction = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch transaction" });
   }
 };
-
-// const checkout = async (req, res) => {
-//   const userId = Number(req.user.id);
-//   const { tryoutListId, target } = req.body;
-
-//   if (!Array.isArray(target) || target.length === 0) {
-//     return res.status(400).json({ message: 'Target list is invalid or empty' });
-//   }
-
-//   const targetIds = target.map((user) => Number(user.id));
-//   if (targetIds.some((id) => isNaN(id))) {
-//     return res
-//       .status(400)
-//       .json({ message: 'One or more target IDs are invalid' });
-//   }
-
-//   try {
-//     const tryout = await prisma.tryoutList.findUnique({
-//       where: { id: Number(tryoutListId) },
-//       select: { price: true },
-//     });
-
-//     if (!tryout) {
-//       return res.status(404).json({ message: 'Tryout not found' });
-//     }
-
-//     const tryoutPrice = Number(tryout.price);
-//     const totalPrice = BigInt(
-//       target.length > 1 ? (tryoutPrice * target.length) / 2 : tryoutPrice
-//     );
-
-//     const userBalance = await prisma.balance.findUnique({
-//       where: { userId },
-//       select: { amount: true },
-//     });
-
-//     const existingOwnerships = await prisma.ownership.findMany({
-//       where: {
-//         tryoutListId: Number(tryoutListId),
-//         userId: {
-//           in: targetIds,
-//         },
-//       },
-//       include: {
-//         user: true,
-//       },
-//     });
-
-//     if (existingOwnerships.length > 0) {
-//       const userEmails = existingOwnerships.map(
-//         (ownership) => ownership.user.email
-//       );
-//       return res.status(400).json({
-//         message: `User(s) ${userEmails.join(', ')} sudah memiliki tryout ini`,
-//       });
-//     }
-
-//     if (!userBalance) {
-//       return res.status(404).json({ message: 'User balance not found' });
-//     }
-
-//     if (userBalance.amount < totalPrice) {
-//       return res.status(400).json({ message: 'Saldo tidak cukup' });
-//     }
-
-//     await prisma.balance.update({
-//       where: { userId },
-//       data: { amount: userBalance.amount - totalPrice },
-//     });
-
-//     const ownerships = targetIds.map((targetUserId) => ({
-//       userId: targetUserId,
-//       tryoutListId: Number(tryoutListId),
-//     }));
-
-//     await prisma.ownership.createMany({ data: ownerships });
-
-//     res.status(200).json({ message: 'Pembelian tryout berhasil' });
-//   } catch (error) {
-//     console.error('Error:', error);
-//     res.status(500).json({ message: 'Terjadi kesalahan saat checkout' });
-//   }
-// };
 
 const DISCOUNT_CODES = {
   JAGOCPNS: { amount: 10000n, type: "fixed" },
@@ -519,7 +486,7 @@ const checkout = async (req, res) => {
       "Tryout tidak tersedia untuk dibeli": 400,
       "Satu atau lebih user tidak ditemukan": 404,
       "Kode diskon tidak valid": 400,
-      "User(s) sudah memiliki tryout ini": 400
+      "User(s) sudah memiliki tryout ini": 400,
     };
 
     const statusCode = errorMessages[error.message] || 500;
@@ -538,5 +505,6 @@ module.exports = {
   getTransaction,
   getSuccessTransaction,
   checkout,
+  getUserTrasactions,
   cancelTransaction,
 };
