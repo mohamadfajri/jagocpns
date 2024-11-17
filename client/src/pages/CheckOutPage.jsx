@@ -194,54 +194,6 @@ export default function CheckOutPage() {
         size="md"
       >
         <Modal.Body>
-          {/* <div className="space-y-4">
-            <div className="">
-              <div className="flex justify-center mb-5">
-                <TryOutCardNew
-                  title={tryout.title}
-                  desc={tryout.description}
-                  // action={"Beli"}
-                  imageUrl={tryout.imageUrl}
-                  price={tryout.price}
-                  // onClick={() => setOpenModal(true)}
-                />
-              </div>
-
-              <div>
-                <div className="flex justify-between">
-                  <div>
-                    <p className="font-bold">Nama Tryout</p>
-                    <p className="font-bold">Qty</p>
-                    <p className="font-bold">Harga Tryout</p>
-                    <p className="font-bold">Diskon</p>
-                  </div>
-                  <div className="text-end">
-                    <p>{tryout.title}</p>
-                    <p>1</p>
-                    <p>{formatIDR(tryout.price)}</p>
-                    <p>Rp 10.000</p>
-                  </div>
-                </div>
-                <div>
-                  <hr className="mt-3" />
-                  <div className="flex justify-between">
-                    <p className="font-bold">Total Harga</p>
-                    <p className="font-bold">Rp 10.000</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <button
-                onClick={() => handleCheckOut()}
-                className="w-full bg-[#06C270] text-white font-medium py-2 rounded-xl"
-              >
-                Checkout
-              </button>
-            </div>
-          </div> */}
-
           <div className="bg-yellow-300 p-3">
             <div className="w-fit bg-white rounded-xl px-3">
               <p>Jagocpns</p>
@@ -319,7 +271,7 @@ export default function CheckOutPage() {
           <div className="flex mt-5 justify-between gap-x-5">
             <input
               type="text"
-              placeholder="Masukkan Code Promo"
+              placeholder="Punya Code Promo?"
               className={`border-gray-300 rounded-lg w-full ${
                 discountValid
                   ? "border-green-500"

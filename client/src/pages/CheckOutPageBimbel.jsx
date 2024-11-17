@@ -273,7 +273,7 @@ export default function CheckOutPageBimbel() {
           <div className="flex mt-5 justify-between gap-x-5">
             <input
               type="text"
-              placeholder="Masukkan Code Promo"
+              placeholder="Punya Code Promo?"
               className={`border-gray-300 rounded-lg w-full ${
                 discountValid
                   ? "border-green-500"
