@@ -165,7 +165,6 @@ export default function CheckOutPageBimbel() {
 
   return (
     <div className='sm:p-10 sm:ml-64 dark:bg-black min-h-screen sm:mt-0"'>
-      CheckOut Bimbel
       <div>
         <p className="font-bold text-xl">{tryout.title}</p>
         <p className="mt-3">
