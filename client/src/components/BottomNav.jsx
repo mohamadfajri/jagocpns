@@ -49,7 +49,7 @@ const BottomNav = () => {
             <h1 className="text-xs">Tryout Saya</h1>
           </li>
           <li className="flex flex-col items-center">
-            <Link to={"/app/mytryouts"}>
+            <Link to={"/app/mybimbel"}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
