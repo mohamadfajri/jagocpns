@@ -199,6 +199,7 @@ export default function CheckOutPage() {
         onClose={() => setOpenModal(false)}
         size="md"
       >
+        <Modal.Header className="" >Beli Tryout</Modal.Header>
         <Modal.Body>
           <div className="bg-yellow-300 p-3">
             <div className="w-fit bg-white rounded-xl px-3">

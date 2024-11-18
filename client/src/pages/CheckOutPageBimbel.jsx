@@ -195,6 +195,8 @@ export default function CheckOutPageBimbel() {
         onClose={() => setOpenModal(false)}
         size="md"
       >
+        <Modal.Header className="">Beli Bimbel</Modal.Header>
+
         <Modal.Body>
           <div className="bg-yellow-300 p-3">
             <div className="w-fit bg-white rounded-xl px-3">
