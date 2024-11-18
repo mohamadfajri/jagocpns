@@ -173,9 +173,12 @@ export default function CheckOutPageBimbel() {
           belajarmu.
         </p>
       </div>
+
+      <hr className="mt-12" />
+
       <div className="mt-12 grid grid-cols-3 gap-x-3">
         <div className="col-span-2">
-          <p className="font-bold text-2xl">Tentang paket</p>
+          <p className="font-bold text-2xl">Tentang Bimbel</p>
           <p className="mt-5">{parse(tryout.description)}</p>
         </div>
         <div className="flex justify-center">
@@ -210,7 +213,7 @@ export default function CheckOutPageBimbel() {
 
           <div className="broder shadow-lg p-2">
             <p className="font-bold text-xl">{tryout.title}</p>
-            <div className="flex gap-5 mt-3">
+            {/* <div className="flex gap-5 mt-3">
               <div className="flex gap-1">
                 <svg
                   className="w-6 h-6 text-[#004FC4] dark:text-white"
@@ -251,7 +254,7 @@ export default function CheckOutPageBimbel() {
 
                 <p>90 Menit</p>
               </div>
-            </div>
+            </div> */}
 
             <div className="mt-3">
               <div className="flex items-center">

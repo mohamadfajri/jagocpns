@@ -10,7 +10,7 @@ export default function CheckOutPage() {
   const location = useLocation();
   const pathParts = location.pathname.split("/");
   const id = pathParts[pathParts.length - 1];
-  const [tryout, setTryout] = useState({ description: '' });
+  const [tryout, setTryout] = useState({ description: "" });
   const [openModal, setOpenModal] = useState(false);
   const [user, setUser] = useState([{}]);
   const navigate = useNavigate();
@@ -174,12 +174,28 @@ export default function CheckOutPage() {
 
       <hr className="mt-12" />
 
-      <div className="mt-5 flex flex-col-reverse gap-x-3 lg:grid grid-cols-2">
+      {/* <div className="mt-5 flex flex-col-reverse gap-x-3 lg:grid grid-cols-2">
         <div className="mt-3 lg:mt-0">
           <p className="font-bold text-2xl">Tentang paket</p>
           <div>
             <p className="mt-5">{parse(tryout.description)}</p>
           </div>
+        </div>
+        <div className="flex justify-center">
+          <TryOutCardNew
+            title={tryout.title}
+            desc={tryout.description}
+            action={"Beli"}
+            imageUrl={tryout.imageUrl}
+            price={tryout.price}
+            onOpenModal={() => setOpenModal(true)}
+          />
+        </div>
+      </div> */}
+      <div className="mt-12 grid grid-cols-3 gap-x-3">
+        <div className="col-span-2">
+          <p className="font-bold text-2xl">Tentang paket</p>
+          <p className="mt-5">{parse(tryout.description)}</p>
         </div>
         <div className="flex justify-center">
           <TryOutCardNew
@@ -199,7 +215,7 @@ export default function CheckOutPage() {
         onClose={() => setOpenModal(false)}
         size="md"
       >
-        <Modal.Header className="" >Beli Tryout</Modal.Header>
+        <Modal.Header className="">Beli Tryout</Modal.Header>
         <Modal.Body>
           <div className="bg-yellow-300 p-3">
             <div className="w-fit bg-white rounded-xl px-3">
