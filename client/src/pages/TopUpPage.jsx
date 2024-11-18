@@ -32,10 +32,10 @@ const TopUpPage = () => {
     console.log(total);
   };
 
-  const handleMethod = (val) => {
-    setMethod(val);
-    setMethodState(val);
-  };
+  // const handleMethod = (val) => {
+  //   setMethod(val);
+  //   setMethodState(val);
+  // };
 
   const formatIDR = (number) => {
     return new Intl.NumberFormat("id-ID", {
@@ -45,9 +45,9 @@ const TopUpPage = () => {
     }).format(number);
   };
 
-  const handleNext = () => {
-    setNext(true);
-  };
+  // const handleNext = () => {
+  //   setNext(true);
+  // };
 
   const createTransaction = async () => {
     try {
@@ -65,9 +65,100 @@ const TopUpPage = () => {
     }
   };
 
+  const topupOptions = [
+    { amount: 20000, display: "20.000" },
+    { amount: 40000, display: "40.000" },
+    { amount: 60000, display: "60.000" },
+    { amount: 100000, display: "100.000" },
+    { amount: 200000, display: "200.000" },
+    { amount: 300000, display: "300.000" },
+  ];
+
   return (
     <>
-      <div className="flex flex-col-reverse xl:grid xl:grid-cols-4 xl:gap-5">
+      <div className="container mx-auto px-4 py-6">
+        <div className="flex flex-col lg:grid lg:grid-cols-4 lg:gap-6">
+          {/* Mobile Balance Card - Shows at top on mobile */}
+          <div className="lg:hidden mb-6">
+            <SaldoCard saldo={formatIDR(balance)} />
+          </div>
+
+          {/* Main Content Section */}
+          <div className="lg:col-span-3">
+            {/* Header */}
+            <div className="flex items-center gap-3 mb-6">
+              <svg
+                className="w-8 h-8 sm:w-9 sm:h-9"
+                viewBox="0 0 36 36"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle cx="17.645" cy="17.645" r="17.645" fill="#FFF8E5" />
+                <path
+                  d="M21.6632 10.0017C22.1623 10.0016 22.6428 10.1911 23.0077 10.5317C23.3725 10.8723 23.5944 11.3387 23.6285 11.8366L23.6329 11.9714V21.8198C23.6327 21.9292 23.6735 22.0347 23.7472 22.1155C23.8209 22.1964 23.9221 22.2467 24.0311 22.2566C24.14 22.2664 24.2487 22.2352 24.3357 22.1689C24.4228 22.1027 24.4818 22.0063 24.5013 21.8986L24.5083 21.8198V12.6402C24.9653 12.6913 25.3899 12.9006 25.7087 13.2319C26.0275 13.5632 26.2204 13.9955 26.2539 14.4541L26.2592 14.5976V21.1633C26.2592 21.89 25.9812 22.5892 25.4821 23.1174C24.983 23.6456 24.3007 23.9629 23.5751 24.004L23.4141 24.0084H11.5959C10.8692 24.0084 10.17 23.7304 9.64181 23.2313C9.11358 22.7322 8.79636 22.0499 8.75522 21.3243L8.75084 21.1633V11.9714C8.75078 11.4723 8.94019 10.9918 9.28079 10.627C9.62139 10.2622 10.0878 10.0402 10.5857 10.0061L10.7205 10.0017H21.6632Z"
+                  fill="#FFB001"
+                />
+              </svg>
+              <p className="text-xl sm:text-2xl font-medium">Pilih Nominal</p>
+            </div>
+
+            {/* Amount Options Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+              {topupOptions.map((option) => (
+                <button
+                  key={option.amount}
+                  onClick={() => handleChoose(option.amount)}
+                  className={`w-full p-4 sm:p-6 rounded-2xl transition-colors ${
+                    total === option.amount
+                      ? "bg-[#FFCB01]"
+                      : "bg-white border border-gray-200 hover:bg-[#FFF8E5]"
+                  }`}
+                >
+                  <div className="flex flex-col gap-y-4 sm:gap-y-8">
+                    <p className="text-2xl sm:text-3xl lg:text-4xl font-bold">
+                      {option.display}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <p className="text-lg sm:text-xl lg:text-2xl font-semibold">
+                        {formatIDR(option.amount)}
+                      </p>
+                      <svg
+                        className="w-5 h-5 sm:w-6 sm:h-6"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M9 18L15 12L9 6"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            {/* Top Up Button */}
+            <button
+              className="w-full mt-6 p-3 sm:p-4 text-lg sm:text-xl font-medium text-white bg-[#FFCB01] hover:bg-[#FFB001] rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={createTransaction}
+              disabled={!total}
+            >
+              Top Up
+            </button>
+          </div>
+
+          {/* Desktop Balance Card - Shows on right side on desktop */}
+          <div className="hidden lg:block lg:mt-14">
+            <SaldoCard saldo={formatIDR(balance)} />
+          </div>
+        </div>
+      </div>
+      {/* <div className="flex flex-col-reverse xl:grid xl:grid-cols-4 xl:gap-5">
         <div className="col-span-3">
           <div className="flex gap-3 items-center">
             <svg
@@ -293,7 +384,7 @@ const TopUpPage = () => {
         <div className="xl:mt-14 mb-5 xl:mb-0">
           <SaldoCard saldo={formatIDR(balance)} />
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
