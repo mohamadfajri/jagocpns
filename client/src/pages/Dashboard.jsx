@@ -4,7 +4,8 @@ import dashboardBanner from "../assets/images/dashboardBanner/dashboardBanner.pn
 import { useEffect, useState } from "react";
 import { fetcher } from "../utils/fetcher.js";
 import { Carousel } from "flowbite-react";
-import { Button } from "flowbite-react";
+import dashboardBanner2 from "../assets/images/dashboardBanner/dashboardBanner2.jpg";
+import dashboardBanner3 from "../assets/images/dashboardBanner/dashboardBanner3.jpg";
 
 const Dashboard = () => {
   const [userCount, setUserCount] = useState(0);
@@ -26,13 +27,11 @@ const Dashboard = () => {
       <div>
         <div className="mb-20 px-5 py-0 xl:px-5 xl:py-5 md:ml-[270px] xl:ml-64 xl:mb-0 dark:bg-black min-h-screen">
           <div className="xl:gap-5 xl:pe-32">
-            <div className= "h-36 sm:h-64 xl:h-80 mb-3 mt-3 xl:mb-5 2xl:h-96">
+            <div className="h-36 sm:h-64 xl:h-80 mb-3 mt-3 xl:mb-5 2xl:h-96">
               <Carousel>
-                <img src={dashboardBanner} alt="..." className="h-" />
-                <img src={dashboardBanner} alt="..." className="h-"/>
-                <img src={dashboardBanner} alt="..." className="h-"/>
-                <img src={dashboardBanner} alt="..." className="h-"/>
-                <img src={dashboardBanner} alt="..." className="h-"/>
+                <img src={dashboardBanner} alt="..." className="h-full" />
+                <img src={dashboardBanner2} alt="..." className="h-full" />
+                <img src={dashboardBanner3} alt="..." className="h-full" />
               </Carousel>
             </div>
 
@@ -67,40 +66,145 @@ const Dashboard = () => {
                     <p className="text-2xl font-bold">Berita</p>
                   </div>
 
-                  <div className="mt-7 text-justify">
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Quod expedita, iste minus pariatur non tempora sed nobis
-                      molestiae aut magnam dolor ea voluptatem ducimus fugit
-                      ipsam! Laudantium quisquam fugit doloribus aut laborum
-                      officia, earum iste quam amet? Laudantium qui voluptas
-                      illo est veniam laboriosam repudiandae perferendis maxime,
-                      tempora harum maiores eos nam placeat sunt eum iusto
-                      recusandae voluptatibus doloremque, porro quaerat? Dolores
-                      fugiat vitae consequuntur ab atque quasi eum ullam nostrum
-                      consectetur repudiandae ipsam fuga quam, necessitatibus
-                      aut adipisci, magnam nulla mollitia. Eligendi at omnis
-                      repudiandae exercitationem ipsa fugit explicabo harum
-                      fuga, perspiciatis assumenda consequuntur aliquam odit eum
-                      nostrum sunt, voluptatibus est totam. Incidunt odit illo
-                      alias dignissimos et quisquam. Autem ad incidunt
-                      exercitationem vel veritatis aperiam at saepe
-                      necessitatibus tempora delectus asperiores ipsam odit
-                      numquam optio sequi sint, nesciunt voluptatum, culpa, quo
-                      ullam. Corrupti labore tempora adipisci sed voluptas!
-                      Aperiam at doloribus, sapiente, molestiae corrupti
-                      laboriosam, accusamus placeat iste vitae velit
-                      exercitationem ducimus nulla repellendus est explicabo.
-                      Perferendis doloremque reiciendis impedit nostrum
-                      explicabo itaque. Perspiciatis enim delectus saepe aliquam
-                      ex sit vero ad labore recusandae, placeat ullam dolor
-                      earum sed deserunt. Odit incidunt vitae placeat
-                      reprehenderit quidem atque voluptates. Harum, quibusdam
-                      reprehenderit ex quos quaerat corrupti quia doloremque
-                      illum?
-                    </p>
+                  <div className="mt-7 text-justify space-y-3">
+                    <div className="border p-5 rounded-xl hover:shadow-lg transition-shadow text-center">
+                      <span className="flex justify-center">
+                        <svg
+                          className="w-10 h-10 bg-[#FFCB01] rounded-xl p-1 text-gray-800 dark:text-white"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M5 5a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1 2 2 0 0 1 2 2v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a2 2 0 0 1 2-2ZM3 19v-7a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Zm6.01-6a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm-10 4a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                      <p className="font-bold">PENGUNGUMUMAN HASIL SKD CPNS</p>
+                      <p>7-19 November 2024</p>
+                    </div>
+
+                    <div className="border p-5 rounded-xl hover:shadow-lg transition-shadow text-center">
+                      <span className="flex justify-center">
+                        <svg
+                          className="w-10 h-10 bg-[#FFCB01] rounded-xl p-1 text-gray-800 dark:text-white"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M5 5a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1 2 2 0 0 1 2 2v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a2 2 0 0 1 2-2ZM3 19v-7a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Zm6.01-6a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm-10 4a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                      <p className="font-bold">PELAKSANAAN SKB CPNS Non-CAT</p>
+                      <p>20 November - 17 Desember 2024</p>
+                    </div>
+
+                    <div className="border p-5 rounded-xl hover:shadow-lg transition-shadow text-center">
+                      <span className="flex justify-center">
+                        <svg
+                          className="w-10 h-10 bg-[#FFCB01] rounded-xl p-1 text-gray-800 dark:text-white"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M5 5a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1 2 2 0 0 1 2 2v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a2 2 0 0 1 2-2ZM3 19v-7a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Zm6.01-6a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm-10 4a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                      <p className="font-bold">
+                        PEMILIHAN TITIK LOKASI SKB CAT
+                      </p>
+                      <p>20-22 November 2024</p>
+                    </div>
+
+                    <div className="border p-5 rounded-xl hover:shadow-lg transition-shadow text-center">
+                      <span className="flex justify-center">
+                        <svg
+                          className="w-10 h-10 bg-[#FFCB01] rounded-xl p-1 text-gray-800 dark:text-white"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M5 5a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1 2 2 0 0 1 2 2v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a2 2 0 0 1 2-2ZM3 19v-7a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Zm6.01-6a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm-10 4a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                      <p className="font-bold">
+                        PENGUMUMAN DAFTAR PESERTA, WAKTU dan TEMPAT SKB CAT
+                      </p>
+                      <p>4-8 DESEMBER 2024</p>
+                    </div>
+
+                    <div className="border p-5 rounded-xl hover:shadow-lg transition-shadow text-center">
+                      <span className="flex justify-center">
+                        <svg
+                          className="w-10 h-10 bg-[#FFCB01] rounded-xl p-1 text-gray-800 dark:text-white"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M5 5a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1 2 2 0 0 1 2 2v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a2 2 0 0 1 2-2ZM3 19v-7a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Zm6.01-6a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm-10 4a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                      <p className="font-bold">PELAKSANAAN SKB CPNS</p>
+                      <p>9-20 DESEMBER 2024</p>
+                    </div>
+
+                    <div className="border p-5 rounded-xl hover:shadow-lg transition-shadow text-center bg-gradient-to-tr from-[#6B46D5] to-[#8D65FF]">
+                      <span className="flex justify-center">
+                        <svg
+                          className="w-10 h-10 bg-[#FFCB01] rounded-xl p-1 text-gray-800 dark:text-white"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M5 5a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1 2 2 0 0 1 2 2v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a2 2 0 0 1 2-2ZM3 19v-7a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Zm6.01-6a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm-10 4a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                      <p className="font-bold text-white">PENGUNGUMAN HASIL CPNS!</p>
+                      <p className="text-white">5-12 Januari 2024</p>
+                    </div>
                   </div>
                 </div>
+
                 <div className="bg-white rounded-2xl mt-5 p-4 border">
                   <div className="flex items-center gap-3">
                     <svg
