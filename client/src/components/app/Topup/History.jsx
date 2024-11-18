@@ -26,19 +26,6 @@ const History = () => {
     }).format(number);
   };
 
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     try {
-  //       const { data } = await fetcher.get("/user/transaction/success");
-  //       console.log(data);
-  //       setData(data.data);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   getData();
-  // }, []);
-
   const fetchUser = async () => {
     try {
       const response = await fetcher("/user");
@@ -59,8 +46,10 @@ const History = () => {
 
   useEffect(() => {
     fetchUser();
-    getTransactionStatus();
   }, []);
+  useEffect(() => {
+    getTransactionStatus();
+  });
 
   console.log("transaction status", transactionStatus);
   console.log("data", data);
