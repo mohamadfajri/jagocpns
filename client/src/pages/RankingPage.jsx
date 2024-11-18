@@ -78,7 +78,7 @@ const RankingPage = () => {
           </div>
         </div>
 
-        <div className="flex flex-col items-center md:grid md:grid-cols-2 xl:grid xl:grid-cols-5 gap-3 md:gap-x-10 mt-5">
+        <div className="mt-3 flex flex-col p-4 items-center gap-y-3 md:grid md:grid-cols-2 md:gap-3 md:p-0 lg:grid lg:grid-cols-5 lg:gap-3 xl:p-0 hover:shadow-md">
           {filteredData.map((tryout, index) => (
             <TryoutCardRanking
               key={index}
