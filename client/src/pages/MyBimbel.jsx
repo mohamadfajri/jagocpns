@@ -36,6 +36,7 @@ export default function MyBimbel() {
               title={bimbel.title}
               image={bimbel.imageUrl}
               buttonText="Grup Whatsapp"
+              whatsappLink={bimbel.whatsappLink || ""}
             />
           ))
         ) : (
