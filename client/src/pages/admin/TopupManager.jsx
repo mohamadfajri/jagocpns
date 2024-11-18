@@ -87,6 +87,8 @@ const TopupManager = () => {
         message: error.response.data.message,
         color: "failure",
       });
+    } finally {
+      fetchData();
     }
   };
 
