@@ -87,7 +87,7 @@ const InvoiceMenu = () => {
         confirmButtonText: "Oke!",
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate("/app/dashboard");
+          navigate("/app/topup");
         }
       });
       setAlert({ title: "Info!", message: data.message, color: "success" });
