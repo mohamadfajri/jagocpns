@@ -74,22 +74,23 @@ model PaidList {
 }
 
 model TryoutList {
-  id          Int         @id @default(autoincrement())
-  title       String
-  price       BigInt
-  imageUrl    String
-  description String
-  batch       Int         @default(1)
-  type        String      @default("Tryout")
-  status      Boolean     @default(false)
-  isOnline    Boolean     @default(false)
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  tryouts     Tryout[]
-  scores      Score[]
-  payments    Payment[]
-  paidLists   PaidList[]
-  ownerships  Ownership[]
+  id           Int         @id @default(autoincrement())
+  title        String
+  price        BigInt
+  imageUrl     String
+  description  String
+  batch        Int         @default(1)
+  type         String      @default("Tryout")
+  whatsappLink String?
+  status       Boolean     @default(false)
+  isOnline     Boolean     @default(false)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  tryouts      Tryout[]
+  scores       Score[]
+  payments     Payment[]
+  paidLists    PaidList[]
+  ownerships   Ownership[]
 }
 
 model Tryout {

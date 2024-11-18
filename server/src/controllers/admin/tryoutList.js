@@ -1,7 +1,7 @@
 const prisma = require("../../utils/prismaClient");
 
 const createTryout = async (req, res) => {
-  const { title, price, description, batch, type } = req.body;
+  const { title, price, description, batch, type, whatsappLink } = req.body;
   const batchInt = parseInt(batch, 10);
 
   try {
@@ -13,6 +13,7 @@ const createTryout = async (req, res) => {
         description,
         batch: batchInt,
         type: type,
+        whatsappLink: whatsappLink || "",
       },
     });
     res.status(201).json({ message: "created" });
@@ -23,8 +24,16 @@ const createTryout = async (req, res) => {
 };
 const updateTryout = async (req, res) => {
   const { id } = req.params;
-  const { title, price, description, status, statusKerjakan, batch, type } =
-    req.body;
+  const {
+    title,
+    price,
+    description,
+    status,
+    statusKerjakan,
+    batch,
+    type,
+    whatsappLink,
+  } = req.body;
   const stringToBool = (str) => str === "true";
   const statusFormatted = stringToBool(status);
   const statusKerjakanFormatted = stringToBool(statusKerjakan);
@@ -40,6 +49,7 @@ const updateTryout = async (req, res) => {
       isOnline: statusKerjakanFormatted,
       batch: batchInt,
       type: type,
+      whatsappLink: whatsappLink || "",
     };
 
     if (image) {
@@ -143,6 +153,8 @@ const getTryoutById = async (req, res) => {
       batch: tryout.batch,
       status: tryout.status,
       statusKerjakan: tryout.isOnline,
+      type: tryout.type,
+      whatsappLink: tryout.whatsappLink || "",
     };
     if (!tryout) {
       return res.status(404).json({ message: "Tryout not found" });

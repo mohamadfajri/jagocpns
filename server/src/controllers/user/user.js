@@ -291,10 +291,10 @@ const getBimbelByUserId = async (req, res) => {
       },
     });
 
-    if (ownerships.length === 0){
+    if (ownerships.length === 0) {
       return res.status(404).json({
         message: "Kepemilikan bimbel tidak ditemukan",
-      })
+      });
     }
 
     const serializedData = ownerships.map((item) => ({
@@ -306,10 +306,11 @@ const getBimbelByUserId = async (req, res) => {
       title: item.tryoutList.title,
       imageUrl: item.tryoutList.imageUrl,
       description: item.tryoutList.description,
+      whatsappLink: item.tryoutList.whatsappLink,
     }));
 
     res.status(200).json({
-      data: serializedData
+      data: serializedData,
     });
   } catch (error) {
     res.status(500).json({
@@ -353,10 +354,10 @@ const getTryoutListForRanking = async (req, res) => {
     const tryouts = await prisma.tryoutList.findMany({
       where: {
         status: true,
-        type: "Tryout"
+        type: "Tryout",
       },
       orderBy: {
-        createdAt: "desc",
+        title: "asc",
       },
     });
 
@@ -377,7 +378,7 @@ const getTryoutListForRanking = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: "Failed to fetch tryouts", error });
   }
-}
+};
 
 module.exports = {
   createUser,

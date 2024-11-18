@@ -26,7 +26,8 @@ const CrudTryoutList = () => {
     status: false,
     statusKerjakan: false,
     image: null,
-    type: "",
+    type: "Tryout",
+    whatsappLink: ""
   });
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
@@ -73,6 +74,7 @@ const CrudTryoutList = () => {
 
   const fetchSingle = async (id) => {
     const response = await fetchAdmin(`tryout/${id}`);
+    console.log("fetch single response", response.data.type)
     setForm({
       id: response.data.id,
       title: response.data.title,
@@ -83,6 +85,7 @@ const CrudTryoutList = () => {
       statusKerjakan: response.data.statusKerjakan,
       image: null,
       type: response.data.type,
+       whatsappLink: response.data.whatsappLink || ""
     });
   };
 
@@ -95,7 +98,8 @@ const CrudTryoutList = () => {
       status: false,
       statusKerjakan: false,
       image: null,
-      type: "",
+      type: "Tryout",
+      whatsappLink: "",
     });
     setIsOpen(true);
   };
@@ -115,6 +119,7 @@ const CrudTryoutList = () => {
           statusKerjakan: form.statusKerjakan,
           batch: parseInt(form.batch),
           type: form.type,
+          whatsappLink: form.whatsappLink || ""
         },
         {
           headers: {
@@ -179,6 +184,7 @@ const CrudTryoutList = () => {
           status: form.status,
           statusKerjakan: form.statusKerjakan,
           type: form.type,
+          whatsappLink: form.whatsappLink || ""
         },
         {
           headers: {
@@ -211,6 +217,8 @@ const CrudTryoutList = () => {
     setIsOpen(false);
     setIsOpenEdit(false);
   };
+
+  // console.log("Form", form)
 
   return (
     <div className="py-4 ml-64 dark:bg-black min-h-screen">
@@ -467,6 +475,20 @@ const CrudTryoutList = () => {
                   <option value="Bimbel">Bimbel</option>
                 </Select>
               </div>
+              {form.type ==="Bimbel" && (
+                    <div>
+                    <div className="mb-2 block">
+                      <Label htmlFor="whatsappLink" value="Link Grup Whatsapp" />
+                    </div>
+                    <TextInput
+                      id="whatsappLink"
+                      type="text"
+                      sizing="sm"
+                      value={form.whatsappLink}
+                      onChange={handleChange}
+                    />
+                  </div>
+              )}
               <div>
                 <div className="mb-2 block">
                   <Label htmlFor="image" value="Gambar" />
@@ -570,6 +592,20 @@ const CrudTryoutList = () => {
                   <option value="Bimbel">Bimbel</option>
                 </Select>
               </div>
+              {form.type ==="Bimbel" && (
+                    <div>
+                    <div className="mb-2 block">
+                      <Label htmlFor="whatsappLink" value="Link Grup Whatsapp" />
+                    </div>
+                    <TextInput
+                      id="whatsappLink"
+                      type="text"
+                      sizing="sm"
+                      value={form.whatsappLink}
+                      onChange={handleChange}
+                    />
+                  </div>
+              )}
               <div>
                 <div className="mb-2 block">
                   <Label htmlFor="description" value="Deskripsi" />
