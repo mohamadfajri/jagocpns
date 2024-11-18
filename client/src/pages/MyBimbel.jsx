@@ -28,7 +28,7 @@ export default function MyBimbel() {
       </p>
       <hr className="mt-12" />
       <div>
-        <p className="font-bold text-2xl mb-5">Bimbel Saya</p>
+        <p className="font-bold text-2xl mb-5 mt-5">Bimbel Saya</p>
         {bimbelData.length ? (
           bimbelData.map((bimbel, index) => (
             <BimbelCard

@@ -66,8 +66,8 @@ const TryoutInformation = () => {
         </div>
       )}
 
-      <div className="grid grid-cols-3 gap-5">
-        <div className="mt-7 col-span-2">
+      <div className="grid lg:grid-cols-3 lg:gap-x-3">
+        <div className="mt-7 lg:col-span-2">
           <hr />
           <div className="grid grid-cols-2 py-5">
             <p>Nama Tryout</p>

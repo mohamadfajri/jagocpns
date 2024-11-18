@@ -7,12 +7,12 @@ export const TryOutCardNew = ({
   url,
   imageUrl,
   price,
-  onKerjakanUlang,  // Ubah dari onClick ke onKerjakanUlang
+  onKerjakanUlang, // Ubah dari onClick ke onKerjakanUlang
   className,
   kerjakanUlang,
-  isResetting,  // Tambahkan prop isResetting
+  isResetting, // Tambahkan prop isResetting
   disabled,
-  onOpenModal     // Tambahkan prop disabled
+  onOpenModal, // Tambahkan prop disabled
 }) => {
   const formatIDR = (number) => {
     return new Intl.NumberFormat("id-ID", {
@@ -23,17 +23,16 @@ export const TryOutCardNew = ({
   };
 
   return (
-    <div
-      className={`${className} border w-80 sm:w-56 md:w-60 xl:w-72 rounded-xl`}
-    >
-       <div className="aspect-video">
+    <div className={`${className} border rounded-xl`}>
+      <div className="aspect-video">
         <img src={imageUrl} alt="" className="rounded-t-xl" />
       </div>
       <div className="p-4">
-        <p className="font-bold text-lg">{title}</p>
+        <p className="font-bold text-sm xl:text-lg">{title}</p>
         <div className="flex items-center justify-between mt-3">
           <div className="flex gap-2 items-center">
             <svg
+              className="w-4 h-4"
               width="16"
               height="20"
               viewBox="0 0 16 20"
@@ -47,10 +46,11 @@ export const TryOutCardNew = ({
                 fill="#1C1C28"
               />
             </svg>
-            <p>100 soal</p>
+            <p className="text-lg">100 soal</p>
           </div>
           <div className="flex gap-2 items-center">
             <svg
+              className="w-4 h-4"
               width="24"
               height="24"
               viewBox="0 0 24 24"
@@ -73,7 +73,7 @@ export const TryOutCardNew = ({
               />
             </svg>
 
-            <p>90 Menit</p>
+            <p className="text-lg">90 Menit</p>
           </div>
         </div>
         {price && (
@@ -82,7 +82,7 @@ export const TryOutCardNew = ({
         <div className={`mt-5 grid grid-cols-2 gap-3`}>
           <Link to={url}>
             <button
-              className="bg-[#FFCB01] py-2 w-full font-medium rounded-lg"
+              className="bg-[#FFCB01] py-2 w-full text-sm font-medium rounded-lg"
               onClick={onOpenModal}
             >
               {action}
@@ -90,13 +90,13 @@ export const TryOutCardNew = ({
           </Link>
           {kerjakanUlang && (
             <button
-              onClick={onKerjakanUlang}  // Ubah dari onClick ke onKerjakanUlang
+              onClick={onKerjakanUlang} // Ubah dari onClick ke onKerjakanUlang
               disabled={disabled || isResetting}
-              className={`bg-[#FFCB01] py-2 w-full font-medium rounded-lg ${
-                (disabled || isResetting) ? 'opacity-50 cursor-not-allowed' : ''
+              className={`bg-[#FFCB01] py-2 w-full font-medium rounded-lg text-sm ${
+                disabled || isResetting ? "opacity-50 cursor-not-allowed" : ""
               }`}
             >
-              {isResetting ? 'Mereset...' : 'Kerjakan ulang'}
+              {isResetting ? "Mereset..." : "Kerjakan ulang"}
             </button>
           )}
         </div>

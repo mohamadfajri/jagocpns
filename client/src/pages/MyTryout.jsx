@@ -132,7 +132,7 @@ const MyTryout = () => {
 
         <section>
           <h2 className="font-bold text-2xl mb-5">Belum Dikerjakan</h2>
-          <div className="mt-5 flex flex-col gap-3 items-center md:grid md:grid-cols-2 xl:grid xl:grid-cols-5">
+          <div className="mt-5 grid grid-cols-1 gap-2 items-center md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid xl:grid-cols-4">
             {renderTryoutCards(
               tryoutData.undone,
               "Kerjakan",
@@ -145,7 +145,7 @@ const MyTryout = () => {
 
         <section>
           <h2 className="font-bold text-2xl mb-5">Sudah Dikerjakan</h2>
-          <div className="mt-5 flex flex-col gap-3 items-center md:grid md:grid-cols-2 xl:grid xl:grid-cols-5">
+          <div className="mt-5 grid grid-cols-1 gap-2 items-center md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid xl:grid-cols-4">
             {renderTryoutCards(tryoutData.done, "Nilai Saya", "score/")}
           </div>
         </section>
