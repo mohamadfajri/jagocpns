@@ -102,7 +102,7 @@ const Sidebar = () => {
           <img src={logo} alt="logo" className="rounded-lg" />
         </div>
 
-        <div className="flex flex-col h-[calc(100vh-100px)]">
+        <div className="flex flex-col h-[calc(100vh-100px)] overflow-x-auto">
           <div className="px-5 bg-white dark:bg-black">
             <ul className="space-y-4 font-semibold">
               <li>
@@ -326,7 +326,7 @@ const Sidebar = () => {
               </li>
             </ul>
           </div>
-          <div className="p-4 mt-auto">
+          <div className="p-4 mt-10">
             <ul className="">
               <li>
                 <div className="bg-gradient-to-r from-[#8d65ff] to-[#6846d5] rounded-xl">
