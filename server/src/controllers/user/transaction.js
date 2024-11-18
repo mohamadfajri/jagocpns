@@ -162,6 +162,9 @@ const getUserTrasactions = async (req, res) => {
       where: {
         userId: parseInt(userId),
       },
+      orderBy: {
+        createdAt: "desc"
+      }
     });
     if (!transactions) {
       return res.status(404).json({
