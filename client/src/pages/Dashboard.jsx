@@ -29,8 +29,8 @@ const Dashboard = () => {
           <div className="xl:gap-5 xl:pe-32">
             <div className="h-36 sm:h-64 xl:h-80 mb-3 mt-3 xl:mb-5 2xl:h-96">
               <Carousel>
-                <img src={dashboardBanner} alt="..." className="h-full" />
-                <img src={dashboardBanner2} alt="..." className="h-full" />
+                <img src={dashboardBanner} alt="..." className="" />
+                <img src={dashboardBanner2} alt="..." className="" />
                 <img src={dashboardBanner3} alt="..." className="h-full" />
               </Carousel>
             </div>
