@@ -67,14 +67,14 @@ const History = () => {
           {data.map((item, index) => (
             <Table.Row
               key={index}
-              className="bg-white dark:border-gray-700 dark:bg-gray-800"
+              className={` dark:border-gray-700 dark:bg-gray-800`}
             >
               <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                 {formatDate(item.date)}
               </Table.Cell>
               <Table.Cell>{item.description}</Table.Cell>
               <Table.Cell>{formatIDR(item.amount)}</Table.Cell>
-              <Table.Cell>{item.status}</Table.Cell>
+              <Table.Cell className={`${item.status === "rejected" ? "text-red-500": "text-black"} font-medium uppercase`}>{item.status}</Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
