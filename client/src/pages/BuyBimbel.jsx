@@ -33,7 +33,7 @@ export default function BuyBimbel() {
           Pilih paket belajar mandiri yang paling sesuai dengan kebutuhan
           belajarmu.
         </p>
-        <div className="mt-5">
+        <div className="mt-5 space-y-5">
           {bimbelData.map((bimbel, index) => (
             <BimbelCard
               key={index}
