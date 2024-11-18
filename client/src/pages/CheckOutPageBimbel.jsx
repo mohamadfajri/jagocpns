@@ -4,12 +4,13 @@ import { fetcher } from "../utils/fetcher.js";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Modal } from "flowbite-react";
 import Swal from "sweetalert2";
+import parse from "html-react-parser";
 
 export default function CheckOutPageBimbel() {
   const location = useLocation();
   const pathParts = location.pathname.split("/");
   const id = pathParts[pathParts.length - 1];
-  const [tryout, setTryout] = useState([]);
+  const [tryout, setTryout] = useState({ description: "" });
   const [openModal, setOpenModal] = useState(false);
   const [user, setUser] = useState([{}]);
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export default function CheckOutPageBimbel() {
   const [appliedDiscount, setAppliedDiscount] = useState(null);
   const [discountMessage, setDiscountMessage] = useState("");
 
-  console.log("user", user)
+  console.log("user", user);
 
   const calculateDiscount = (price, discountInfo) => {
     if (!discountInfo) return 0;
@@ -74,7 +75,7 @@ export default function CheckOutPageBimbel() {
   const getUser = async () => {
     try {
       const response = await fetcher("/user");
-      console.log(response.data)
+      console.log(response.data);
       setUser([
         {
           id: response.data.userId,
@@ -175,7 +176,7 @@ export default function CheckOutPageBimbel() {
       <div className="mt-12 grid grid-cols-3 gap-x-3">
         <div className="col-span-2">
           <p className="font-bold text-2xl">Tentang paket</p>
-          <p className="mt-5">{tryout.description}</p>
+          <p className="mt-5">{parse(tryout.description)}</p>
         </div>
         <div className="flex justify-center">
           <TryOutCardNew
