@@ -18,9 +18,9 @@ export default function CheckOutPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const DISCOUNT_CODES = {
-    JAGOCPNS: { amount: 10000, type: "fixed" },
-    WELCOME50: { amount: 50, type: "percentage" },
-    FLASH25: { amount: 25, type: "percentage" },
+    aksuxhc: { amount: 10000, type: "fixed" },
+    kauwhgd: { amount: 50, type: "percentage" },
+    laiwe: { amount: 25, type: "percentage" },
   };
 
   const [discountInput, setDiscountInput] = useState("");

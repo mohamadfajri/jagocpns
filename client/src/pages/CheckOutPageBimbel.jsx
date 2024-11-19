@@ -17,9 +17,9 @@ export default function CheckOutPageBimbel() {
 
   const [isLoading, setIsLoading] = useState(false);
   const DISCOUNT_CODES = {
-    JAGOCPNS: { amount: 10000, type: "fixed" },
-    WELCOME50: { amount: 50, type: "percentage" },
-    FLASH25: { amount: 25, type: "percentage" },
+    awdkas: { amount: 10000, type: "fixed" },
+    kalwhdkuas: { amount: 50, type: "percentage" },
+    laiwj: { amount: 25, type: "percentage" },
   };
 
   const [discountInput, setDiscountInput] = useState("");
