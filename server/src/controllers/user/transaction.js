@@ -163,8 +163,8 @@ const getUserTrasactions = async (req, res) => {
         userId: parseInt(userId),
       },
       orderBy: {
-        createdAt: "desc"
-      }
+        createdAt: "desc",
+      },
     });
     if (!transactions) {
       return res.status(404).json({
@@ -194,7 +194,7 @@ const getUserTrasactions = async (req, res) => {
       date: t.updatedAt,
       description: getId(t.updatedAt, t.id),
       amount: t.amount.toString(),
-      status: t.status
+      status: t.status,
     }));
 
     return res.status(200).json({ data: format });
@@ -457,6 +457,7 @@ const checkout = async (req, res) => {
       const payments = targetIds.map((targetUserId) => ({
         userId: targetUserId,
         tryoutListId,
+        promoCode: discountCode ? discountCode.trim().toUpperCase() : null,
       }));
 
       await prisma.payment.createMany({ data: payments });
