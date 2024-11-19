@@ -16,7 +16,7 @@ const LinkList = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-between py-6 min-h-screen">
+    <div className="flex flex-col items-center justify-between py-6 px-5 min-h-screen">
       <div className="bg-white rounded-xl py-8 max-w-xl w-full">
         <div className="w-full flex flex-col items-center mb-6">
           <img src={logo} alt="logo" className="w-36" />
