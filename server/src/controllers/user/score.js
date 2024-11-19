@@ -1,9 +1,9 @@
 const prisma = require('../../utils/prismaClient');
 
 const isLulus = (twk, tiu, tkp) => {
-  const kkmTwk = 65;
-  const kkmTiu = 80;
-  const kkmTkp = 166;
+  const kkmTwk = 0;
+  const kkmTiu = 0;
+  const kkmTkp = 0;
 
   return {
     statusTwk: twk >= kkmTwk ? 'Lulus' : 'Tidak Lulus',
