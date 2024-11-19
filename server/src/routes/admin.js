@@ -39,6 +39,7 @@ const {
   getAllTransactions,
   acceptTransaction,
   rejectTransaction,
+  getPromoCodeAnalytics,
 } = require("../controllers/admin/transaction");
 const {
   createLink,
@@ -114,6 +115,11 @@ router.get("/admin/users/registrations", adminOnly, getUserRegistrations);
 router.get("/admin/users/segment", adminOnly, getUserSegment);
 
 router.get("/admin/transactions/summary", adminOnly, getTransactionSummary);
+router.get(
+  "/admin/transactions/promocodeSummary",
+  adminOnly,
+  getPromoCodeAnalytics
+);
 router.get("/admin/transactions/volume", adminOnly, getTransactionVolume);
 
 router.get("/admin/balance/summary", adminOnly, getBalanceSummary);
