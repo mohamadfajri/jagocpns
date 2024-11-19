@@ -85,6 +85,98 @@ const getAllTransactions = async (req, res) => {
   }
 };
 
+const getPromoCodeAnalytics = async (req, res) => {
+  try {
+    // Get date range from query params (optional)
+    const { startDate, endDate } = req.query;
+
+    // Base date filter condition
+    let dateFilter = {};
+    if (startDate && endDate) {
+      dateFilter = {
+        createdAt: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+      };
+    }
+
+    // Get all payments with promo codes and their related tryoutList data
+    const promoPayments = await prisma.payment.findMany({
+      where: {
+        promoCode: {
+          not: null,
+        },
+        ...dateFilter,
+      },
+      include: {
+        tryoutList: {
+          select: {
+            price: true,
+          },
+        },
+      },
+    });
+
+    // Process the data to get analytics
+    const promoCodeMap = new Map();
+
+    promoPayments.forEach((payment) => {
+      const promoCode = payment.promoCode;
+      if (!promoCodeMap.has(promoCode)) {
+        promoCodeMap.set(promoCode, {
+          usageCount: 0,
+          totalAmount: 0n,
+        });
+      }
+
+      const data = promoCodeMap.get(promoCode);
+      data.usageCount += 1;
+      data.totalAmount += payment.tryoutList.price;
+    });
+
+    // Convert Map to array for response
+    const combinedAnalytics = Array.from(promoCodeMap.entries()).map(
+      ([promoCode, data]) => ({
+        promoCode,
+        usageCount: data.usageCount,
+        totalAmount: data.totalAmount.toString(),
+      })
+    );
+
+    // Sort by usage count
+    combinedAnalytics.sort((a, b) => b.usageCount - a.usageCount);
+
+    // Get overall summary
+    const summary = {
+      totalPromoCodeUses: combinedAnalytics.reduce(
+        (acc, curr) => acc + curr.usageCount,
+        0
+      ),
+      totalAmount: combinedAnalytics
+        .reduce((acc, curr) => acc + BigInt(curr.totalAmount), 0n)
+        .toString(),
+      uniquePromoCodes: combinedAnalytics.length,
+    };
+
+    // Return the response
+    return res.status(200).json({
+      message: "Data analisis promo code berhasil diambil",
+      data: {
+        analytics: combinedAnalytics,
+        summary,
+        dateRange: startDate && endDate ? { startDate, endDate } : "all time",
+      },
+    });
+  } catch (error) {
+    console.error("Promo Analytics Error:", error);
+    return res.status(500).json({
+      message: "Terjadi kesalahan saat mengambil data analisis promo code",
+      error: process.env.NODE_ENV === "development" ? error.stack : undefined,
+    });
+  }
+};
+
 const acceptTransaction = async (req, res) => {
   const { id } = req.body;
   const adminId = req.user.id;
@@ -168,4 +260,9 @@ const rejectTransaction = async (req, res) => {
   }
 };
 
-module.exports = { getAllTransactions, acceptTransaction, rejectTransaction };
+module.exports = {
+  getAllTransactions,
+  acceptTransaction,
+  rejectTransaction,
+  getPromoCodeAnalytics,
+};
