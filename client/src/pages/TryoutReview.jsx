@@ -265,12 +265,12 @@ const TryoutReview = () => {
                           <li key={index} className="mb-3">
                             <button
                               disabled
-                              className="flex flex-row items-center"
+                              className={`flex flex-row items-center ${getScore(choice.key, currentQuestion) === 5 ? "bg-[#06C270] p-3 rounded-xl" : ""}`}
                             >
                               <div
                                 className={`text-center border border-black pt-1 flex-shrink-0 w-9 h-9 mr-3 ${
                                   choice.key === userAnswers[currentQuestion]
-                                    ? "bg-gray-500"
+                                    ? "bg-[#FFCB01]"
                                     : ""
                                 }`}
                               >
@@ -407,11 +407,11 @@ const TryoutReview = () => {
                     <button
                       onClick={handlePrev}
                       disabled={currentQuestion === 0}
-                      className={`flex flex-row items-center font-medium mr-4 px-2 py-1 ${
-                        currentQuestion === 0 ? "text-gray-300" : ""
+                      className={`flex flex-row items-center font-medium mr-4 px-2 py-1 rounded-xl ${
+                        currentQuestion === 0 ? "text-gray-300" : "bg-[#FFCB01]"
                       }`}
                     >
-                      <span className="mr-2 border rounded-full p-1">
+                      <span className="mr-2 rounded-full p-1">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
@@ -430,14 +430,14 @@ const TryoutReview = () => {
                     <button
                       onClick={handleNext}
                       disabled={currentQuestion === questions.length - 1}
-                      className={`flex flex-row items-center font-medium px-2 py-1 ${
+                      className={`flex flex-row items-center font-medium px-2 py-1 rounded-xl ${
                         currentQuestion === questions.length - 1
                           ? "text-gray-300"
-                          : ""
+                          : "bg-[#FFCB01]"
                       }`}
                     >
                       Selanjutnya
-                      <span className="ml-2 border rounded-full p-1">
+                      <span className="ml-2 rounded-full p-1">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
