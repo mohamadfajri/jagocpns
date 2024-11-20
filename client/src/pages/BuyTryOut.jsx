@@ -90,7 +90,7 @@ const BuyTryOut = () => {
   };
 
   return (
-    <div className="mb-20 p-5 sm:ml-64 dark:bg-black min-h-screen sm:mt-0">
+    <div className="mb-10 mt-3 sm:mt-3 xl:mt-0 p-5 sm:p-5 xl:p-10 md:ml-64 xl:ml-64 dark:bg-black min-h-screen">
       <div>
         <p className="font-bold text-2xl">Tryout SKB</p>
         <p className="mt-5">
