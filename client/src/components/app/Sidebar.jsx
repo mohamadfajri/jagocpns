@@ -7,7 +7,8 @@ import { Avatar } from "flowbite-react";
 import { useEffect, useRef } from "react";
 import { fetcher } from "../../utils/fetcher.js";
 import avatar from "../../assets/images/avatar.png";
-import Logo from "../../assets/images/logo-extend-black.png"
+import Logo from "../../assets/images/logo-extend-black.png";
+import Breadcrumb from "../Breadcrumb.jsx";
 
 const Sidebar = () => {
   const [userData, setUserData] = useState([]);
@@ -55,6 +56,10 @@ const Sidebar = () => {
     <>
       <div className="fixed bottom-0 left-0 right-0 z-30">
         <BottomNav />
+      </div>
+
+      <div className="ml-72 mt-5">
+        <Breadcrumb />
       </div>
 
       <header className="flex justify-between items-center px-5 py-3 sm:hidden bg-white">
@@ -367,7 +372,7 @@ const Sidebar = () => {
         </div>
       </aside>
 
-        <Outlet />
+      <Outlet />
     </>
   );
 };
