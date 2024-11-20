@@ -58,7 +58,7 @@ const Sidebar = () => {
         <BottomNav />
       </div>
 
-      <div className="ml-72 mt-5">
+      <div className="ml-5 md:ml-72 mt-5">
         <Breadcrumb />
       </div>
 
