@@ -7,7 +7,7 @@ const Breadcrumb = () => {
   // Custom mapping untuk label yang lebih readable
   const routeLabels = {
     dashboard: " ",
-    mytryouts: "Tryut Saya",
+    mytryouts: "Tryout Saya",
     mybimbel: "Bimbel Saya",
     tryoutstore: "Beli Tryout",
     bimbelstore: "Beli Bimbel",
