@@ -265,7 +265,7 @@ const TryoutReview = () => {
                           <li key={index} className="mb-3">
                             <button
                               disabled
-                              className={`flex flex-row items-center ${getScore(choice.key, currentQuestion) === 5 ? "bg-[#06C270] p-3 rounded-xl" : ""}`}
+                              className={`flex flex-row items-center ${getScore(choice.key, currentQuestion) === 5 ? "bg-[#06C270] p-3 rounded-xl" : choice.key === userAnswers[currentQuestion] ? "bg-red-500 rounded-xl p-3" : ""}`}
                             >
                               <div
                                 className={`text-center border border-black pt-1 flex-shrink-0 w-9 h-9 mr-3 ${
