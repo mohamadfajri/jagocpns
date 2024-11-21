@@ -41,11 +41,13 @@ const getUserRankingsByTryout = async (req, res) => {
   const { userId, tryoutListId, minTotal, maxTotal, name } = req.query;
 
   const isLulus = (twk, tiu, tkp) => {
-    const kkmTwk = 65;
-    const kkmTiu = 80;
-    const kkmTkp = 166;
+    const kkmTwk = 0;
+    const kkmTiu = 0;
+    const kkmTkp = 0;
+    const kkm = 0;
+    const totalScore = twk + tiu + tkp;
 
-    if (twk >= kkmTwk && tiu >= kkmTiu && tkp >= kkmTkp) {
+    if (totalScore >= kkm) {
       return "Lulus";
     } else {
       return "Tidak Lulus";
