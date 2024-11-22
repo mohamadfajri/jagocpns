@@ -6,9 +6,11 @@ import { fetcher } from "../utils/fetcher.js";
 import { Carousel } from "flowbite-react";
 import dashboardBanner2 from "../assets/images/dashboardBanner/dashboardBanner2.jpg";
 import dashboardBanner3 from "../assets/images/dashboardBanner/dashboardBanner3.jpg";
+import { Button, Modal } from "flowbite-react";
 
 const Dashboard = () => {
   const [userCount, setUserCount] = useState(0);
+  const [openModal, setOpenModal] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,6 +27,18 @@ const Dashboard = () => {
   return (
     <>
       <div>
+        <Button onClick={() => setOpenModal(true)}>Toggle modal</Button>
+        <Modal show={openModal} onClose={() => setOpenModal(false)}>
+          <Modal.Header className="text-yellow-300">Warning!</Modal.Header>
+          <Modal.Body>
+            <div className="flex justify-center">
+              <div className="text-center">
+                <p className="font-bold text-xl">1 Tryout Hanya Bisa Dikerjakan Dalam 1 Device</p>
+                <p className="font-bold text-xl">*Lebih Dari 1 Device Akun Akan Terblokir Otomatis</p>
+              </div>
+            </div>
+          </Modal.Body>
+        </Modal>
         <div className="mb-20 px-5 py-0 xl:px-5 xl:py-0 md:ml-[270px] xl:ml-64 xl:mb-0 dark:bg-black min-h-screen">
           <div className="xl:gap-5 xl:pe-32">
             <div className="h-36 sm:h-64 xl:h-[25rem] mb-3 mt-3 xl:mb-5">
@@ -199,7 +213,9 @@ const Dashboard = () => {
                           />
                         </svg>
                       </span>
-                      <p className="font-bold text-white">PENGUNGUMAN HASIL CPNS!</p>
+                      <p className="font-bold text-white">
+                        PENGUNGUMAN HASIL CPNS!
+                      </p>
                       <p className="text-white">5-12 Januari 2024</p>
                     </div>
                   </div>
