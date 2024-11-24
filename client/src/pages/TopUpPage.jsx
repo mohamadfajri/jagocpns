@@ -29,7 +29,6 @@ const TopUpPage = () => {
 
   const handleChoose = (val) => {
     setTotal(val);
-    console.log(total);
   };
 
   // const handleMethod = (val) => {

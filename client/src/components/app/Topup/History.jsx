@@ -51,9 +51,6 @@ const History = () => {
     getTransactionStatus();
   });
 
-  console.log("transaction status", transactionStatus);
-  console.log("data", data);
-
   return (
     <div className="overflow-x-auto">
       <Table>
@@ -74,7 +71,13 @@ const History = () => {
               </Table.Cell>
               <Table.Cell>{item.description}</Table.Cell>
               <Table.Cell>{formatIDR(item.amount)}</Table.Cell>
-              <Table.Cell className={`${item.status === "rejected" ? "text-red-500": "text-black"} font-medium uppercase`}>{item.status}</Table.Cell>
+              <Table.Cell
+                className={`${
+                  item.status === "rejected" ? "text-red-500" : "text-black"
+                } font-medium uppercase`}
+              >
+                {item.status}
+              </Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>

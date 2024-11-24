@@ -109,7 +109,7 @@ const ProfileMain = () => {
         </div>
 
         <Button
-          className="w-1/2 bg-[#06C270]" 
+          className="w-1/2 bg-[#06C270]"
           disabled={!isChange}
           type="submit"
         >
