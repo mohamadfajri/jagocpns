@@ -94,7 +94,7 @@ const InvoiceMenu = () => {
     } catch (error) {
       Swal.fire({
         iconHtml: errorIcon,
-        text: error.response?.data?.message || "An error occurred",
+        text: error.response?.data?.message || "Pastikan Ukuran File di Bawah 2.5MB",
         showConfirmButton: true,
         confirmButtonColor: "#FF3B3B",
         confirmButtonText: "Coba Lagi",
@@ -182,6 +182,7 @@ const InvoiceMenu = () => {
                 </p>
               )}
             </label>
+            <span className="text-xs text-gray-500">Pastikan Ukuran File Maksimal 2.5MB</span>
           </div>
         </div>
         {/* <div className="border rounded-lg px-2 py-6 w-full text-center text-2xl font-bold text-white bg-green-400 my-2">
