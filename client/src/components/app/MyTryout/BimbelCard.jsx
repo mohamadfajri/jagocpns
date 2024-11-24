@@ -4,20 +4,20 @@ export default function BimbelCard(props) {
   const { title, image, buttonText, price, url, whatsappLink } = props;
   return (
     <div className="w-full mx-auto mb-6">
-      <div className="flex flex-col md:flex-row md:h-64 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+      <div className="flex flex-col lg:flex-row lg:h-64 rounded-xl shadow-sm hover:shadow-md transition-shadow">
         {/* Image container */}
-        <div className="w-full md:w-2/3 h-48 md:h-full">
+        <div className="w-full lg:w-2/3 h-48 md:h-full">
           <img
             src={image}
             alt={title}
-            className="w-full h-full object-cover rounded-t-xl md:rounded-l-xl md:rounded-tr-none"
+            className="w-full h-full lg:object-fill rounded-t-xl md:rounded-l-xl md:rounded-tr-none"
           />
         </div>
 
         {/* Content container */}
-        <div className="w-full md:w-1/3 p-4 flex flex-col justify-between border-x border-b md:border-l-0 md:border-t md:border-r rounded-b-xl md:rounded-r-xl md:rounded-l-none">
+        <div className="w-full lg:w-1/3 p-4 flex flex-col justify-between border-x border-b md:border-l-0 md:border-t md:border-r rounded-b-xl md:rounded-r-xl md:rounded-l-none">
           {/* Title */}
-          <p className="text-xl md:text-xl lg:text-3xl font-medium mb-4 md:mb-0">
+          <p className="text-lg md:text-xl lg:text-xl font-medium mb-4 md:mb-0">
             {title}
           </p>
 
