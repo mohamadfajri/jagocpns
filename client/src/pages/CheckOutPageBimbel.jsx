@@ -17,8 +17,8 @@ export default function CheckOutPageBimbel() {
 
   const [isLoading, setIsLoading] = useState(false);
   const DISCOUNT_CODES = {
-    awdkas: { amount: 10000, type: "fixed" },
-    kalwhdkuas: { amount: 50, type: "percentage" },
+    jagocpns20: { amount: 20000, type: "fixed" },
+    ahmad20: { amount: 20000, type: "fixed" },
     laiwj: { amount: 25, type: "percentage" },
   };
 
@@ -26,8 +26,6 @@ export default function CheckOutPageBimbel() {
   const [discountValid, setDiscountValid] = useState(false);
   const [appliedDiscount, setAppliedDiscount] = useState(null);
   const [discountMessage, setDiscountMessage] = useState("");
-
-  console.log("user", user);
 
   const calculateDiscount = (price, discountInfo) => {
     if (!discountInfo) return 0;
@@ -41,7 +39,7 @@ export default function CheckOutPageBimbel() {
 
   const handleDiscountButton = (e) => {
     e.preventDefault();
-    const normalizedInput = discountInput.trim().toUpperCase();
+    const normalizedInput = discountInput.trim();
     const discountInfo = DISCOUNT_CODES[normalizedInput];
 
     if (discountInfo) {
