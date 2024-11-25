@@ -377,7 +377,7 @@ const checkout = async (req, res) => {
       let discountAmount = 0n;
 
       if (discountCode) {
-        const upperDiscountCode = discountCode.trim().toUpperCase();
+        const upperDiscountCode = discountCode.trim();
         if (!DISCOUNT_CODES[upperDiscountCode]) {
           throw new Error("Kode diskon tidak valid");
         }
