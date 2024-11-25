@@ -163,7 +163,7 @@ export default function CheckOutPageBimbel() {
   };
 
   return (
-    <div className='sm:p-10 sm:ml-64 dark:bg-black min-h-screen sm:mt-0"'>
+    <div className='p-5 sm:ml-64 dark:bg-black min-h-screen sm:mt-0"'>
       <div>
         <p className="font-bold text-xl">{tryout.title}</p>
         <p className="mt-3">
@@ -174,7 +174,7 @@ export default function CheckOutPageBimbel() {
 
       <hr className="mt-12" />
 
-      <div className="mt-12 grid grid-cols-3 gap-x-3">
+      <div className="mt-12 flex flex-col-reverse xl:grid xl:grid-cols-3 gap-x-3">
         <div className="col-span-2">
           <p className="font-bold text-2xl">Tentang Bimbel</p>
           <p className="mt-5">{parse(tryout.description)}</p>

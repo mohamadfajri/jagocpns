@@ -192,7 +192,7 @@ export default function CheckOutPage() {
           />
         </div>
       </div> */}
-      <div className="mt-12 grid grid-cols-3 gap-x-3">
+      <div className="mt-12 flex flex-col-reverse xl:grid xl:grid-cols-3 gap-x-3">
         <div className="col-span-2">
           <p className="font-bold text-2xl">Tentang paket</p>
           <p className="mt-5">{parse(tryout.description)}</p>

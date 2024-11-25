@@ -30,7 +30,7 @@ export const TryOutCardNew = ({
         <img
           src={imageUrl}
           alt={title}
-          className="rounded-t-xl w-full h-full object-cover"
+          className="rounded-t-xl w-full h-full xl:object-cover"
         />
       </div>
 
