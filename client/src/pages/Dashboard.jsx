@@ -6,6 +6,7 @@ import { fetcher } from "../utils/fetcher.js";
 import { Carousel } from "flowbite-react";
 import dashboardBanner2 from "../assets/images/dashboardBanner/dashboardBanner2.jpg";
 import dashboardBanner3 from "../assets/images/dashboardBanner/dashboardBanner3.jpg";
+import dashboardBanner4 from "../assets/images/dashboardBanner/dashboardBanner4.jpg";
 import { Button, Modal } from "flowbite-react";
 
 const Dashboard = () => {
@@ -33,8 +34,12 @@ const Dashboard = () => {
           <Modal.Body>
             <div className="flex justify-center">
               <div className="text-center">
-                <p className="font-bold text-xl">1 Tryout Hanya Bisa Dikerjakan Dalam 1 Device</p>
-                <p className="font-bold text-xl">*Lebih Dari 1 Device Akun Akan Terblokir Otomatis</p>
+                <p className="font-bold text-xl">
+                  1 Tryout Hanya Bisa Dikerjakan Dalam 1 Device
+                </p>
+                <p className="font-bold text-xl">
+                  *Lebih Dari 1 Device Akun Akan Terblokir Otomatis
+                </p>
               </div>
             </div>
           </Modal.Body>
@@ -46,6 +51,7 @@ const Dashboard = () => {
                 <img src={dashboardBanner} alt="..." className="" />
                 <img src={dashboardBanner2} alt="..." className="" />
                 <img src={dashboardBanner3} alt="..." className="" />
+                <img src={dashboardBanner4} alt="..." className="" />
               </Carousel>
             </div>
 
