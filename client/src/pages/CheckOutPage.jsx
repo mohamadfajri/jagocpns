@@ -18,7 +18,8 @@ export default function CheckOutPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const DISCOUNT_CODES = {
-    aksuxhc: { amount: 10000, type: "fixed" },
+    SKBCPNS: { amount: 5000, type: "fixed" },
+    SKBAHMAD: { amount: 5000, type: "fixed" },
     kauwhgd: { amount: 50, type: "percentage" },
     laiwe: { amount: 25, type: "percentage" },
   };
@@ -40,7 +41,7 @@ export default function CheckOutPage() {
 
   const handleDiscountButton = (e) => {
     e.preventDefault();
-    const normalizedInput = discountInput.trim().toUpperCase();
+    const normalizedInput = discountInput.trim()
     const discountInfo = DISCOUNT_CODES[normalizedInput];
 
     if (discountInfo) {

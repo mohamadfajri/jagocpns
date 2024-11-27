@@ -292,9 +292,10 @@ const getTransaction = async (req, res) => {
 };
 
 const DISCOUNT_CODES = {
+  SKBCPNS: { amount: 5000n, type: "fixed" },
+  SKBAHMAD: { amount: 5000n, type: "fixed" },
   jagocpns20: { amount: 20000n, type: "fixed" },
   ahmad20: { amount: 20000n, type: "fixed" },
-  JAGOCPNS: { amount: 10000n, type: "fixed" },
   WELCOME50: { amount: 50n, type: "percentage" },
   FLASH25: { amount: 25n, type: "percentage" },
 };
