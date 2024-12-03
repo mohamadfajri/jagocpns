@@ -8,6 +8,7 @@ import dashboardBanner2 from "../assets/images/dashboardBanner/dashboardBanner2.
 import dashboardBanner3 from "../assets/images/dashboardBanner/dashboardBanner3.jpg";
 import dashboardBanner4 from "../assets/images/dashboardBanner/dashboardBanner4.jpg";
 import { Button, Modal } from "flowbite-react";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 const Dashboard = () => {
   const [userCount, setUserCount] = useState(0);
@@ -29,17 +30,24 @@ const Dashboard = () => {
     <>
       <div>
         <Button onClick={() => setOpenModal(true)}>Toggle modal</Button>
-        <Modal show={openModal} onClose={() => setOpenModal(false)}>
-          <Modal.Header className="text-yellow-300">Warning!</Modal.Header>
+        <Modal
+          show={openModal}
+          size="md"
+          onClose={() => setOpenModal(false)}
+          popup
+        >
+          <Modal.Header />
           <Modal.Body>
-            <div className="flex justify-center">
-              <div className="text-center">
-                <p className="font-bold text-xl">
-                  1 Tryout Hanya Bisa Dikerjakan Dalam 1 Device
-                </p>
-                <p className="font-bold text-xl">
-                  *Lebih Dari 1 Device Akun Akan Terblokir Otomatis
-                </p>
+            <div className="text-center">
+              <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+              <h1 className="text-black font-bold">WARNING!</h1>
+              <h3 className="mb-5 text-lg font-medium text-black">
+                1 Tryout Bisa Dikerjakan Maksimal 4 Kali
+              </h3>
+              <div className="flex justify-center gap-4">
+                <Button color="failure" onClick={() => setOpenModal(false)}>
+                  {"Ok"}
+                </Button>
               </div>
             </div>
           </Modal.Body>
