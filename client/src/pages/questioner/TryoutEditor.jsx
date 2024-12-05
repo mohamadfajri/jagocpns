@@ -100,10 +100,10 @@ const TryoutEditor = () => {
   }, [activeNumber]);
 
   useEffect(() => {
-    if (numbers.length === 111) {
+    if (activeNumber === 100) {
       setWarning(true);
     }
-  }, [numbers]);
+  }, [activeNumber]);
 
   useEffect(() => {
     const fetchSoal = async () => {
@@ -596,7 +596,7 @@ const TryoutEditor = () => {
               Save
             </Button>
             <Button
-              disabled={!isSave | loading}
+              disabled={!isSave | loading | (activeNumber === 100)}
               color={"success"}
               size="sm"
               onClick={handleSaveAndNext}
@@ -611,22 +611,10 @@ const TryoutEditor = () => {
         <Modal.Body>
           <div className="space-y-6">
             <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-              Soal sudah mencapai 110
+              Soal sudah mencapai 100
             </p>
           </div>
         </Modal.Body>
-        <Modal.Footer>
-          <Button
-            color="gray"
-            onClick={() => {
-              setNumbers(numbers.slice(0, -1));
-              setActiveNumber(activeNumber - 1);
-              setWarning(false);
-            }}
-          >
-            Cancel
-          </Button>
-        </Modal.Footer>
       </Modal>
     </div>
   );
