@@ -20,6 +20,8 @@ export default function CheckOutPage() {
   const DISCOUNT_CODES = {
     SKBCPNS: { amount: 5000, type: "fixed" },
     SKBAHMAD: { amount: 5000, type: "fixed" },
+    miminjago: { amount: 5000, type: "fixed" },
+    skbrike: { amount: 5000, type: "fixed" },
     kauwhgd: { amount: 50, type: "percentage" },
     laiwe: { amount: 25, type: "percentage" },
   };
